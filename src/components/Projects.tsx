@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Bot, Workflow, Mail, Database, FileText, BarChart3, ArrowUpRight, Building2, Zap, LayoutGrid, Repeat, Settings, Circle, CheckCircle, GitMerge, Phone, Network, ZoomIn, X } from "lucide-react";
+import { ExternalLink, Bot, Workflow, Mail, Database, FileText, BarChart3, ArrowUpRight, Building2, Zap, LayoutGrid, Repeat, Settings, Circle, CheckCircle, GitMerge, Phone, Network, ZoomIn, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 
 import imgAIContent from "@/assets/AI_Content_Repurposing.png";
@@ -26,7 +26,6 @@ const filters = [
 ];
 
 const projects = [
-  // ── Konsier / Velocity Capital Projects ──
   {
     title: "KS-WF6 — Daily Outbound Pipeline (Merged V1 POC + V2 Production)",
     icon: GitMerge,
@@ -44,7 +43,7 @@ const projects = [
     icon: Phone,
     tags: ["n8n", "Retell AI", "Claude AI", "Pipedrive", "Notion", "Slack"],
     categories: ["konsier", "n8n", "ai"],
-    description: "Processes inbound/outbound Retell AI call events. Dual-branch: outbound calls → AGENT-03 qualification analysis → Pipedrive stage update → Notion call log. Inbound replies → AGENT-PQA (Prompt QA Agent) fires when red_flags detected, writes one Claude Haiku fix → Notion QA Queue for VA review.",
+    description: "Processes inbound/outbound Retell AI call events. Dual-branch: outbound calls → AGENT-03 qualification analysis → Pipedrive stage update → Notion call log. Inbound replies → AGENT-PQA fires when red_flags detected, writes Claude Haiku fix → Notion QA Queue.",
     highlight: "Published · Dual-branch",
     status: "live" as const,
     image: imgKsWf2,
@@ -56,7 +55,7 @@ const projects = [
     icon: Network,
     tags: ["n8n", "Pipedrive", "Slack", "Claude AI"],
     categories: ["konsier", "n8n", "ai"],
-    description: "11-node tier routing agent: webhook receives call volume data → Code node calculates tier score (daily_calls × 22) → IF node checks manual override → HTTP PATCH Pipedrive stage → HTTP POST Pipedrive note → Switch routes to 4 Slack branches (Starter / Professional / Enterprise / Not Qualified).",
+    description: "11-node tier routing agent: webhook receives call volume data → Code node calculates tier score → IF node checks manual override → HTTP PATCH Pipedrive stage → Switch routes to 4 Slack branches (Starter / Professional / Enterprise / Not Qualified).",
     highlight: "11 nodes · Built",
     status: "live" as const,
     image: imgKsA2,
@@ -68,14 +67,13 @@ const projects = [
     icon: Mail,
     tags: ["n8n", "Instantly", "Claude AI", "Pipedrive"],
     categories: ["konsier", "n8n", "ai"],
-    description: "Published 6-branch reply handler: webhook receives Instantly reply events → Claude AGENT-02 (Reply Triage) classifies intent → Code parses JSON → Switch routes to Hot Lead (Pipedrive stage update), Objection, Question, Unsubscribe, Auto-Reply, or Needs Review branches.",
+    description: "Published 6-branch reply handler: webhook receives Instantly reply events → Claude AGENT-02 classifies intent → Switch routes to Hot Lead, Objection, Question, Unsubscribe, Auto-Reply, or Needs Review branches.",
     highlight: "Published · 6-branch",
     status: "live" as const,
     image: imgKsWf1,
     loomEmbed: null as string | null,
     externalLink: null as string | null,
   },
-  // ── GHL / Earlier Projects ──
   {
     title: "GHL Pinas — Complete CRM & AI Automation System",
     icon: Building2,
@@ -93,7 +91,7 @@ const projects = [
     icon: Building2,
     tags: ["GoHighLevel", "Workflow Automation", "CRM", "Pipeline Management", "Tag-Based Triggers"],
     categories: ["ghl"],
-    description: "Complete GHL automation suite: intelligent lead follow-up sequence, automated reply handler that stops follow-up on inbound replies, multi-stage pipeline management, and round-robin contact assignment. All workflows are tag-triggered, fully automated, and production-ready.",
+    description: "Complete GHL automation suite: intelligent lead follow-up sequence, automated reply handler that stops follow-up on inbound replies, multi-stage pipeline management, and round-robin contact assignment.",
     highlight: "Full automation suite",
     status: "live" as const,
     image: null as string | null,
@@ -105,7 +103,7 @@ const projects = [
     icon: Workflow,
     tags: ["Claude", "Retell AI", "n8n", "GHL CRM", "Vercel"],
     categories: ["ghl", "ai"],
-    description: "Complete AI-powered sales funnel with embedded lead forms, quiz, membership tiers, and a live AI voice agent (Maya) powered by Retell AI. Integrated with GHL via n8n — voice calls are analyzed by Claude API and contacts are auto-created in GHL with HOT/COLD tags.",
+    description: "Complete AI-powered sales funnel with embedded lead forms, quiz, membership tiers, and a live AI voice agent (Maya) powered by Retell AI. Integrated with GHL via n8n — voice calls analyzed by Claude API, contacts auto-created with HOT/COLD tags.",
     highlight: "AI-assisted design",
     status: "live" as const,
     image: null as string | null,
@@ -198,13 +196,23 @@ const projects = [
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
-};
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+const CARDS_PER_PAGE = 2;
+
+const slideVariants = {
+  enter: (dir: number) => ({
+    x: dir > 0 ? "100%" : "-100%",
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    transition: { duration: 0.42, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+  exit: (dir: number) => ({
+    x: dir > 0 ? "-100%" : "100%",
+    opacity: 0,
+    transition: { duration: 0.32, ease: "easeIn" },
+  }),
 };
 
 const Lightbox = ({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) => (
@@ -230,11 +238,7 @@ const Lightbox = ({ src, alt, onClose }: { src: string; alt: string; onClose: ()
         >
           <X size={18} /> Close
         </button>
-        <img
-          src={src}
-          alt={alt}
-          className="w-full h-auto rounded-2xl shadow-2xl border border-white/10"
-        />
+        <img src={src} alt={alt} className="w-full h-auto rounded-2xl shadow-2xl border border-white/10" />
       </motion.div>
     </motion.div>
   </AnimatePresence>
@@ -242,170 +246,245 @@ const Lightbox = ({ src, alt, onClose }: { src: string; alt: string; onClose: ()
 
 const Projects = () => {
   const [activeFilter, setActiveFilter] = useState("all");
+  const [page, setPage] = useState(0);
+  const [dir, setDir] = useState(1);
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
-  const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
+  const { ref, inView } = useInView({ threshold: 0.05, triggerOnce: true });
 
   const filtered = activeFilter === "all"
     ? projects
     : projects.filter(p => p.categories.includes(activeFilter));
 
+  const totalPages = Math.ceil(filtered.length / CARDS_PER_PAGE);
+  const visibleCards = filtered.slice(page * CARDS_PER_PAGE, (page + 1) * CARDS_PER_PAGE);
+
+  // Reset to first page when filter changes
+  useEffect(() => {
+    setPage(0);
+    setDir(1);
+  }, [activeFilter]);
+
+  const goNext = () => {
+    if (page < totalPages - 1) { setDir(1); setPage(p => p + 1); }
+  };
+  const goPrev = () => {
+    if (page > 0) { setDir(-1); setPage(p => p - 1); }
+  };
+  const goToPage = (i: number) => {
+    setDir(i > page ? 1 : -1);
+    setPage(i);
+  };
+
   return (
     <>
-    {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
-    <section id="projects" className="section-padding relative" ref={ref}>
-      <div className="max-w-7xl mx-auto relative">
-        <motion.div
-          initial={{ clipPath: "inset(0 100% 0 0)" }}
-          whileInView={{ clipPath: "inset(0 0% 0 0)" }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12 max-w-2xl mx-auto"
-        >
-          <span className="inline-block text-primary text-xs font-semibold tracking-wider uppercase mb-3 px-4 py-1.5 rounded-full bg-primary/10">
-            What I've Built
-          </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
-            Featured <span className="text-primary">Projects</span>
-          </h2>
-          <p className="text-muted-foreground text-base">
-            Real working systems — every project here is live, tested, and production-ready.
-          </p>
-        </motion.div>
+      {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
 
-        {/* Filter tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {filters.map((f) => (
+      <section id="projects" className="section-padding relative" ref={ref}>
+        <div className="max-w-7xl mx-auto relative">
+
+          {/* Header */}
+          <motion.div
+            initial={{ clipPath: "inset(0 100% 0 0)" }}
+            whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12 max-w-2xl mx-auto"
+          >
+            <span className="inline-block text-primary text-xs font-semibold tracking-wider uppercase mb-3 px-4 py-1.5 rounded-full bg-primary/10">
+              What I've Built
+            </span>
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
+              Featured <span className="text-primary">Projects</span>
+            </h2>
+            <p className="text-muted-foreground text-base">
+              Real working systems — every project here is live, tested, and production-ready.
+            </p>
+          </motion.div>
+
+          {/* Filter tabs */}
+          <div className="flex flex-wrap justify-center gap-2 mb-10">
+            {filters.map((f) => (
+              <motion.button
+                key={f.value}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setActiveFilter(f.value)}
+                className={`relative flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  activeFilter === f.value
+                    ? "text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground bg-secondary"
+                }`}
+              >
+                {activeFilter === f.value && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute inset-0 bg-primary rounded-full"
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10 flex items-center gap-1.5">
+                  <f.icon size={14} />
+                  {f.label}
+                </span>
+              </motion.button>
+            ))}
+          </div>
+
+          {/* ── CAROUSEL ── */}
+          <div className="relative">
+
+            {/* Prev arrow */}
             <motion.button
-              key={f.value}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveFilter(f.value)}
-              className={`relative flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeFilter === f.value
-                  ? "text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground bg-secondary"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={goPrev}
+              disabled={page === 0}
+              className={`absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center neon-border bg-card/90 backdrop-blur-sm transition-all ${
+                page === 0 ? "opacity-25 cursor-not-allowed" : "hover:bg-primary/20 hover:border-primary/60"
               }`}
             >
-              {activeFilter === f.value && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute inset-0 bg-primary rounded-full"
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                />
-              )}
-              <span className="relative z-10 flex items-center gap-1.5">
-                <f.icon size={14} />
-                {f.label}
-              </span>
+              <ChevronLeft size={20} className="text-primary" />
             </motion.button>
-          ))}
-        </div>
 
-        <AnimatePresence mode="popLayout">
-          <motion.div
-            key={activeFilter}
-            variants={containerVariants}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            {filtered.map((project) => (
-              <motion.div
-                key={project.title}
-                variants={cardVariants}
-                layout
-                exit={{ scale: 0.8, opacity: 0, transition: { duration: 0.2 } }}
-                whileHover={{ y: -8, boxShadow: "0 16px 40px -12px hsl(var(--primary) / 0.15)" }}
-                transition={{ type: "spring" }}
-                className="group rounded-2xl bg-card border border-border relative overflow-hidden"
-              >
-                {project.loomEmbed && (
-                  <div className="border-b border-border">
-                    <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
-                      <iframe
-                        src={project.loomEmbed}
-                        frameBorder="0"
-                        allowFullScreen
-                        style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
-                      />
-                    </div>
-                  </div>
-                )}
+            {/* Next arrow */}
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={goNext}
+              disabled={page >= totalPages - 1}
+              className={`absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center neon-border bg-card/90 backdrop-blur-sm transition-all ${
+                page >= totalPages - 1 ? "opacity-25 cursor-not-allowed" : "hover:bg-primary/20 hover:border-primary/60"
+              }`}
+            >
+              <ChevronRight size={20} className="text-primary" />
+            </motion.button>
 
-                {project.image && (
-                  <div
-                    className="border-b border-border overflow-hidden relative cursor-zoom-in"
-                    onClick={() => setLightbox({ src: project.image as string, alt: project.title })}
-                  >
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                      <ZoomIn size={28} className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg" />
-                    </div>
-                  </div>
-                )}
-
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors duration-300">
-                      <project.icon size={18} className="text-primary group-hover:text-primary-foreground transition-colors duration-300" />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
-                        {project.highlight}
-                      </span>
-                      <motion.span
-                        animate={project.status === "live" ? { scale: [1, 1.15, 1] } : {}}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                        className="flex items-center gap-1"
-                      >
-                        {project.status === "live" ? (
-                          <Circle size={8} className="fill-primary text-primary" />
-                        ) : (
-                          <CheckCircle size={12} className="text-muted-foreground" />
-                        )}
-                      </motion.span>
-                    </div>
-                  </div>
-
-                  <h3 className="text-base font-semibold text-foreground mb-2">{project.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">{project.description}</p>
-
-                  {project.externalLink && (
-                    <a
-                      href={project.externalLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 mb-4 text-sm font-medium text-primary hover:underline"
+            {/* Sliding card area */}
+            <div className="overflow-hidden px-1">
+              <AnimatePresence custom={dir} mode="wait">
+                <motion.div
+                  key={`${activeFilter}-${page}`}
+                  custom={dir}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate={inView ? "center" : "enter"}
+                  exit="exit"
+                  className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                >
+                  {visibleCards.map((project) => (
+                    <motion.div
+                      key={project.title}
+                      whileHover={{ y: -6, boxShadow: "0 16px 40px -12px hsl(var(--primary) / 0.18)" }}
+                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                      className="group rounded-2xl bg-card border border-border relative overflow-hidden"
                     >
-                      <ExternalLink size={14} />
-                      View Live
-                      <ArrowUpRight size={12} />
-                    </a>
-                  )}
+                      {/* Loom embed */}
+                      {project.loomEmbed && (
+                        <div className="border-b border-border">
+                          <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
+                            <iframe
+                              src={project.loomEmbed}
+                              frameBorder="0"
+                              allowFullScreen
+                              style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                            />
+                          </div>
+                        </div>
+                      )}
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex flex-wrap gap-2"
-                  >
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="text-xs font-medium text-muted-foreground bg-secondary px-2.5 py-1 rounded-full">
-                        {tag}
-                      </span>
-                    ))}
-                  </motion.div>
+                      {/* Screenshot image with zoom */}
+                      {project.image && (
+                        <div
+                          className="border-b border-border overflow-hidden relative cursor-zoom-in"
+                          onClick={() => setLightbox({ src: project.image as string, alt: project.title })}
+                        >
+                          <img
+                            src={project.image}
+                            alt={project.title}
+                            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                            <ZoomIn size={28} className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg" />
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="p-6">
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors duration-300">
+                            <project.icon size={18} className="text-primary group-hover:text-primary-foreground transition-colors duration-300" />
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
+                              {project.highlight}
+                            </span>
+                            <motion.span
+                              animate={project.status === "live" ? { scale: [1, 1.15, 1] } : {}}
+                              transition={{ duration: 1.5, repeat: Infinity }}
+                            >
+                              {project.status === "live" ? (
+                                <Circle size={8} className="fill-primary text-primary" />
+                              ) : (
+                                <CheckCircle size={12} className="text-muted-foreground" />
+                              )}
+                            </motion.span>
+                          </div>
+                        </div>
+
+                        <h3 className="text-base font-semibold text-foreground mb-2">{project.title}</h3>
+                        <p className="text-muted-foreground text-sm leading-relaxed mb-4">{project.description}</p>
+
+                        {project.externalLink && (
+                          <a
+                            href={project.externalLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 mb-4 text-sm font-medium text-primary hover:underline"
+                          >
+                            <ExternalLink size={14} />
+                            View Live
+                            <ArrowUpRight size={12} />
+                          </a>
+                        )}
+
+                        <div className="flex flex-wrap gap-2">
+                          {project.tags.map((tag) => (
+                            <span key={tag} className="text-xs font-medium text-muted-foreground bg-secondary px-2.5 py-1 rounded-full">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Dot indicators + page counter */}
+            {totalPages > 1 && (
+              <div className="flex flex-col items-center gap-3 mt-8">
+                <div className="flex items-center gap-2">
+                  {Array.from({ length: totalPages }).map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => goToPage(i)}
+                      className={`transition-all duration-300 rounded-full ${
+                        i === page
+                          ? "w-6 h-2 bg-primary"
+                          : "w-2 h-2 bg-border hover:bg-primary/50"
+                      }`}
+                    />
+                  ))}
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </section>
+                <p className="text-muted-foreground text-xs font-mono">
+                  {page + 1} / {totalPages} — {filtered.length} projects
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
     </>
   );
 };
