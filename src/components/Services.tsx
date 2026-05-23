@@ -65,21 +65,21 @@ const Services = () => {
 
   return (
     <section id="services" className="section-padding relative overflow-hidden" ref={ref}>
-      {/* Decorative holographic robot — right side watermark */}
+      {/* Decorative holographic robot — right side, transparent overlay */}
       <div
         className="absolute pointer-events-none hidden lg:block"
-        style={{ top: "50%", right: "-60px", transform: "translateY(-50%)", zIndex: 0 }}
+        style={{ top: "50%", right: "0px", transform: "translateY(-50%)", zIndex: 0 }}
       >
         <img
           src={robotHolographic}
           alt=""
           aria-hidden="true"
           style={{
-            width: "480px",
-            opacity: 0.055,
-            maskImage: "radial-gradient(ellipse 70% 80% at 40% 42%, black 25%, rgba(0,0,0,0.5) 58%, transparent 85%)",
-            WebkitMaskImage: "radial-gradient(ellipse 70% 80% at 40% 42%, black 25%, rgba(0,0,0,0.5) 58%, transparent 85%)",
-            filter: "grayscale(0.3) brightness(2) saturate(1.8)",
+            width: "420px",
+            opacity: 0.18,
+            maskImage: "radial-gradient(ellipse 75% 80% at 35% 42%, black 30%, rgba(0,0,0,0.5) 60%, transparent 88%)",
+            WebkitMaskImage: "radial-gradient(ellipse 75% 80% at 35% 42%, black 30%, rgba(0,0,0,0.5) 60%, transparent 88%)",
+            filter: "brightness(1.4) saturate(1.5)",
           }}
         />
       </div>

@@ -50,6 +50,24 @@ const Hero = () => {
           style={{ objectPosition: "30% center" }}
         />
 
+        {/* Robot mascot — blends into background scene via gradient overlays above */}
+        <img
+          src={robotAnalyst}
+          alt=""
+          aria-hidden="true"
+          className="absolute pointer-events-none hidden lg:block"
+          style={{
+            width: "260px",
+            bottom: "40px",
+            left: "3%",
+            mixBlendMode: "screen" as const,
+            opacity: 0.78,
+            maskImage: "radial-gradient(ellipse 82% 88% at 50% 60%, black 35%, rgba(0,0,0,0.4) 65%, transparent 100%)",
+            WebkitMaskImage: "radial-gradient(ellipse 82% 88% at 50% 60%, black 35%, rgba(0,0,0,0.4) 65%, transparent 100%)",
+            filter: "brightness(1.2) contrast(0.9)",
+          }}
+        />
+
         {/* Main directional gradient — left open, right sealed */}
         <div className="absolute inset-0" style={{
           background: `linear-gradient(to right,
@@ -110,28 +128,6 @@ const Hero = () => {
           className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent"
         />
       </div>
-
-      {/* ── DECORATIVE ROBOT MASCOT ─────────────────────────────────────────── */}
-      <motion.div
-        className="absolute pointer-events-none z-[8] hidden lg:block"
-        style={{ bottom: "72px", right: "3.5%" }}
-        animate={{ y: [0, -16, 0] }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <img
-          src={robotAnalyst}
-          alt=""
-          aria-hidden="true"
-          style={{
-            width: "196px",
-            mixBlendMode: "screen" as const,
-            opacity: 0.82,
-            maskImage: "radial-gradient(ellipse 78% 88% at 52% 62%, black 38%, rgba(0,0,0,0.45) 68%, transparent 100%)",
-            WebkitMaskImage: "radial-gradient(ellipse 78% 88% at 52% 62%, black 38%, rgba(0,0,0,0.45) 68%, transparent 100%)",
-            filter: "brightness(1.15) contrast(0.92) saturate(0.9)",
-          }}
-        />
-      </motion.div>
 
       {/* ── CONTENT ─────────────────────────────────────────────────────────── */}
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 pt-24 pb-8">
