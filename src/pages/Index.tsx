@@ -28,29 +28,31 @@ const Index = () => {
         <motion.div style={{ y: heroY }}>
           <Hero />
         </motion.div>
-        {/* Services + Tools share a giant robot background */}
-        <div className="relative overflow-hidden">
+        <Services />
+
+        {/* ── ROBOT DIVIDER — sits at the boundary between Services and Tools ── */}
+        <div className="relative hidden lg:block" style={{ height: 0, zIndex: 1 }}>
           <img
             src={robotHolographic}
             alt=""
             aria-hidden="true"
-            className="absolute pointer-events-none hidden lg:block"
+            className="pointer-events-none"
             style={{
-              right: "-2%",
-              top: "50%",
-              transform: "translateY(-50%)",
-              height: "92%",
+              position: "absolute",
+              left: "50%",
+              top: "0",
+              transform: "translate(-50%, -50%)",
+              height: "75vh",
               width: "auto",
-              zIndex: 0,
-              opacity: 0.11,
-              filter: "brightness(1.7) saturate(1.6) contrast(0.88)",
-              maskImage: "radial-gradient(ellipse 62% 72% at 48% 50%, black 18%, rgba(0,0,0,0.55) 52%, transparent 80%)",
-              WebkitMaskImage: "radial-gradient(ellipse 62% 72% at 48% 50%, black 18%, rgba(0,0,0,0.55) 52%, transparent 80%)",
+              opacity: 0.22,
+              filter: "brightness(2.0) saturate(1.8) contrast(0.85)",
+              maskImage: "radial-gradient(ellipse 68% 78% at 50% 50%, black 22%, rgba(0,0,0,0.6) 55%, transparent 82%)",
+              WebkitMaskImage: "radial-gradient(ellipse 68% 78% at 50% 50%, black 22%, rgba(0,0,0,0.6) 55%, transparent 82%)",
             }}
           />
-          <Services />
-          <Tools />
         </div>
+
+        <Tools />
         <Projects />
         <WorkExperience />
         <Testimonials />
