@@ -46,15 +46,8 @@ const Hero = () => {
       <div className="absolute inset-0 z-0">
         <img
           src={heroBg} alt="" aria-hidden="true"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "60%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "22% center",
-          }}
+          className="w-full h-full object-cover"
+          style={{ objectPosition: "18% center" }}
         />
 
         {/* Robot mascot — blends into background scene via gradient overlays above */}
@@ -162,7 +155,7 @@ const Hero = () => {
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative order-2 lg:order-1 hidden lg:flex flex-col justify-between min-h-[520px] py-4"
+            className="relative order-2 lg:order-1 hidden lg:flex flex-col justify-between items-end min-h-[520px] py-4"
           >
             {/* ── GLASSMORPHIC TECH PANEL ── */}
             <motion.div
