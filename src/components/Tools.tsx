@@ -1,23 +1,39 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import {
+  SiN8N, SiAnthropic, SiNotion, SiSlack, SiZapier,
+  SiMake, SiOpenai, SiGoogle, SiSupabase,
+} from "react-icons/si";
+import { Mic, Send, BarChart3, Link2, Sparkles, Target, Workflow } from "lucide-react";
 
-const tools = [
-  { name: "n8n", emoji: "⚙️", category: "Automation" },
-  { name: "Pipedrive", emoji: "📈", category: "CRM" },
-  { name: "Retell AI", emoji: "📞", category: "Voice AI" },
-  { name: "Claude API", emoji: "🤖", category: "AI" },
-  { name: "Apollo.io", emoji: "🎯", category: "Lead Gen" },
-  { name: "Instantly", emoji: "✉️", category: "Outreach" },
-  { name: "Notion", emoji: "📋", category: "Knowledge Base" },
-  { name: "Slack", emoji: "💬", category: "Notifications" },
-  { name: "GoHighLevel", emoji: "🏗️", category: "CRM" },
-  { name: "Zapier", emoji: "🔄", category: "Automation" },
-  { name: "Make.com", emoji: "🔧", category: "Automation" },
-  { name: "ChatGPT", emoji: "🧠", category: "AI" },
-  { name: "Webhooks", emoji: "🔗", category: "Integration" },
-  { name: "Google Workspace", emoji: "📊", category: "Productivity" },
-  { name: "Supabase", emoji: "🗄️", category: "Database" },
-  { name: "Lovable", emoji: "🎨", category: "Dev" },
+type ToolIcon =
+  | { type: "si"; component: React.ComponentType<{ size?: number; style?: React.CSSProperties; className?: string }> }
+  | { type: "lucide"; component: React.ComponentType<{ size?: number; className?: string; color?: string }>; color: string };
+
+interface Tool {
+  name: string;
+  icon: ToolIcon;
+  category: string;
+  color: string;
+}
+
+const tools: Tool[] = [
+  { name: "n8n", icon: { type: "si", component: SiN8N }, category: "Automation", color: "#EA4B71" },
+  { name: "Pipedrive", icon: { type: "lucide", component: Workflow, color: "#25CA3E" }, category: "CRM", color: "#25CA3E" },
+  { name: "Retell AI", icon: { type: "lucide", component: Mic, color: "#818CF8" }, category: "Voice AI", color: "#818CF8" },
+  { name: "Claude API", icon: { type: "si", component: SiAnthropic }, category: "AI", color: "#D97706" },
+  { name: "Apollo.io", icon: { type: "lucide", component: Target, color: "#3B82F6" }, category: "Lead Gen", color: "#3B82F6" },
+  { name: "Instantly", icon: { type: "lucide", component: Send, color: "#F97316" }, category: "Outreach", color: "#F97316" },
+  { name: "Notion", icon: { type: "si", component: SiNotion }, category: "Knowledge Base", color: "#E2E8F0" },
+  { name: "Slack", icon: { type: "si", component: SiSlack }, category: "Notifications", color: "#4A154B" },
+  { name: "GoHighLevel", icon: { type: "lucide", component: BarChart3, color: "#2563EB" }, category: "CRM", color: "#2563EB" },
+  { name: "Zapier", icon: { type: "si", component: SiZapier }, category: "Automation", color: "#FF4A00" },
+  { name: "Make.com", icon: { type: "si", component: SiMake }, category: "Automation", color: "#9B4DCA" },
+  { name: "ChatGPT", icon: { type: "si", component: SiOpenai }, category: "AI", color: "#10A37F" },
+  { name: "Webhooks", icon: { type: "lucide", component: Link2, color: "#06B6D4" }, category: "Integration", color: "#06B6D4" },
+  { name: "Google Workspace", icon: { type: "si", component: SiGoogle }, category: "Productivity", color: "#4285F4" },
+  { name: "Supabase", icon: { type: "si", component: SiSupabase }, category: "Database", color: "#3ECF8E" },
+  { name: "Lovable", icon: { type: "lucide", component: Sparkles, color: "#EC4899" }, category: "Dev", color: "#EC4899" },
 ];
 
 const containerVariants = {
@@ -30,6 +46,15 @@ const itemVariants = {
 };
 
 const marqueeTools = [...tools, ...tools, ...tools];
+
+const ToolIcon = ({ icon, color, size = 28 }: { icon: ToolIcon; color: string; size?: number }) => {
+  if (icon.type === "si") {
+    const Icon = icon.component;
+    return <Icon size={size} style={{ color }} />;
+  }
+  const Icon = icon.component as React.ComponentType<{ size?: number; color?: string }>;
+  return <Icon size={size} color={color} />;
+};
 
 const Tools = () => {
   const { ref, inView } = useInView({ threshold: 0.15, triggerOnce: true });
@@ -72,8 +97,8 @@ const Tools = () => {
               className="group flex flex-col items-center gap-3 p-5 rounded-2xl bg-card border border-border hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 cursor-default"
               style={{ perspective: 1000 }}
             >
-              <span className="text-3xl group-hover:drop-shadow-[0_0_8px_hsl(var(--primary)/0.5)] transition-all duration-300">
-                {tool.emoji}
+              <span className="transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
+                <ToolIcon icon={tool.icon} color={tool.color} size={28} />
               </span>
               <div className="text-center">
                 <p className="text-sm font-semibold text-foreground">{tool.name}</p>
@@ -93,7 +118,7 @@ const Tools = () => {
                 key={`${tool.name}-${i}`}
                 className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border shrink-0"
               >
-                <span className="text-lg">{tool.emoji}</span>
+                <ToolIcon icon={tool.icon} color={tool.color} size={16} />
                 <span className="text-sm font-medium text-foreground whitespace-nowrap">{tool.name}</span>
               </div>
             ))}
