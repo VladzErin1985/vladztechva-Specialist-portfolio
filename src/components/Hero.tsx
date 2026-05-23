@@ -46,8 +46,15 @@ const Hero = () => {
       <div className="absolute inset-0 z-0">
         <img
           src={heroBg} alt="" aria-hidden="true"
-          className="w-full h-full object-cover"
-          style={{ objectPosition: "30% center" }}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "60%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "22% center",
+          }}
         />
 
         {/* Robot mascot — blends into background scene via gradient overlays above */}
