@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { GraduationCap, MapPin, Calendar, Rocket, Briefcase, Monitor, Circle, CheckCircle } from "lucide-react";
+import miniEditors from "@/assets/mini_editors.jpeg";
 
 const experiences = [
   {
@@ -64,8 +65,37 @@ const experiences = [
 
 const WorkExperience = () => {
   return (
-    <section id="experience" className="section-padding relative">
-      <div className="max-w-7xl mx-auto relative">
+    <section id="experience" className="section-padding relative overflow-hidden">
+      {/* Mini Editors — full-section background */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <img
+          src={miniEditors}
+          alt="" aria-hidden="true"
+          className="absolute w-full h-full"
+          style={{ objectFit: "cover", objectPosition: "center center", opacity: 1 }}
+        />
+        {/* Dark center overlay so timeline cards stay readable */}
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 85% 75% at 50% 50%, hsl(222 47% 4% / 0.80) 25%, hsl(222 47% 4% / 0.60) 60%, hsl(222 47% 4% / 0.35) 100%)",
+        }} />
+        <div className="absolute inset-x-0 top-0" style={{
+          height: "20%",
+          background: "linear-gradient(to bottom, hsl(222 47% 4%), transparent)",
+        }} />
+        <div className="absolute inset-x-0 bottom-0" style={{
+          height: "20%",
+          background: "linear-gradient(to top, hsl(222 47% 4%), transparent)",
+        }} />
+        <div className="absolute inset-y-0 left-0" style={{
+          width: "10%",
+          background: "linear-gradient(to right, hsl(222 47% 4%), transparent)",
+        }} />
+        <div className="absolute inset-y-0 right-0" style={{
+          width: "10%",
+          background: "linear-gradient(to left, hsl(222 47% 4%), transparent)",
+        }} />
+      </div>
+      <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ clipPath: "inset(0 100% 0 0)" }}
           whileInView={{ clipPath: "inset(0 0% 0 0)" }}
