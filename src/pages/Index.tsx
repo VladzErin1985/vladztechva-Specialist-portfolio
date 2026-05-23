@@ -5,7 +5,7 @@ import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import Tools from "@/components/Tools";
 import robotHolographic from "@/assets/robot_holographic.jpeg";
-import robotAnalyst from "@/assets/robot_analyst.jpeg";
+import robotLaptop from "@/assets/robot_laptop.jpeg";
 import WorkExperience from "@/components/WorkExperience";
 import Projects from "@/components/Projects";
 import Testimonials from "@/components/Testimonials";
@@ -48,13 +48,13 @@ const Index = () => {
             }} />
           </div>
 
-          {/* RIGHT — analyst robot (Robot Stock Analyst) */}
+          {/* RIGHT — laptop robot (dark background, full body) */}
           <div className="absolute inset-y-0 right-0 w-1/2 overflow-hidden">
             <img
-              src={robotAnalyst}
+              src={robotLaptop}
               alt="" aria-hidden="true"
               className="w-full h-full object-cover pointer-events-none"
-              style={{ objectPosition: "60% center", mixBlendMode: "screen" as const }}
+              style={{ objectPosition: "40% center" }}
             />
             {/* Seam fade toward center */}
             <div className="absolute inset-y-0 left-0 w-2/5" style={{
