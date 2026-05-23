@@ -126,42 +126,37 @@ const Hero = () => {
               </motion.div>
             </div>
 
-            {/* Photo */}
-            <div className="relative">
-              {/* Outer rotating ring */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute -inset-3 rounded-full border border-dashed border-primary/20"
-              />
-              {/* Glow ring */}
-              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-b from-primary/20 via-transparent to-accent/10 blur-sm" />
+            {/* Photo — frameless, blends into background */}
+            <div className="relative flex justify-center">
+              {/* Ambient cyan glow behind person */}
+              <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-72 h-80 rounded-full bg-primary/10 blur-[70px] pointer-events-none" />
+              {/* Subtle blue rim light on sides */}
+              <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-primary/8 to-transparent pointer-events-none" />
+              <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-primary/8 to-transparent pointer-events-none" />
 
-              <div className="relative rounded-2xl overflow-hidden neon-border shadow-2xl" style={{ boxShadow: '0 0 40px hsl(191 100% 42% / 0.15)' }}>
-                <img
-                  src={profileImg}
-                  alt="Vladimir Napigkit — AI Automation Architect"
-                  className="w-full max-w-[320px] lg:max-w-[380px] h-[420px] lg:h-[480px] object-cover object-top"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-center">
-                  <p className="text-foreground font-bold text-sm">Vladimir C. Napigkit</p>
-                  <p className="text-primary text-xs font-mono tracking-wider">AI AUTOMATION ARCHITECT</p>
-                </div>
-              </div>
+              <img
+                src={profileImg}
+                alt="Vladimir Napigkit — AI Automation Architect"
+                className="w-full max-w-[320px] lg:max-w-[420px] relative z-10"
+                style={{
+                  maskImage: 'radial-gradient(ellipse 88% 92% at 50% 20%, black 52%, rgba(0,0,0,0.55) 68%, transparent 87%)',
+                  WebkitMaskImage: 'radial-gradient(ellipse 88% 92% at 50% 20%, black 52%, rgba(0,0,0,0.55) 68%, transparent 87%)',
+                  filter: 'drop-shadow(0 0 24px hsl(191 100% 42% / 0.18))',
+                }}
+              />
 
               {/* Floating status badges */}
               <motion.div
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -bottom-4 -left-6 bg-card neon-border rounded-xl px-3 py-2 text-xs font-mono"
+                className="absolute bottom-12 -left-4 bg-card/90 neon-border rounded-xl px-3 py-2 text-xs font-mono z-20 backdrop-blur-sm"
               >
                 <span className="text-primary">⚡</span> <span className="text-foreground/80">KS-WF6 Running</span>
               </motion.div>
               <motion.div
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute -top-3 -right-6 bg-card neon-border rounded-xl px-3 py-2 text-xs font-mono"
+                className="absolute top-16 -right-4 bg-card/90 neon-border rounded-xl px-3 py-2 text-xs font-mono z-20 backdrop-blur-sm"
               >
                 <span className="text-accent">🔥</span> <span className="text-foreground/80">Hot Lead Routed</span>
               </motion.div>
