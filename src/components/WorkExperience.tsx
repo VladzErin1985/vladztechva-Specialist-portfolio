@@ -158,7 +158,7 @@ const WorkExperience = () => {
 
               <div className="hidden md:block md:w-1/2" />
 
-              <div className="ml-14 md:ml-0 md:w-1/2 p-5 rounded-2xl bg-card border border-border card-3d group">
+              <div className="ml-14 md:ml-0 md:w-1/2 p-5 rounded-2xl glass-card card-3d group">
                 {exp.current && (
                   <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full mb-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
@@ -196,7 +196,7 @@ const WorkExperience = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 p-6 rounded-2xl bg-card border border-border card-3d max-w-xl mx-auto flex items-center gap-5"
+          className="mt-16 p-6 rounded-2xl glass-card card-3d max-w-xl mx-auto flex items-center gap-5"
         >
           <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
             <GraduationCap size={26} className="text-primary" />

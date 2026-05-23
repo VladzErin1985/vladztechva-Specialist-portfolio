@@ -50,9 +50,10 @@ const TestimonialCard = ({ t, index }: { t: typeof testimonials[0]; index: numbe
         transformPerspective: 1000,
         rotateX: isCoarse ? 0 : tilt.rotateX,
         rotateY: isCoarse ? 0 : tilt.rotateY,
+        boxShadow: "0 4px 28px -4px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06)",
       }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="p-6 rounded-2xl bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/10 hover:bg-primary-foreground/15 transition-colors group relative"
+      className="p-6 rounded-2xl bg-primary-foreground/5 backdrop-blur-md border border-primary-foreground/10 hover:bg-primary-foreground/10 transition-colors group relative"
     >
       {/* Quote icon */}
       <motion.div

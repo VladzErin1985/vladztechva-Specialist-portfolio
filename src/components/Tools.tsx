@@ -116,7 +116,7 @@ const Tools = () => {
               variants={itemVariants}
               whileHover={{ rotateY: 360 }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
-              className="group flex flex-col items-center gap-3 p-5 rounded-2xl bg-card border border-border hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 cursor-default"
+              className="group flex flex-col items-center gap-3 p-5 rounded-2xl glass-card hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 cursor-default"
               style={{ perspective: 1000 }}
             >
               <span className="transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
@@ -138,7 +138,7 @@ const Tools = () => {
             {marqueeTools.map((tool, i) => (
               <div
                 key={`${tool.name}-${i}`}
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border shrink-0"
+                className="flex items-center gap-2 px-4 py-2 rounded-full glass-card shrink-0"
               >
                 <ToolIcon icon={tool.icon} color={tool.color} size={16} />
                 <span className="text-sm font-medium text-foreground whitespace-nowrap">{tool.name}</span>

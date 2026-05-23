@@ -368,7 +368,7 @@ const Projects = () => {
               whileTap={{ scale: 0.9 }}
               onClick={goPrev}
               disabled={page === 0}
-              className={`absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center neon-border bg-card/90 backdrop-blur-sm transition-all ${
+              className={`absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center neon-border glass-card transition-all ${
                 page === 0 ? "opacity-25 cursor-not-allowed" : "hover:bg-primary/20 hover:border-primary/60"
               }`}
             >
@@ -381,7 +381,7 @@ const Projects = () => {
               whileTap={{ scale: 0.9 }}
               onClick={goNext}
               disabled={page >= totalPages - 1}
-              className={`absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center neon-border bg-card/90 backdrop-blur-sm transition-all ${
+              className={`absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center neon-border glass-card transition-all ${
                 page >= totalPages - 1 ? "opacity-25 cursor-not-allowed" : "hover:bg-primary/20 hover:border-primary/60"
               }`}
             >
@@ -405,7 +405,7 @@ const Projects = () => {
                       key={project.title}
                       whileHover={{ y: -6, boxShadow: "0 16px 40px -12px hsl(var(--primary) / 0.18)" }}
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                      className="group rounded-2xl bg-card border border-border relative overflow-hidden"
+                      className="group rounded-2xl glass-card relative overflow-hidden"
                     >
                       {/* Loom embed */}
                       {project.loomEmbed && (

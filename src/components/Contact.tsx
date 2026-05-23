@@ -36,7 +36,7 @@ const FloatingLabelInput = ({ label, type = "text", name, textarea = false }: { 
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         onChange={(e: any) => setHasValue(e.target.value.length > 0)}
-        className={`w-full px-4 pt-3.5 pb-3 rounded-xl bg-card border border-border text-foreground text-sm outline-none transition-all ${
+        className={`w-full px-4 pt-3.5 pb-3 rounded-xl glass-card text-foreground text-sm outline-none transition-all ${
           textarea ? "min-h-[120px] resize-none" : ""
         }`}
         rows={textarea ? 4 : undefined}
@@ -88,7 +88,7 @@ const Contact = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15 }}
-                className="flex items-center gap-4 p-4 rounded-2xl bg-card border border-border hover:border-primary/30 transition-all group"
+                className="flex items-center gap-4 p-4 rounded-2xl glass-card hover:border-primary/30 transition-all group"
               >
                 <motion.div
                   whileInView={{ y: [0, -10, 0] }}
@@ -140,7 +140,7 @@ const Contact = () => {
           initial={{ scale: 0.95, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-16 p-8 rounded-2xl bg-card border border-border text-center"
+          className="mt-16 p-8 rounded-2xl glass-card text-center"
         >
           <h3 className="text-foreground text-xl font-bold mb-2">Let's build something amazing together</h3>
           <p className="text-muted-foreground text-sm mb-6">Ready to automate your business? Let's chat.</p>

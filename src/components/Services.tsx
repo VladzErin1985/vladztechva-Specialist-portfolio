@@ -40,7 +40,7 @@ const ServiceCard = ({ service }: { service: typeof services[0] }) => {
         rotateY: isCoarse ? 0 : tilt.rotateY,
       }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="group p-6 rounded-2xl bg-card border border-border relative overflow-hidden cursor-default hover:shadow-lg hover:shadow-primary/5 hover:border-primary/30 transition-shadow"
+      className="group p-6 rounded-2xl glass-card relative overflow-hidden cursor-default hover:shadow-lg hover:shadow-primary/5 hover:border-primary/30 transition-shadow"
     >
       <div className="flex items-start justify-between mb-5">
         <motion.div
