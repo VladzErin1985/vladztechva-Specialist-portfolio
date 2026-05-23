@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import cyberpunkWorkstation from "@/assets/cyberpunk_workstation.jpeg";
 import { ExternalLink, Bot, Workflow, Mail, Database, FileText, BarChart3, ArrowUpRight, Building2, Zap, LayoutGrid, Repeat, Settings, Circle, CheckCircle, GitMerge, Phone, Network, ZoomIn, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 
@@ -279,8 +280,37 @@ const Projects = () => {
     <>
       {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
 
-      <section id="projects" className="section-padding relative" ref={ref}>
-        <div className="max-w-7xl mx-auto relative">
+      <section id="projects" className="section-padding relative overflow-hidden" ref={ref}>
+        {/* Cyberpunk workstation — full-section background */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <img
+            src={cyberpunkWorkstation}
+            alt="" aria-hidden="true"
+            className="absolute w-full h-full"
+            style={{ objectFit: "cover", objectPosition: "center top", opacity: 1 }}
+          />
+          {/* Dark overlay so cards stay readable — heavy center fade */}
+          <div className="absolute inset-0" style={{
+            background: "radial-gradient(ellipse 80% 70% at 50% 50%, hsl(222 47% 4% / 0.82) 30%, hsl(222 47% 4% / 0.65) 60%, hsl(222 47% 4% / 0.45) 100%)",
+          }} />
+          <div className="absolute inset-x-0 top-0" style={{
+            height: "20%",
+            background: "linear-gradient(to bottom, hsl(222 47% 4%), transparent)",
+          }} />
+          <div className="absolute inset-x-0 bottom-0" style={{
+            height: "20%",
+            background: "linear-gradient(to top, hsl(222 47% 4%), transparent)",
+          }} />
+          <div className="absolute inset-y-0 left-0" style={{
+            width: "12%",
+            background: "linear-gradient(to right, hsl(222 47% 4%), transparent)",
+          }} />
+          <div className="absolute inset-y-0 right-0" style={{
+            width: "12%",
+            background: "linear-gradient(to left, hsl(222 47% 4%), transparent)",
+          }} />
+        </div>
+        <div className="max-w-7xl mx-auto relative z-10">
 
           {/* Header */}
           <motion.div
