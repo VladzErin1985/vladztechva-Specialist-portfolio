@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, MapPin, CheckCircle } from "lucide-react";
-import profileImg from "@/assets/profile_nobg.png";
+import heroBg from "@/assets/hero_bg.jpg";
 
 const techBadges = [
   { icon: "🤖", label: "OpenAI + Claude" },
@@ -21,13 +21,53 @@ const bottomNav = ["AI AGENTS", "WORKFLOWS", "INTEGRATIONS", "AUTOMATION", "ANAL
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden grid-bg">
-      {/* Background glow orbs */}
-      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-accent/5 blur-[100px] pointer-events-none" />
+    <section className="relative min-h-screen flex items-center overflow-hidden">
 
-      {/* Scan line effect */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.015]">
+      {/* ── BACKGROUND: AI Automation Architect reference image ── */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={heroBg}
+          alt=""
+          aria-hidden="true"
+          className="w-full h-full object-cover object-center"
+          style={{ objectPosition: "30% center" }}
+        />
+        {/* Right-side dark overlay: hides image panels so our HTML panels sit cleanly */}
+        <div className="absolute inset-0"
+          style={{
+            background: `
+              linear-gradient(to right,
+                hsl(222 47% 4% / 0.15) 0%,
+                hsl(222 47% 4% / 0.25) 28%,
+                hsl(222 47% 4% / 0.72) 48%,
+                hsl(222 47% 4% / 0.96) 62%,
+                hsl(222 47% 4%) 75%
+              )
+            `
+          }}
+        />
+        {/* Top overlay: hides image's baked-in title text, our HTML header shows instead */}
+        <div className="absolute inset-x-0 top-0 h-40"
+          style={{ background: "linear-gradient(to bottom, hsl(222 47% 4%) 0%, hsl(222 47% 4% / 0.85) 40%, transparent 100%)" }}
+        />
+        {/* Bottom overlay: hides image's tagline, ours shows instead */}
+        <div className="absolute inset-x-0 bottom-0 h-48"
+          style={{ background: "linear-gradient(to top, hsl(222 47% 4%) 0%, hsl(222 47% 4% / 0.9) 40%, transparent 100%)" }}
+        />
+        {/* Subtle grid lines on top for site consistency */}
+        <div className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(hsl(191 100% 42%) 1px, transparent 1px),
+              linear-gradient(90deg, hsl(191 100% 42%) 1px, transparent 1px)
+            `,
+            backgroundSize: "60px 60px"
+          }}
+        />
+      </div>
+
+      {/* ── SCAN LINE ── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.012] z-[1]">
         <motion.div
           animate={{ y: ["0%", "100vh"] }}
           transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
@@ -35,7 +75,8 @@ const Hero = () => {
         />
       </div>
 
-      <div className="relative w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 pt-24 pb-8">
+      {/* ── CONTENT ── */}
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 pt-24 pb-8">
 
         {/* ── TOP HEADER ── */}
         <motion.div
@@ -44,29 +85,29 @@ const Hero = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-10"
         >
-          <p className="text-primary/60 text-xs tracking-[0.3em] uppercase font-mono mb-2">VERTICALLY INTEGRATED AUTOMATION ECOSYSTEM</p>
+          <p className="text-primary/70 text-xs tracking-[0.3em] uppercase font-mono mb-2">VERTICALLY INTEGRATED AUTOMATION ECOSYSTEM</p>
           <p className="text-muted-foreground text-xs tracking-[0.2em] uppercase font-mono">ONE CLIENT. END-TO-END VALUE. CONTINUOUS GROWTH.</p>
         </motion.div>
 
-        {/* ── MAIN 2-COLUMN LAYOUT ── */}
+        {/* ── 2-COLUMN: Left (empty — Vladimir in BG) | Right (content) ── */}
         <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] gap-8 items-center mb-10">
 
-          {/* LEFT — Large frameless photo with floating tech panel */}
+          {/* LEFT — Floating tech badge panel only; Vladimir comes from the BG image */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="relative order-2 lg:order-1 flex justify-center"
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative order-2 lg:order-1 hidden lg:flex flex-col justify-start pt-4 min-h-[520px]"
           >
-            {/* Floating tech panel — top left corner over photo */}
+            {/* Tech badge panel — mirrors position of the panel in reference image */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="absolute top-4 left-0 z-30 hud-corner p-4 rounded-xl neon-border bg-card/85 backdrop-blur-sm w-[210px]"
+              transition={{ duration: 0.7, delay: 0.5 }}
+              className="hud-corner p-4 rounded-xl neon-border bg-card/80 backdrop-blur-md w-[220px]"
             >
               <p className="text-primary text-[9px] tracking-[0.22em] uppercase font-mono mb-3 opacity-70">BUSINESS AUTOMATION ARCHITECT</p>
-              <div className="space-y-2 mb-3">
+              <div className="space-y-2.5 mb-4">
                 {techBadges.map((b) => (
                   <div key={b.label} className="flex items-center gap-2">
                     <span className="w-6 h-6 rounded-md bg-primary/10 neon-border flex items-center justify-center text-xs shrink-0">{b.icon}</span>
@@ -83,41 +124,28 @@ const Hero = () => {
               </div>
             </motion.div>
 
-            {/* Ambient glow behind person */}
-            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-72 h-80 rounded-full bg-primary/10 blur-[70px] pointer-events-none" />
-
-            {/* Frameless photo — background removed, blends naturally */}
-            <img
-              src={profileImg}
-              alt="Vladimir Napigkit — AI Automation Architect"
-              className="w-full max-w-[340px] lg:max-w-[480px] relative z-10"
-              style={{
-                filter: 'drop-shadow(0 0 32px hsl(191 100% 42% / 0.25)) drop-shadow(0 8px 24px rgba(0,0,0,0.6))',
-              }}
-            />
-
-            {/* Floating status badges */}
+            {/* Code snippet — decorative, matches reference image bottom-left code panel */}
             <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute bottom-16 right-2 bg-card/90 neon-border rounded-xl px-3 py-2 text-xs font-mono z-20 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.0 }}
+              className="mt-auto p-3 rounded-lg bg-background/70 border border-border font-mono text-[9px] text-muted-foreground leading-relaxed w-[260px] backdrop-blur-sm"
             >
-              <span className="text-primary">⚡</span> <span className="text-foreground/80">KS-WF6 Running</span>
-            </motion.div>
-            <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-              className="absolute top-32 right-0 bg-card/90 neon-border rounded-xl px-3 py-2 text-xs font-mono z-20 backdrop-blur-sm"
-            >
-              <span className="text-accent">🔥</span> <span className="text-foreground/80">Hot Lead Routed</span>
+              <span className="text-primary/60">let</span> parsed;<br />
+              <span className="text-primary/60">try</span> {"{"}<br />
+              {"  "}<span className="text-accent/70">const</span> match = raw.match(...);<br />
+              {"  "}parsed = JSON.parse(match[0]);<br />
+              {"}"} <span className="text-primary/60">catch</span> (e) {"{"}<br />
+              {"  "}parsed = {"{ status: 'follow_up' }"};<br />
+              {"}"}
             </motion.div>
           </motion.div>
 
-          {/* RIGHT — Name + Title + Pipeline + CTAs */}
+          {/* RIGHT — Name + Pipeline + CTAs */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
             className="order-1 lg:order-2 flex flex-col gap-5"
           >
             {/* Name + Title */}
@@ -151,7 +179,7 @@ const Hero = () => {
             </div>
 
             {/* Pipeline panel */}
-            <div className="hud-corner p-5 rounded-xl neon-border bg-card/60 backdrop-blur-sm">
+            <div className="hud-corner p-5 rounded-xl neon-border bg-card/65 backdrop-blur-md">
               <p className="text-primary text-[10px] tracking-[0.2em] uppercase font-mono mb-4 opacity-70">AUTOMATION PIPELINE</p>
 
               <div className="space-y-2">
@@ -238,7 +266,7 @@ const Hero = () => {
         >
           {bottomNav.map((item, i) => (
             <span key={item} className="flex items-center gap-1">
-              <span className="px-4 py-1.5 rounded-full border border-border bg-card/40 text-muted-foreground text-[10px] font-mono tracking-widest hover:border-primary/40 hover:text-primary transition-colors cursor-default">
+              <span className="px-4 py-1.5 rounded-full border border-border bg-card/40 backdrop-blur-sm text-muted-foreground text-[10px] font-mono tracking-widest hover:border-primary/40 hover:text-primary transition-colors cursor-default">
                 {item}
               </span>
               {i < bottomNav.length - 1 && <span className="text-border text-xs">|</span>}
