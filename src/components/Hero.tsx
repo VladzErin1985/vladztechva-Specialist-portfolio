@@ -48,56 +48,82 @@ const Hero = () => {
           <p className="text-muted-foreground text-xs tracking-[0.2em] uppercase font-mono">ONE CLIENT. END-TO-END VALUE. CONTINUOUS GROWTH.</p>
         </motion.div>
 
-        {/* ── MAIN 3-COLUMN LAYOUT ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr_320px] gap-6 items-start mb-10">
+        {/* ── MAIN 2-COLUMN LAYOUT ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] gap-8 items-center mb-10">
 
-          {/* LEFT — Tech Panel */}
+          {/* LEFT — Large frameless photo with floating tech panel */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="hud-corner p-5 rounded-xl neon-border bg-card/60 backdrop-blur-sm order-2 lg:order-1"
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="relative order-2 lg:order-1 flex justify-center"
           >
-            <p className="text-primary text-[10px] tracking-[0.25em] uppercase font-mono mb-4 opacity-70">BUSINESS AUTOMATION ARCHITECT</p>
-
-            <div className="space-y-3 mb-6">
-              {techBadges.map((b) => (
-                <div key={b.label} className="flex items-center gap-3">
-                  <span className="w-8 h-8 rounded-lg bg-primary/10 neon-border flex items-center justify-center text-sm">{b.icon}</span>
-                  <span className="text-foreground/80 text-sm font-mono">{b.label}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="border-t border-border pt-4">
-              <p className="text-muted-foreground text-[10px] tracking-[0.2em] uppercase font-mono mb-2">STATUS</p>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-primary pulse-cyan" />
-                <span className="text-primary text-xs font-mono font-semibold tracking-wider">AUTOMATION ACTIVE</span>
+            {/* Floating tech panel — top left corner over photo */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+              className="absolute top-4 left-0 z-30 hud-corner p-4 rounded-xl neon-border bg-card/85 backdrop-blur-sm w-[210px]"
+            >
+              <p className="text-primary text-[9px] tracking-[0.22em] uppercase font-mono mb-3 opacity-70">BUSINESS AUTOMATION ARCHITECT</p>
+              <div className="space-y-2 mb-3">
+                {techBadges.map((b) => (
+                  <div key={b.label} className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-md bg-primary/10 neon-border flex items-center justify-center text-xs shrink-0">{b.icon}</span>
+                    <span className="text-foreground/80 text-xs font-mono">{b.label}</span>
+                  </div>
+                ))}
               </div>
-            </div>
+              <div className="border-t border-border pt-2.5">
+                <p className="text-muted-foreground text-[9px] tracking-[0.2em] uppercase font-mono mb-1.5">STATUS</p>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-primary pulse-cyan shrink-0" />
+                  <span className="text-primary text-[10px] font-mono font-semibold tracking-wider">AUTOMATION ACTIVE</span>
+                </div>
+              </div>
+            </motion.div>
 
-            {/* Code snippet */}
-            <div className="mt-4 p-3 rounded-lg bg-background/80 border border-border font-mono text-[9px] text-muted-foreground leading-relaxed overflow-hidden">
-              <span className="text-primary/60">let</span> parsed;<br />
-              <span className="text-primary/60">try</span> {"{"}<br />
-              {"  "}<span className="text-accent/80">const</span> match = raw.match(...);<br />
-              {"  "}parsed = JSON.parse(match[0]);<br />
-              {"}"} <span className="text-primary/60">catch</span> (e) {"{"}<br />
-              {"  "}parsed = {"{ status: 'follow_up' }"};<br />
-              {"}"}
-            </div>
+            {/* Ambient glow behind person */}
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-72 h-80 rounded-full bg-primary/10 blur-[70px] pointer-events-none" />
+
+            {/* Frameless photo — no border, blends into background */}
+            <img
+              src={profileImg}
+              alt="Vladimir Napigkit — AI Automation Architect"
+              className="w-full max-w-[340px] lg:max-w-[480px] relative z-10"
+              style={{
+                maskImage: 'radial-gradient(ellipse 88% 92% at 50% 20%, black 52%, rgba(0,0,0,0.55) 68%, transparent 87%)',
+                WebkitMaskImage: 'radial-gradient(ellipse 88% 92% at 50% 20%, black 52%, rgba(0,0,0,0.55) 68%, transparent 87%)',
+                filter: 'drop-shadow(0 0 28px hsl(191 100% 42% / 0.2))',
+              }}
+            />
+
+            {/* Floating status badges */}
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute bottom-16 right-2 bg-card/90 neon-border rounded-xl px-3 py-2 text-xs font-mono z-20 backdrop-blur-sm"
+            >
+              <span className="text-primary">⚡</span> <span className="text-foreground/80">KS-WF6 Running</span>
+            </motion.div>
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              className="absolute top-32 right-0 bg-card/90 neon-border rounded-xl px-3 py-2 text-xs font-mono z-20 backdrop-blur-sm"
+            >
+              <span className="text-accent">🔥</span> <span className="text-foreground/80">Hot Lead Routed</span>
+            </motion.div>
           </motion.div>
 
-          {/* CENTER — Profile Photo */}
+          {/* RIGHT — Name + Title + Pipeline + CTAs */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="order-1 lg:order-2 flex flex-col items-center"
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="order-1 lg:order-2 flex flex-col gap-5"
           >
-            {/* Name + Title above photo */}
-            <div className="text-center mb-6">
+            {/* Name + Title */}
+            <div>
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -119,47 +145,63 @@ const Hero = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.7 }}
-                className="flex items-center justify-center gap-2 mt-2 text-muted-foreground text-xs"
+                className="flex items-center gap-2 mt-2 text-muted-foreground text-xs"
               >
                 <MapPin size={12} className="text-primary" />
                 <span>Zamboanga City, Philippines · UTC+8</span>
               </motion.div>
             </div>
 
-            {/* Photo — frameless, blends into background */}
-            <div className="relative flex justify-center">
-              {/* Ambient cyan glow behind person */}
-              <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-72 h-80 rounded-full bg-primary/10 blur-[70px] pointer-events-none" />
-              {/* Subtle blue rim light on sides */}
-              <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-primary/8 to-transparent pointer-events-none" />
-              <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-primary/8 to-transparent pointer-events-none" />
+            {/* Pipeline panel */}
+            <div className="hud-corner p-5 rounded-xl neon-border bg-card/60 backdrop-blur-sm">
+              <p className="text-primary text-[10px] tracking-[0.2em] uppercase font-mono mb-4 opacity-70">AUTOMATION PIPELINE</p>
 
-              <img
-                src={profileImg}
-                alt="Vladimir Napigkit — AI Automation Architect"
-                className="w-full max-w-[320px] lg:max-w-[420px] relative z-10"
-                style={{
-                  maskImage: 'radial-gradient(ellipse 88% 92% at 50% 20%, black 52%, rgba(0,0,0,0.55) 68%, transparent 87%)',
-                  WebkitMaskImage: 'radial-gradient(ellipse 88% 92% at 50% 20%, black 52%, rgba(0,0,0,0.55) 68%, transparent 87%)',
-                  filter: 'drop-shadow(0 0 24px hsl(191 100% 42% / 0.18))',
-                }}
-              />
+              <div className="space-y-2">
+                {pipeline.map((item, i) => (
+                  <div key={i} className="relative">
+                    <motion.div
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.5 + i * 0.1 }}
+                      className="flex items-center gap-3 p-3 rounded-lg bg-background/60 border border-border hover:border-primary/40 transition-colors group"
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-sm shrink-0 group-hover:bg-primary/20 transition-colors">
+                        {item.icon}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-foreground text-xs font-semibold leading-tight whitespace-pre-line">{item.title}</p>
+                        <p className="text-muted-foreground text-[10px] font-mono truncate">{item.sub}</p>
+                      </div>
+                      <div className="ml-auto shrink-0">
+                        <CheckCircle size={12} className="text-primary opacity-60 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                    </motion.div>
+                    {i < pipeline.length - 1 && (
+                      <div className="flex justify-center my-1">
+                        <motion.div
+                          animate={{ opacity: [0.3, 1, 0.3] }}
+                          transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.3 }}
+                          className="text-primary text-xs font-mono"
+                        >↓ AUTOMATED HANDOFF</motion.div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
 
-              {/* Floating status badges */}
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute bottom-12 -left-4 bg-card/90 neon-border rounded-xl px-3 py-2 text-xs font-mono z-20 backdrop-blur-sm"
-              >
-                <span className="text-primary">⚡</span> <span className="text-foreground/80">KS-WF6 Running</span>
-              </motion.div>
-              <motion.div
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute top-16 -right-4 bg-card/90 neon-border rounded-xl px-3 py-2 text-xs font-mono z-20 backdrop-blur-sm"
-              >
-                <span className="text-accent">🔥</span> <span className="text-foreground/80">Hot Lead Routed</span>
-              </motion.div>
+              {/* Stats */}
+              <div className="mt-4 pt-4 border-t border-border grid grid-cols-3 gap-2 text-center">
+                {[
+                  { n: "4", l: "Revenue Streams" },
+                  { n: "8", l: "AI Agents" },
+                  { n: "15+", l: "Workflows" },
+                ].map((s) => (
+                  <div key={s.l}>
+                    <p className="text-primary font-bold text-lg leading-none">{s.n}</p>
+                    <p className="text-muted-foreground text-[10px] font-mono">{s.l}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* CTAs */}
@@ -167,7 +209,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 }}
-              className="flex gap-3 mt-8"
+              className="flex gap-3"
             >
               <motion.a
                 href="#projects"
@@ -186,63 +228,6 @@ const Hero = () => {
                 Get In Touch
               </motion.a>
             </motion.div>
-          </motion.div>
-
-          {/* RIGHT — Ecosystem Panel */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="order-3 hud-corner p-5 rounded-xl neon-border bg-card/60 backdrop-blur-sm"
-          >
-            <p className="text-primary text-[10px] tracking-[0.2em] uppercase font-mono mb-4 opacity-70">AUTOMATION PIPELINE</p>
-
-            <div className="space-y-2">
-              {pipeline.map((item, i) => (
-                <div key={i} className="relative">
-                  <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 + i * 0.1 }}
-                    className="flex items-center gap-3 p-3 rounded-lg bg-background/60 border border-border hover:border-primary/40 transition-colors group"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-sm shrink-0 group-hover:bg-primary/20 transition-colors">
-                      {item.icon}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-foreground text-xs font-semibold leading-tight whitespace-pre-line">{item.title}</p>
-                      <p className="text-muted-foreground text-[10px] font-mono truncate">{item.sub}</p>
-                    </div>
-                    <div className="ml-auto shrink-0">
-                      <CheckCircle size={12} className="text-primary opacity-60 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                  </motion.div>
-                  {i < pipeline.length - 1 && (
-                    <div className="flex justify-center my-1">
-                      <motion.div
-                        animate={{ opacity: [0.3, 1, 0.3] }}
-                        transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.3 }}
-                        className="text-primary text-xs font-mono"
-                      >↓ AUTOMATED HANDOFF</motion.div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Stats */}
-            <div className="mt-4 pt-4 border-t border-border grid grid-cols-3 gap-2 text-center">
-              {[
-                { n: "4", l: "Revenue Streams" },
-                { n: "8", l: "AI Agents" },
-                { n: "15+", l: "Workflows" },
-              ].map((s) => (
-                <div key={s.l}>
-                  <p className="text-primary font-bold text-lg leading-none">{s.n}</p>
-                  <p className="text-muted-foreground text-[10px] font-mono">{s.l}</p>
-                </div>
-              ))}
-            </div>
           </motion.div>
         </div>
 
