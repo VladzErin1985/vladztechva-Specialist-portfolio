@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, MapPin, CheckCircle } from "lucide-react";
-import profileImg from "@/assets/profile.jpeg";
+import profileImg from "@/assets/profile_nobg.png";
 
 const techBadges = [
   { icon: "🤖", label: "OpenAI + Claude" },
@@ -86,15 +86,13 @@ const Hero = () => {
             {/* Ambient glow behind person */}
             <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-72 h-80 rounded-full bg-primary/10 blur-[70px] pointer-events-none" />
 
-            {/* Frameless photo — no border, blends into background */}
+            {/* Frameless photo — background removed, blends naturally */}
             <img
               src={profileImg}
               alt="Vladimir Napigkit — AI Automation Architect"
               className="w-full max-w-[340px] lg:max-w-[480px] relative z-10"
               style={{
-                maskImage: 'radial-gradient(ellipse 88% 92% at 50% 20%, black 52%, rgba(0,0,0,0.55) 68%, transparent 87%)',
-                WebkitMaskImage: 'radial-gradient(ellipse 88% 92% at 50% 20%, black 52%, rgba(0,0,0,0.55) 68%, transparent 87%)',
-                filter: 'drop-shadow(0 0 28px hsl(191 100% 42% / 0.2))',
+                filter: 'drop-shadow(0 0 32px hsl(191 100% 42% / 0.25)) drop-shadow(0 8px 24px rgba(0,0,0,0.6))',
               }}
             />
 
