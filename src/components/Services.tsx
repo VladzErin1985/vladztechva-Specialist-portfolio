@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Building2, Bot, Zap, Target, Globe, Brain, ArrowUpRight, Network, Phone } from "lucide-react";
+import robotHolographic from "@/assets/robot_holographic.jpeg";
 import { useTilt } from "@/hooks/useTilt";
 import { useInView } from "react-intersection-observer";
 
@@ -63,7 +64,31 @@ const Services = () => {
   const { ref, inView } = useInView({ threshold: 0.15, triggerOnce: true });
 
   return (
-    <section id="services" className="section-padding relative" ref={ref}>
+    <section id="services" className="section-padding relative overflow-hidden" ref={ref}>
+
+      {/* Giant holographic robot — right side background, full height */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <img
+          src={robotHolographic}
+          alt="" aria-hidden="true"
+          className="absolute h-full w-auto"
+          style={{ right: "-5%", top: 0, objectFit: "cover", objectPosition: "30% top" }}
+        />
+        {/* Fade inward so cards stay readable */}
+        <div className="absolute inset-y-0 left-0" style={{
+          width: "65%",
+          background: "linear-gradient(to right, hsl(222 47% 4%) 55%, hsl(222 47% 4%/0.85) 75%, transparent 100%)",
+        }} />
+        <div className="absolute inset-x-0 top-0" style={{
+          height: "18%",
+          background: "linear-gradient(to bottom, hsl(222 47% 4%), transparent)",
+        }} />
+        <div className="absolute inset-x-0 bottom-0" style={{
+          height: "18%",
+          background: "linear-gradient(to top, hsl(222 47% 4%), transparent)",
+        }} />
+      </div>
+
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ clipPath: "inset(0 100% 0 0)" }}

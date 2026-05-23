@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import robotLaptop from "@/assets/robot_laptop.jpeg";
 import { useInView } from "react-intersection-observer";
 import {
   SiN8N, SiAnthropic, SiNotion, SiSlack, SiZapier,
@@ -61,8 +62,29 @@ const Tools = () => {
 
   return (
     <section id="tools" className="section-padding relative overflow-hidden" ref={ref}>
+      {/* Giant laptop robot — left side background, full height */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <img
+          src={robotLaptop}
+          alt="" aria-hidden="true"
+          className="absolute h-full w-auto"
+          style={{ left: "-5%", top: 0, objectFit: "cover", objectPosition: "60% top" }}
+        />
+        <div className="absolute inset-y-0 right-0" style={{
+          width: "65%",
+          background: "linear-gradient(to left, hsl(222 47% 4%) 55%, hsl(222 47% 4%/0.85) 75%, transparent 100%)",
+        }} />
+        <div className="absolute inset-x-0 top-0" style={{
+          height: "18%",
+          background: "linear-gradient(to bottom, hsl(222 47% 4%), transparent)",
+        }} />
+        <div className="absolute inset-x-0 bottom-0" style={{
+          height: "18%",
+          background: "linear-gradient(to top, hsl(222 47% 4%), transparent)",
+        }} />
+      </div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent" />
-      <div className="max-w-7xl mx-auto relative">
+      <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ clipPath: "inset(0 100% 0 0)" }}
           whileInView={{ clipPath: "inset(0 0% 0 0)" }}
