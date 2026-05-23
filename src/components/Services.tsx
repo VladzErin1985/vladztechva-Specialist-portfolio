@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Building2, Bot, Zap, Target, Globe, Brain, ArrowUpRight, Network, Phone } from "lucide-react";
-import robotHolographic from "@/assets/robot_holographic.jpeg";
 import { useTilt } from "@/hooks/useTilt";
 import { useInView } from "react-intersection-observer";
 
@@ -64,25 +63,7 @@ const Services = () => {
   const { ref, inView } = useInView({ threshold: 0.15, triggerOnce: true });
 
   return (
-    <section id="services" className="section-padding relative overflow-hidden" ref={ref}>
-      {/* Decorative holographic robot — right side, transparent overlay */}
-      <div
-        className="absolute pointer-events-none hidden lg:block"
-        style={{ top: "50%", right: "0px", transform: "translateY(-50%)", zIndex: 0 }}
-      >
-        <img
-          src={robotHolographic}
-          alt=""
-          aria-hidden="true"
-          style={{
-            width: "420px",
-            opacity: 0.18,
-            maskImage: "radial-gradient(ellipse 75% 80% at 35% 42%, black 30%, rgba(0,0,0,0.5) 60%, transparent 88%)",
-            WebkitMaskImage: "radial-gradient(ellipse 75% 80% at 35% 42%, black 30%, rgba(0,0,0,0.5) 60%, transparent 88%)",
-            filter: "brightness(1.4) saturate(1.5)",
-          }}
-        />
-      </div>
+    <section id="services" className="section-padding relative" ref={ref}>
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ clipPath: "inset(0 100% 0 0)" }}
