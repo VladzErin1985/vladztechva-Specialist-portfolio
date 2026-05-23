@@ -10,6 +10,10 @@ import imgN8nGmail from "@/assets/n8n_Gmail_Attachments.png";
 import imgFBAgent from "@/assets/n8n_FB_AI_Agent.png";
 import imgCustomerOrders from "@/assets/n8n_Customer_Orders.png";
 import imgRAGSupabase from "@/assets/n8n_RAG_Supabase.png";
+import imgKsWf6 from "@/assets/ks_wf6.png";
+import imgKsWf2 from "@/assets/ks_wf2.png";
+import imgKsA2 from "@/assets/ks_a2.png";
+import imgKsWf1 from "@/assets/ks_wf1.png";
 
 const filters = [
   { label: "All", value: "all", icon: LayoutGrid },
@@ -31,7 +35,7 @@ const projects = [
     description: "16-node production pipeline: Apollo lead scrape → ICP scoring → Notion dedup check → batch-50 Claude AGENT-01 email generation → Instantly delivery → Notion Lead Log → Slack alert. Merged V1 POC with V2 production logic for a clean, single-workflow outbound engine.",
     highlight: "16 nodes · Production",
     status: "live" as const,
-    image: null as string | null,
+    image: imgKsWf6,
     loomEmbed: null as string | null,
     externalLink: null as string | null,
   },
@@ -43,7 +47,7 @@ const projects = [
     description: "Processes inbound/outbound Retell AI call events. Dual-branch: outbound calls → AGENT-03 qualification analysis → Pipedrive stage update → Notion call log. Inbound replies → AGENT-PQA (Prompt QA Agent) fires when red_flags detected, writes one Claude Haiku fix → Notion QA Queue for VA review.",
     highlight: "Published · Dual-branch",
     status: "live" as const,
-    image: null as string | null,
+    image: imgKsWf2,
     loomEmbed: null as string | null,
     externalLink: null as string | null,
   },
@@ -55,7 +59,7 @@ const projects = [
     description: "11-node tier routing agent: webhook receives call volume data → Code node calculates tier score (daily_calls × 22) → IF node checks manual override → HTTP PATCH Pipedrive stage → HTTP POST Pipedrive note → Switch routes to 4 Slack branches (Starter / Professional / Enterprise / Not Qualified).",
     highlight: "11 nodes · Built",
     status: "live" as const,
-    image: null as string | null,
+    image: imgKsA2,
     loomEmbed: null as string | null,
     externalLink: null as string | null,
   },
@@ -67,7 +71,7 @@ const projects = [
     description: "Published 6-branch reply handler: webhook receives Instantly reply events → Claude AGENT-02 (Reply Triage) classifies intent → Code parses JSON → Switch routes to Hot Lead (Pipedrive stage update), Objection, Question, Unsubscribe, Auto-Reply, or Needs Review branches.",
     highlight: "Published · 6-branch",
     status: "live" as const,
-    image: null as string | null,
+    image: imgKsWf1,
     loomEmbed: null as string | null,
     externalLink: null as string | null,
   },
@@ -85,16 +89,28 @@ const projects = [
     externalLink: null as string | null,
   },
   {
+    title: "GHL Automation Workflow Suite",
+    icon: Building2,
+    tags: ["GoHighLevel", "Workflow Automation", "CRM", "Pipeline Management", "Tag-Based Triggers"],
+    categories: ["ghl"],
+    description: "Complete GHL automation suite: intelligent lead follow-up sequence, automated reply handler that stops follow-up on inbound replies, multi-stage pipeline management, and round-robin contact assignment. All workflows are tag-triggered, fully automated, and production-ready.",
+    highlight: "Full automation suite",
+    status: "live" as const,
+    image: null as string | null,
+    loomEmbed: "https://www.loom.com/embed/f13ba5175d4e47e99131d5230729119b",
+    externalLink: null as string | null,
+  },
+  {
     title: "Funnel Design & GHL Integration",
     icon: Workflow,
-    tags: ["Claude", "Lovable", "GHL CRM"],
+    tags: ["Claude", "Retell AI", "n8n", "GHL CRM", "Vercel"],
     categories: ["ghl", "ai"],
-    description: "Designed and built complete landing page funnels using Claude for content generation paired with Lovable for rapid UI development.",
+    description: "Complete AI-powered sales funnel with embedded lead forms, quiz, membership tiers, and a live AI voice agent (Maya) powered by Retell AI. Integrated with GHL via n8n — voice calls are analyzed by Claude API and contacts are auto-created in GHL with HOT/COLD tags.",
     highlight: "AI-assisted design",
     status: "live" as const,
     image: null as string | null,
-    loomEmbed: null as string | null,
-    externalLink: "https://ghl-pinas-funnel-complete.netlify.app/",
+    loomEmbed: "https://www.loom.com/embed/3db7327ad1f4425ea84c096e13f77e73",
+    externalLink: "https://ghl-pinas-masterclass-git-main-vnapigkit-1222s-projects.vercel.app/",
   },
   {
     title: "Facebook AI Chat Agent",
