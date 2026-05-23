@@ -15,6 +15,8 @@ import imgKsWf6 from "@/assets/ks_wf6.png";
 import imgKsWf2 from "@/assets/ks_wf2.png";
 import imgKsA2 from "@/assets/ks_a2.png";
 import imgKsWf1 from "@/assets/ks_wf1.png";
+import imgJoeyPhase1 from "@/assets/joey_phase1.png";
+import imgJoeyPhase2 from "@/assets/joey_phase2.png";
 
 const filters = [
   { label: "All", value: "all", icon: LayoutGrid },
@@ -72,6 +74,30 @@ const projects = [
     highlight: "Published · 6-branch",
     status: "live" as const,
     image: imgKsWf1,
+    loomEmbed: null as string | null,
+    externalLink: null as string | null,
+  },
+  {
+    title: "AI Lead Gen System Phase 1 — RAG Pinecone Knowledge Base",
+    icon: Database,
+    tags: ["n8n", "Google Drive", "Pinecone", "OpenAI", "RAG"],
+    categories: ["n8n", "ai"],
+    description: "Fully automated RAG ingestion pipeline for Joey Elaty (Real Estate): Google Drive trigger → SOP auto-ingestion → text chunking → OpenAI embeddings → Pinecone vector store. Covers 4 companies with zero manual uploads — every new SOP document is auto-indexed.",
+    highlight: "Automated RAG pipeline",
+    status: "complete" as const,
+    image: imgJoeyPhase1,
+    loomEmbed: null as string | null,
+    externalLink: null as string | null,
+  },
+  {
+    title: "AI Lead Gen System Phase 2 — Autonomous AI Agent",
+    icon: Bot,
+    tags: ["n8n", "Claude API", "Pinecone", "Google Sheets", "GHL CRM"],
+    categories: ["n8n", "ai"],
+    description: "Autonomous AI agent built on Phase 1 RAG knowledge base: Claude queries Pinecone for company context → reads live Google Sheets leads → generates personalized outreach → updates GHL CRM contacts via API. Zero human intervention — lead data flows through to CRM automatically.",
+    highlight: "Zero-touch lead system",
+    status: "complete" as const,
+    image: imgJoeyPhase2,
     loomEmbed: null as string | null,
     externalLink: null as string | null,
   },
