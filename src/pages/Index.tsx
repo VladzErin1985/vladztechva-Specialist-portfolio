@@ -30,26 +30,35 @@ const Index = () => {
         </motion.div>
         <Services />
 
-        {/* ── ROBOT DIVIDER — sits at the boundary between Services and Tools ── */}
-        <div className="relative hidden lg:block" style={{ height: 0, zIndex: 1 }}>
+        {/* ── ROBOT DIVIDER — full-visible image between Services and Tools ── */}
+        <div className="relative overflow-hidden" style={{ height: "85vh" }}>
           <img
             src={robotHolographic}
             alt=""
             aria-hidden="true"
-            className="pointer-events-none"
-            style={{
-              position: "absolute",
-              left: "50%",
-              top: "0",
-              transform: "translate(-50%, -50%)",
-              height: "75vh",
-              width: "auto",
-              opacity: 0.22,
-              filter: "brightness(2.0) saturate(1.8) contrast(0.85)",
-              maskImage: "radial-gradient(ellipse 68% 78% at 50% 50%, black 22%, rgba(0,0,0,0.6) 55%, transparent 82%)",
-              WebkitMaskImage: "radial-gradient(ellipse 68% 78% at 50% 50%, black 22%, rgba(0,0,0,0.6) 55%, transparent 82%)",
-            }}
+            className="w-full h-full object-cover pointer-events-none"
+            style={{ objectPosition: "center 20%" }}
           />
+          {/* Fade top into Services */}
+          <div className="absolute inset-x-0 top-0 z-10" style={{
+            height: "30%",
+            background: "linear-gradient(to bottom, hsl(222 47% 4%) 0%, hsl(222 47% 4% / 0.7) 40%, transparent 100%)",
+          }} />
+          {/* Fade bottom into Tools */}
+          <div className="absolute inset-x-0 bottom-0 z-10" style={{
+            height: "30%",
+            background: "linear-gradient(to top, hsl(222 47% 4%) 0%, hsl(222 47% 4% / 0.7) 40%, transparent 100%)",
+          }} />
+          {/* Fade left edge */}
+          <div className="absolute inset-y-0 left-0 z-10" style={{
+            width: "12%",
+            background: "linear-gradient(to right, hsl(222 47% 4%), transparent)",
+          }} />
+          {/* Fade right edge */}
+          <div className="absolute inset-y-0 right-0 z-10" style={{
+            width: "12%",
+            background: "linear-gradient(to left, hsl(222 47% 4%), transparent)",
+          }} />
         </div>
 
         <Tools />
