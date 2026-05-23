@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Bot, Workflow, Mail, Database, FileText, BarChart3, ArrowUpRight, Building2, Zap, LayoutGrid, Repeat, Settings, Circle, CheckCircle, GitMerge, Phone, Network } from "lucide-react";
+import { ExternalLink, Bot, Workflow, Mail, Database, FileText, BarChart3, ArrowUpRight, Building2, Zap, LayoutGrid, Repeat, Settings, Circle, CheckCircle, GitMerge, Phone, Network, ZoomIn, X } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 
 import imgAIContent from "@/assets/AI_Content_Repurposing.png";
@@ -207,8 +207,42 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
+const Lightbox = ({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) => (
+  <AnimatePresence>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.8, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+        className="relative max-w-5xl w-full"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute -top-10 right-0 text-white/80 hover:text-white transition-colors flex items-center gap-1 text-sm"
+        >
+          <X size={18} /> Close
+        </button>
+        <img
+          src={src}
+          alt={alt}
+          className="w-full h-auto rounded-2xl shadow-2xl border border-white/10"
+        />
+      </motion.div>
+    </motion.div>
+  </AnimatePresence>
+);
+
 const Projects = () => {
   const [activeFilter, setActiveFilter] = useState("all");
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
   const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
 
   const filtered = activeFilter === "all"
@@ -216,6 +250,8 @@ const Projects = () => {
     : projects.filter(p => p.categories.includes(activeFilter));
 
   return (
+    <>
+    {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
     <section id="projects" className="section-padding relative" ref={ref}>
       <div className="max-w-7xl mx-auto relative">
         <motion.div
@@ -296,13 +332,19 @@ const Projects = () => {
                 )}
 
                 {project.image && (
-                  <div className="border-b border-border overflow-hidden">
+                  <div
+                    className="border-b border-border overflow-hidden relative cursor-zoom-in"
+                    onClick={() => setLightbox({ src: project.image as string, alt: project.title })}
+                  >
                     <img
                       src={project.image}
                       alt={project.title}
                       className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                      <ZoomIn size={28} className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg" />
+                    </div>
                   </div>
                 )}
 
@@ -364,6 +406,7 @@ const Projects = () => {
         </AnimatePresence>
       </div>
     </section>
+    </>
   );
 };
 
