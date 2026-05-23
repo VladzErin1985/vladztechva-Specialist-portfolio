@@ -71,11 +71,11 @@ const Hero = () => {
         {/* Main directional gradient — left open, right sealed */}
         <div className="absolute inset-0" style={{
           background: `linear-gradient(to right,
-            hsl(222 47% 4% / 0.12) 0%,
-            hsl(222 47% 4% / 0.30) 30%,
-            hsl(222 47% 4% / 0.78) 52%,
-            hsl(222 47% 4% / 0.97) 65%,
-            hsl(222 47% 4%) 78%)`
+            hsl(222 47% 4% / 0.10) 0%,
+            hsl(222 47% 4% / 0.25) 25%,
+            hsl(222 47% 4% / 0.42) 48%,
+            hsl(222 47% 4% / 0.85) 68%,
+            hsl(222 47% 4%) 80%)`
         }} />
 
         {/* Top seal — hides baked-in image text */}
@@ -148,7 +148,7 @@ const Hero = () => {
         </motion.div>
 
         {/* ── 2-COLUMN LAYOUT ─────────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-[54%_46%] gap-10 items-center mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 items-center mb-10">
 
           {/* LEFT — floating panels (Vladimir comes from BG image) */}
           <motion.div
@@ -301,7 +301,7 @@ const Hero = () => {
                 border: "1px solid hsl(191 100% 42% / 0.2)",
                 boxShadow: "0 0 0 1px hsl(191 100% 42% / 0.07), 0 12px 48px hsl(191 100% 42% / 0.06), inset 0 1px 0 rgba(255,255,255,0.05)",
               }}
-              className="rounded-2xl p-5 relative overflow-hidden"
+              className="rounded-2xl p-5 relative overflow-hidden max-w-[390px] w-full"
             >
               {/* Corner accents */}
               <span className="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-primary/50 rounded-tl-xl" />
