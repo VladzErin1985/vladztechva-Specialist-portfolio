@@ -10,11 +10,10 @@ const techBadges = [
 ];
 
 const pipeline = [
-  { step: "1", title: "WEALTH &\nINSURANCE", sub: "Financial Protection & Strategy", icon: "🛡️" },
-  { step: "2", title: "INVESTMENT\nDEAL", sub: "Curated Investment Opportunities", icon: "📈" },
-  { step: "3", title: "REAL ESTATE\nACQUISITION", sub: "Acquire High-Value Properties", icon: "🏢" },
-  { step: "4", title: "CONSTRUCTION\nPROJECT", sub: "Build & Develop Assets", icon: "🏗️" },
-  { step: "5", title: "BACK TO\nINVESTMENT", sub: "Reinvest Profits & Scale", icon: "🔄" },
+  { step: "1", title: "OUTBOUND\nLEAD GEN", sub: "Apollo · Clay · Instantly", icon: "🎯" },
+  { step: "2", title: "AI VOICE\nQUALIFICATION", sub: "Retell AI · Claude", icon: "🤖" },
+  { step: "3", title: "TIER ROUTING\n& CRM UPDATE", sub: "Pipedrive · n8n", icon: "📊" },
+  { step: "4", title: "AUTO EMAIL\nNURTURE", sub: "Reply Handler · Slack", icon: "✉️" },
 ];
 
 const bottomNav = ["AI AGENTS", "WORKFLOWS", "INTEGRATIONS", "AUTOMATION", "ANALYTICS", "REVENUE"];
@@ -218,9 +217,9 @@ const Hero = () => {
               {/* Stats */}
               <div className="mt-4 pt-4 border-t border-border grid grid-cols-3 gap-2 text-center">
                 {[
-                  { n: "4", l: "Revenue Streams" },
+                  { n: "9+", l: "Workflows" },
                   { n: "8", l: "AI Agents" },
-                  { n: "15+", l: "Workflows" },
+                  { n: "3", l: "Pipelines" },
                 ].map((s) => (
                   <div key={s.l}>
                     <p className="text-primary font-bold text-lg leading-none">{s.n}</p>
