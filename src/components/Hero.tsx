@@ -148,7 +148,7 @@ const Hero = () => {
         </motion.div>
 
         {/* ── 2-COLUMN LAYOUT ─────────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-[46%_54%] gap-10 items-center mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[54%_46%] gap-10 items-center mb-10">
 
           {/* LEFT — floating panels (Vladimir comes from BG image) */}
           <motion.div
@@ -246,8 +246,8 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.7 }}
-                className="font-bold leading-[0.92] mb-3 tracking-tight"
-                style={{ fontSize: "clamp(2.8rem, 5.5vw, 5rem)" }}
+                className="font-bold leading-[0.9] mb-3 tracking-normal"
+                style={{ fontSize: "clamp(3rem, 5vw, 5.2rem)" }}
               >
                 <span style={{
                   background: "linear-gradient(90deg, #ffffff 0%, #e2f8ff 40%, #00f0ff 75%, #60a5fa 100%)",
