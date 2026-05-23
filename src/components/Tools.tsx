@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import {
   SiN8N, SiAnthropic, SiNotion, SiSlack, SiZapier,
   SiMake, SiOpenai, SiGoogle, SiSupabase,
+  SiFramer, SiVercel, SiReact, SiTailwindcss,
 } from "react-icons/si";
 import { Mic, Send, BarChart3, Link2, Sparkles, Target, Workflow } from "lucide-react";
 
@@ -35,6 +36,10 @@ const tools: Tool[] = [
   { name: "Google Workspace", icon: { type: "si", component: SiGoogle }, category: "Productivity", color: "#4285F4" },
   { name: "Supabase", icon: { type: "si", component: SiSupabase }, category: "Database", color: "#3ECF8E" },
   { name: "Lovable", icon: { type: "lucide", component: Sparkles, color: "#EC4899" }, category: "Dev", color: "#EC4899" },
+  { name: "Framer", icon: { type: "si", component: SiFramer }, category: "Design", color: "#0055FF" },
+  { name: "React", icon: { type: "si", component: SiReact }, category: "Frontend", color: "#61DAFB" },
+  { name: "Tailwind CSS", icon: { type: "si", component: SiTailwindcss }, category: "Styling", color: "#06B6D4" },
+  { name: "Vercel", icon: { type: "si", component: SiVercel }, category: "Deploy", color: "#E2E8F0" },
 ];
 
 const containerVariants = {

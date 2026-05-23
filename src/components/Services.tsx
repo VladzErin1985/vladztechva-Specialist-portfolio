@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Building2, Bot, Zap, Target, Globe, Brain, ArrowUpRight, Network, Phone } from "lucide-react";
+import { Building2, Bot, Zap, Target, Globe, Brain, ArrowUpRight, Network, Phone, Monitor, Code2, Layers } from "lucide-react";
 import robotHolographic from "@/assets/robot_holographic.jpeg";
 import { useTilt } from "@/hooks/useTilt";
 import { useInView } from "react-intersection-observer";
@@ -13,6 +13,9 @@ const services = [
   { icon: Target, title: "Outbound Lead Systems", description: "Apollo + Instantly outbound stacks: ICP filtering, Clay enrichment, warmup sequences, spintax email copy, reply webhook processing, and Notion dedup." },
   { icon: Brain, title: "RAG & Knowledge Pipelines", description: "Retrieval-Augmented Generation using Supabase vector databases and Notion as a live knowledge base for context-aware AI agent responses." },
   { icon: Globe, title: "GHL Systems & Funnels", description: "Complete GoHighLevel CRM setups — 5-stage pipelines, funnels, quiz builders, A2P 10DLC, sub-account snapshots, and round-robin workflows." },
+  { icon: Monitor, title: "Portfolio Builder & Design", description: "Modern animated portfolio sites built with React, Vite, and Tailwind — deployed on Vercel/Netlify. Backend-connected via n8n or Make.com for contact form CRM sync and lead capture automation." },
+  { icon: Code2, title: "Website Design & Development", description: "Business websites with custom UI/UX using Lovable, React, and Tailwind CSS. Form submissions automatically routed via n8n webhook → Pipedrive/GHL CRM → automated follow-up sequences." },
+  { icon: Layers, title: "Funnel Design & Automation", description: "High-converting sales funnels with GHL, custom landing pages, quiz-based lead scoring, and upsell sequences. n8n handles all backend logic — submission → AI qualification → CRM stage → drip email." },
 ];
 
 const containerVariants = {
