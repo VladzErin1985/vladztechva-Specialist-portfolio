@@ -192,31 +192,39 @@
     50% { transform: translateY(-12px); }
   }
 
-  /* ── Glass card — 20% transparent + backdrop blur + neon glow ── */
+  /* ── Glass card — ultra-transparent + frosted blur + neon edge ── */
   .glass-card {
-    background: hsl(222 40% 7% / 0.20);
-    backdrop-filter: blur(18px) saturate(1.6);
-    -webkit-backdrop-filter: blur(18px) saturate(1.6);
-    border: 1px solid hsl(191 100% 42% / 0.22);
+    background: hsl(222 40% 7% / 0.08);
+    backdrop-filter: blur(10px) saturate(1.8) brightness(0.95);
+    -webkit-backdrop-filter: blur(10px) saturate(1.8) brightness(0.95);
+    border: 1px solid hsl(191 100% 42% / 0.28);
     box-shadow:
-      0 4px 32px -4px hsl(222 47% 4% / 0.55),
-      inset 0 1px 0 hsl(255 100% 100% / 0.10),
-      inset 0 0 0 1px hsl(191 100% 42% / 0.06),
-      0 0 18px hsl(191 100% 42% / 0.08);
+      0 4px 32px -4px hsl(222 47% 4% / 0.40),
+      inset 0 1px 0 hsl(255 100% 100% / 0.12),
+      inset 0 0 0 1px hsl(191 100% 42% / 0.08),
+      0 0 20px hsl(191 100% 42% / 0.10);
   }
 
-  /* ── Text in glass cards — dark halo so letters stay readable on any bg ── */
+  /* ── Text in glass cards — strong dark halo keeps letters crisp on any bg ── */
   .glass-card p,
   .glass-card li,
   .glass-card h3,
-  .glass-card h4,
-  .glass-card span {
-    text-shadow: 0 1px 4px rgba(0,0,0,0.92), 0 2px 10px rgba(0,0,0,0.70);
+  .glass-card h4 {
+    text-shadow:
+      0 0 2px rgba(0,0,0,1),
+      0 1px 4px rgba(0,0,0,0.98),
+      0 2px 12px rgba(0,0,0,0.85);
   }
 
-  /* Icons use drop-shadow instead (text-shadow doesn't work on SVG) */
+  .glass-card span {
+    text-shadow:
+      0 0 2px rgba(0,0,0,0.95),
+      0 1px 4px rgba(0,0,0,0.85);
+  }
+
+  /* Icons — drop-shadow instead of text-shadow (SVG) */
   .glass-card svg {
-    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.85));
+    filter: drop-shadow(0 0 2px rgba(0,0,0,1)) drop-shadow(0 1px 4px rgba(0,0,0,0.9));
   }
 
   /* ── 3D text — section headings ── */
