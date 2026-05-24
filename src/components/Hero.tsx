@@ -14,10 +14,10 @@ const techBadges = [
 
 // ── Pipeline (right panel) ────────────────────────────────────────────────────
 const pipeline = [
-  { title: "AI + Apollo",        sub: "Lead Gen · n8n Automation",   icon: "🎯", color: "#00f0ff" },
-  { title: "AI Qualification",  sub: "Retell AI · Claude",          icon: "🤖", color: "#818cf8" },
-  { title: "CRM Routing",       sub: "Pipedrive · n8n",             icon: "📊", color: "#34d399" },
-  { title: "Auto Nurture",      sub: "Reply Handler · Slack",       icon: "✉️", color: "#f59e0b" },
+  { title: "Lead Scraping",     sub: "Apollo → ICP Score → Claude Email",  icon: "🎯", color: "#00f0ff" },
+  { title: "Reply Triage",      sub: "Instantly Reply → Hot Lead → CRM",   icon: "✉️", color: "#818cf8" },
+  { title: "Voice Qualify",     sub: "Retell AI Call → AGENT-03 Analysis", icon: "🤖", color: "#34d399" },
+  { title: "Tier Routing",      sub: "Stage Update → Slack Alert",         icon: "📊", color: "#f59e0b" },
 ];
 
 // ── Bottom nav ────────────────────────────────────────────────────────────────
