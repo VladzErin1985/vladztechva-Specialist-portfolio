@@ -163,11 +163,9 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.5 }}
               style={{
-                background: "rgba(6, 10, 22, 0.55)",
-                backdropFilter: "blur(24px)",
-                WebkitBackdropFilter: "blur(24px)",
-                border: "1px solid hsl(191 100% 42% / 0.22)",
-                boxShadow: "0 0 0 1px hsl(191 100% 42% / 0.08), 0 8px 40px hsl(191 100% 42% / 0.07), inset 0 1px 0 rgba(255,255,255,0.06)",
+                background: "rgba(6, 10, 22, 0.10)",
+                border: "1px solid hsl(191 100% 42% / 0.28)",
+                boxShadow: "0 0 0 1px hsl(191 100% 42% / 0.08), 0 8px 40px hsl(191 100% 42% / 0.10), inset 0 1px 0 rgba(255,255,255,0.08)",
               }}
               className="rounded-2xl p-5 w-[228px] relative overflow-hidden"
             >
@@ -190,7 +188,7 @@ const Hero = () => {
                         boxShadow: "0 0 8px hsl(191 100% 42% / 0.12)",
                       }}
                     >{b.icon}</span>
-                    <span className="text-foreground/75 text-xs font-mono">{b.label}</span>
+                    <span className="text-foreground text-xs font-mono" style={{ textShadow: "0 0 1px #000, 0 1px 6px #000" }}>{b.label}</span>
                   </div>
                 ))}
               </div>
@@ -212,9 +210,8 @@ const Hero = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.1 }}
               style={{
-                background: "rgba(6, 10, 22, 0.60)",
-                backdropFilter: "blur(16px)",
-                border: "1px solid hsl(215 30% 20% / 0.7)",
+                background: "rgba(6, 10, 22, 0.10)",
+                border: "1px solid hsl(215 30% 30% / 0.35)",
               }}
               className="rounded-xl p-3.5 w-[270px] font-mono text-[9px] text-muted-foreground leading-[1.75]"
             >
@@ -250,11 +247,11 @@ const Hero = () => {
                 style={{ fontSize: "clamp(3rem, 5vw, 5.2rem)" }}
               >
                 <span style={{
-                  background: "linear-gradient(90deg, #ffffff 0%, #e2f8ff 40%, #00f0ff 75%, #60a5fa 100%)",
+                  background: "linear-gradient(90deg, #ffffff 0%, #e2f8ff 30%, #00f0ff 65%, #38bdf8 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
-                  filter: "drop-shadow(0 0 18px hsl(191 100% 42% / 0.35))",
+                  filter: "drop-shadow(0 0 28px hsl(191 100% 42% / 0.70)) drop-shadow(0 0 60px hsl(191 100% 42% / 0.35)) drop-shadow(2px 4px 0px rgba(0,0,0,0.9))",
                 }}>VLADIMIR</span>
                 <br />
                 <span style={{
@@ -262,6 +259,7 @@ const Hero = () => {
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
+                  filter: "drop-shadow(0 0 18px hsl(191 100% 42% / 0.40)) drop-shadow(2px 4px 0px rgba(0,0,0,0.9))",
                 }}>NAPIGKIT</span>
               </motion.h1>
 
@@ -295,11 +293,9 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
               style={{
-                background: "rgba(6, 10, 22, 0.58)",
-                backdropFilter: "blur(28px)",
-                WebkitBackdropFilter: "blur(28px)",
-                border: "1px solid hsl(191 100% 42% / 0.2)",
-                boxShadow: "0 0 0 1px hsl(191 100% 42% / 0.07), 0 12px 48px hsl(191 100% 42% / 0.06), inset 0 1px 0 rgba(255,255,255,0.05)",
+                background: "rgba(6, 10, 22, 0.10)",
+                border: "1px solid hsl(191 100% 42% / 0.25)",
+                boxShadow: "0 0 0 1px hsl(191 100% 42% / 0.08), 0 12px 48px hsl(191 100% 42% / 0.08), inset 0 1px 0 rgba(255,255,255,0.07)",
               }}
               className="rounded-2xl p-5 relative overflow-hidden max-w-[390px] w-full"
             >
@@ -339,8 +335,8 @@ const Hero = () => {
                         {item.icon}
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="text-foreground/90 text-xs font-semibold tracking-wide">{item.title}</p>
-                        <p className="text-foreground/35 text-[10px] font-mono">{item.sub}</p>
+                        <p className="text-foreground text-xs font-semibold tracking-wide" style={{ textShadow: "0 0 1px #000, 0 1px 6px #000, 0 2px 12px #000" }}>{item.title}</p>
+                        <p className="text-foreground/70 text-[10px] font-mono" style={{ textShadow: "0 0 1px #000, 0 1px 4px #000" }}>{item.sub}</p>
                       </div>
                       <CheckCircle size={12} style={{ color: item.color, opacity: 0.5 }} className="shrink-0" />
                     </motion.div>
