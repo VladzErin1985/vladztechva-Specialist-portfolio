@@ -386,36 +386,36 @@ const Projects = () => {
           </div>
 
           {/* ── CAROUSEL ── */}
-          <div className="relative">
+          <div className="relative px-16 md:px-20">
 
-            {/* Prev arrow */}
+            {/* Prev arrow — left edge */}
             <motion.button
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.12, backgroundColor: "hsl(191 100% 42% / 0.15)" }}
               whileTap={{ scale: 0.9 }}
               onClick={goPrev}
               disabled={page === 0}
-              className={`absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center neon-border glass-card transition-all ${
-                page === 0 ? "opacity-25 cursor-not-allowed" : "hover:bg-primary/20 hover:border-primary/60"
+              className={`absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full flex items-center justify-center neon-border glass-card transition-all ${
+                page === 0 ? "opacity-20 cursor-not-allowed" : "cursor-pointer hover:border-primary/70"
               }`}
             >
-              <ChevronLeft size={20} className="text-primary" />
+              <ChevronLeft size={22} className="text-primary" />
             </motion.button>
 
-            {/* Next arrow */}
+            {/* Next arrow — right edge */}
             <motion.button
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.12, backgroundColor: "hsl(191 100% 42% / 0.15)" }}
               whileTap={{ scale: 0.9 }}
               onClick={goNext}
               disabled={page >= totalPages - 1}
-              className={`absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center neon-border glass-card transition-all ${
-                page >= totalPages - 1 ? "opacity-25 cursor-not-allowed" : "hover:bg-primary/20 hover:border-primary/60"
+              className={`absolute right-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full flex items-center justify-center neon-border glass-card transition-all ${
+                page >= totalPages - 1 ? "opacity-20 cursor-not-allowed" : "cursor-pointer hover:border-primary/70"
               }`}
             >
-              <ChevronRight size={20} className="text-primary" />
+              <ChevronRight size={22} className="text-primary" />
             </motion.button>
 
             {/* Sliding card area */}
-            <div className="overflow-hidden px-1">
+            <div className="overflow-hidden">
               <AnimatePresence custom={dir} mode="wait">
                 <motion.div
                   key={`${activeFilter}-${page}`}
