@@ -414,8 +414,17 @@ const Projects = () => {
               <ChevronRight size={22} className="text-primary" />
             </motion.button>
 
-            {/* Sliding card area */}
-            <div className="overflow-hidden">
+            {/* Sliding card area — drag/swipe enabled */}
+            <motion.div
+              className="overflow-hidden cursor-grab active:cursor-grabbing"
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.08}
+              onDragEnd={(_e, info) => {
+                if (info.offset.x < -50) goNext();
+                else if (info.offset.x > 50) goPrev();
+              }}
+            >
               <AnimatePresence custom={dir} mode="wait">
                 <motion.div
                   key={`${activeFilter}-${page}`}
@@ -515,7 +524,7 @@ const Projects = () => {
                   ))}
                 </motion.div>
               </AnimatePresence>
-            </div>
+            </motion.div>
 
             {/* Dot indicators + page counter */}
             {totalPages > 1 && (
