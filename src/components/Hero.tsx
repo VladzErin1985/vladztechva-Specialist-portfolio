@@ -163,9 +163,9 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.5 }}
               style={{
-                background: "rgba(255, 255, 255, 0.03)",
-                border: "1px solid hsl(191 100% 42% / 0.20)",
-                boxShadow: "0 0 0 1px hsl(191 100% 42% / 0.05), inset 0 1px 0 rgba(255,255,255,0.06)",
+                background: "rgba(6, 10, 22, 0.72)",
+                border: "1px solid hsl(191 100% 42% / 0.22)",
+                boxShadow: "0 0 0 1px hsl(191 100% 42% / 0.08), 0 8px 40px hsl(191 100% 42% / 0.08), inset 0 1px 0 rgba(255,255,255,0.06)",
               }}
               className="rounded-2xl p-5 w-[228px] relative overflow-hidden"
             >
