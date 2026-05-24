@@ -163,9 +163,9 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.5 }}
               style={{
-                background: "rgba(6, 10, 22, 0.10)",
-                border: "1px solid hsl(191 100% 42% / 0.28)",
-                boxShadow: "0 0 0 1px hsl(191 100% 42% / 0.08), 0 8px 40px hsl(191 100% 42% / 0.10), inset 0 1px 0 rgba(255,255,255,0.08)",
+                background: "rgba(255, 255, 255, 0.03)",
+                border: "1px solid hsl(191 100% 42% / 0.20)",
+                boxShadow: "0 0 0 1px hsl(191 100% 42% / 0.05), inset 0 1px 0 rgba(255,255,255,0.06)",
               }}
               className="rounded-2xl p-5 w-[228px] relative overflow-hidden"
             >
@@ -210,8 +210,8 @@ const Hero = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.1 }}
               style={{
-                background: "rgba(6, 10, 22, 0.10)",
-                border: "1px solid hsl(215 30% 30% / 0.35)",
+                background: "rgba(255, 255, 255, 0.02)",
+                border: "1px solid hsl(215 30% 60% / 0.18)",
               }}
               className="rounded-xl p-3.5 w-[270px] font-mono text-[9px] text-muted-foreground leading-[1.75]"
             >
@@ -293,9 +293,9 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
               style={{
-                background: "rgba(6, 10, 22, 0.10)",
-                border: "1px solid hsl(191 100% 42% / 0.25)",
-                boxShadow: "0 0 0 1px hsl(191 100% 42% / 0.08), 0 12px 48px hsl(191 100% 42% / 0.08), inset 0 1px 0 rgba(255,255,255,0.07)",
+                background: "rgba(255, 255, 255, 0.03)",
+                border: "1px solid hsl(191 100% 42% / 0.20)",
+                boxShadow: "0 0 0 1px hsl(191 100% 42% / 0.05), inset 0 1px 0 rgba(255,255,255,0.06)",
               }}
               className="rounded-2xl p-5 relative overflow-hidden max-w-[390px] w-full"
             >
@@ -316,8 +316,8 @@ const Hero = () => {
                       transition={{ delay: 0.7 + i * 0.1 }}
                       className="flex items-center gap-3 p-3 rounded-xl group transition-all duration-300"
                       style={{
-                        background: "rgba(255,255,255,0.025)",
-                        border: "1px solid rgba(255,255,255,0.06)",
+                        background: "rgba(255,255,255,0.01)",
+                        border: "1px solid rgba(255,255,255,0.04)",
                       }}
                       whileHover={{
                         background: "rgba(0,240,255,0.05)",
@@ -435,9 +435,8 @@ const Hero = () => {
               <span
                 className="px-4 py-1.5 rounded-full text-foreground/40 text-[10px] font-mono tracking-widest hover:text-primary cursor-default transition-colors duration-200"
                 style={{
-                  border: "1px solid hsl(215 30% 18%)",
-                  background: "rgba(6,10,22,0.4)",
-                  backdropFilter: "blur(8px)",
+                  border: "1px solid hsl(215 30% 35% / 0.25)",
+                  background: "rgba(255,255,255,0.02)",
                 }}
               >
                 {item}
