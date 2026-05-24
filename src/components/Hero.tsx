@@ -14,7 +14,7 @@ const techBadges = [
 
 // ── Pipeline (right panel) ────────────────────────────────────────────────────
 const pipeline = [
-  { title: "n8n + AI",           sub: "Workflows · Agents · Automation", icon: "⚡", color: "#00f0ff" },
+  { title: "AI + Apollo",        sub: "Lead Gen · n8n Automation",   icon: "🎯", color: "#00f0ff" },
   { title: "AI Qualification",  sub: "Retell AI · Claude",          icon: "🤖", color: "#818cf8" },
   { title: "CRM Routing",       sub: "Pipedrive · n8n",             icon: "📊", color: "#34d399" },
   { title: "Auto Nurture",      sub: "Reply Handler · Slack",       icon: "✉️", color: "#f59e0b" },
