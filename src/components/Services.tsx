@@ -42,8 +42,9 @@ const ServiceCard = ({ service }: { service: typeof services[0] }) => {
         rotateX: isCoarse ? 0 : tilt.rotateX,
         rotateY: isCoarse ? 0 : tilt.rotateY,
       }}
+      whileHover={{ y: -8, scale: 1.015, boxShadow: "0 20px 50px hsl(191 100% 42% / 0.22), 0 0 0 1px hsl(191 100% 42% / 0.5)" }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="group p-6 rounded-2xl glass-card relative overflow-hidden cursor-default hover:shadow-lg hover:shadow-primary/5 hover:border-primary/30 transition-shadow"
+      className="group p-6 rounded-2xl glass-card relative overflow-hidden cursor-default"
     >
       <div className="flex items-start justify-between mb-5">
         <motion.div

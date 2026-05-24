@@ -86,9 +86,10 @@ const Contact = () => {
                 rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
+                whileHover={{ y: -5, scale: 1.01, boxShadow: "0 14px 40px hsl(191 100% 42% / 0.18), 0 0 0 1px hsl(191 100% 42% / 0.5)" }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className="flex items-center gap-4 p-4 rounded-2xl glass-card hover:border-primary/30 transition-all group"
+                transition={{ delay: i * 0.15, type: "spring", stiffness: 300, damping: 22 }}
+                className="flex items-center gap-4 p-4 rounded-2xl glass-card group"
               >
                 <motion.div
                   whileInView={{ y: [0, -10, 0] }}

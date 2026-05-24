@@ -172,7 +172,11 @@ const WorkExperience = () => {
 
               <div className="hidden md:block md:w-1/2" />
 
-              <div className="ml-14 md:ml-0 md:w-1/2 p-5 rounded-2xl glass-card card-3d group">
+              <motion.div
+                whileHover={{ y: -6, scale: 1.01, boxShadow: "0 16px 48px hsl(191 100% 42% / 0.20), 0 0 0 1px hsl(191 100% 42% / 0.5)" }}
+                transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                className="ml-14 md:ml-0 md:w-1/2 p-5 rounded-2xl glass-card card-3d group"
+              >
                 {exp.current && (
                   <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full mb-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
@@ -201,7 +205,7 @@ const WorkExperience = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
             </motion.div>
           ))}
         </div>

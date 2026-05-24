@@ -116,9 +116,9 @@ const Tools = () => {
             <motion.div
               key={tool.name}
               variants={itemVariants}
-              whileHover={{ rotateY: 360 }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-              className="group flex flex-col items-center gap-3 p-5 rounded-2xl glass-card hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 cursor-default"
+              whileHover={{ y: -6, scale: 1.06, rotateY: 360, boxShadow: "0 16px 40px hsl(191 100% 42% / 0.22), 0 0 0 1px hsl(191 100% 42% / 0.5)" }}
+              transition={{ duration: 0.55, ease: "easeInOut" }}
+              className="group flex flex-col items-center gap-3 p-5 rounded-2xl glass-card cursor-default"
               style={{ perspective: 1000 }}
             >
               <span className="transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
