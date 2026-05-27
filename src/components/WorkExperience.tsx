@@ -5,8 +5,8 @@ import miniEditors from "@/assets/mini_editors.jpeg";
 const experiences = [
   {
     role: "AI Automation Architect",
-    company: "Konsier (konsier.ai)",
-    period: "2026 – Present",
+    company: "Velocity Capital LLC · Konsier.AI",
+    period: "May 2026 – Present",
     location: "Philippines · Remote",
     icon: Network,
     highlights: [
