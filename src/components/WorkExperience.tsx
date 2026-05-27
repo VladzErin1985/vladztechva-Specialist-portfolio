@@ -33,7 +33,7 @@ const experiences = [
   {
     role: "Sales Specialist",
     company: "Samsung",
-    period: "Sept 2014 – Jun 2019",
+    period: "Sept 2014 – Jun 2025",
     location: "Kuwait",
     icon: Briefcase,
     highlights: [
