@@ -20,7 +20,7 @@ const experiences = [
   {
     role: "GHL & AI Automation Specialist",
     company: "Freelance / Self-Directed",
-    period: "2025 – Present",
+    period: "Feb 2026 – Apr 2026",
     location: "Philippines",
     icon: Rocket,
     highlights: [
