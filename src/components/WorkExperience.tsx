@@ -43,17 +43,16 @@ const experiences = [
     ],
   },
   {
-    role: "Sales Representative",
+    role: "Tech Support Specialist",
     company: "Sony",
     period: "Oct 2011 – Jul 2014",
     location: "Kuwait",
     icon: Monitor,
     highlights: [
-      "Promoted Sony VAIO laptops as a dedicated brand representative, driving sales through deep product knowledge and hands-on demonstrations",
-      "Delivered on-site technical support and troubleshooting for hardware and software issues across the full IT product range",
-      "Maintained expert-level knowledge of competitor products — benchmarking features and specs against VAIO to support informed customer decisions",
-      "Built and configured PC hardware from components; resolved complex hardware/software issues independently",
-      "Produced Sales, Competitor, and Inventory Reports using Microsoft Excel to support store operations and management reviews",
+      "Diagnosed and repaired hardware and software issues across Sony VAIO laptops and the full IT product range",
+      "Built, configured, and upgraded PC hardware from components — RAM, storage, motherboards, and peripherals",
+      "Maintained expert-level knowledge of competitor products to accurately compare specs and guide technical recommendations",
+      "Provided on-site troubleshooting and end-user support, resolving issues efficiently with minimal downtime",
     ],
   },
   {
