@@ -65,18 +65,34 @@ const Contact = () => {
   return (
     <section id="contact" className="section-padding relative overflow-hidden" ref={ref}>
 
-      {/* Pinterest pin image — static fallback background */}
+      {/* YouTube video background — Blue Technology Loop, no copyright */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        <img
-          src={contactBg}
-          alt=""
-          aria-hidden="true"
-          className="absolute w-full h-full"
-          style={{ objectFit: "cover", objectPosition: "center center", opacity: 0.85 }}
-        />
-        {/* Subtle dark overlay — let the image breathe */}
+        {/* Oversized iframe to cover all aspect ratios */}
+        <div style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "120vw",
+          height: "120vh",
+          minWidth: "120%",
+          minHeight: "120%",
+        }}>
+          <iframe
+            src="https://www.youtube.com/embed/vDUwXWXTcaU?autoplay=1&mute=1&loop=1&playlist=vDUwXWXTcaU&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1"
+            allow="autoplay; encrypted-media"
+            title="bg-video"
+            style={{
+              width: "100%",
+              height: "100%",
+              border: "none",
+              opacity: 0.55,
+            }}
+          />
+        </div>
+        {/* Dark overlay to blend and keep text readable */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 100% 90% at 50% 45%, hsl(220 60% 5% / 0.45) 10%, hsl(220 60% 4% / 0.60) 55%, hsl(222 47% 4% / 0.88) 100%)",
+          background: "radial-gradient(ellipse 100% 90% at 50% 45%, hsl(220 60% 5% / 0.50) 10%, hsl(220 60% 4% / 0.65) 55%, hsl(222 47% 4% / 0.90) 100%)",
         }} />
         <div className="absolute inset-x-0 top-0" style={{ height: "15%", background: "linear-gradient(to bottom, hsl(222 47% 4%), transparent)" }} />
         <div className="absolute inset-x-0 bottom-0" style={{ height: "15%", background: "linear-gradient(to top, hsl(222 47% 4%), transparent)" }} />
