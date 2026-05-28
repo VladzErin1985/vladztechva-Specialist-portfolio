@@ -49,8 +49,11 @@ const experiences = [
     location: "Kuwait",
     icon: Monitor,
     highlights: [
-      "Promoted VAIO laptops and provided on-site technical support",
-      "Created Sales, Competitor, and Inventory Reports using Microsoft Excel",
+      "Promoted Sony VAIO laptops as a dedicated brand representative, driving sales through deep product knowledge and hands-on demonstrations",
+      "Delivered on-site technical support and troubleshooting for hardware and software issues across the full IT product range",
+      "Maintained expert-level knowledge of competitor products — benchmarking features and specs against VAIO to support informed customer decisions",
+      "Built and configured PC hardware from components; resolved complex hardware/software issues independently",
+      "Produced Sales, Competitor, and Inventory Reports using Microsoft Excel to support store operations and management reviews",
     ],
   },
   {
