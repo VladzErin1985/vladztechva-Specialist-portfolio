@@ -25,7 +25,8 @@ const FloatingLabelInput = ({ label, type = "text", name, textarea = false }: { 
           scale: isActive ? 0.85 : 1,
         }}
         transition={{ duration: 0.2 }}
-        className="absolute left-4 top-3.5 text-muted-foreground text-sm pointer-events-none origin-left"
+        className="absolute left-4 top-3.5 text-sm pointer-events-none origin-left"
+        style={{ color: "rgba(0,240,255,0.8)", textShadow: "0 0 8px rgba(0,240,255,0.4)" }}
       >
         {label}
       </motion.label>
@@ -36,7 +37,13 @@ const FloatingLabelInput = ({ label, type = "text", name, textarea = false }: { 
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         onChange={(e: any) => setHasValue(e.target.value.length > 0)}
-        className={`w-full px-4 pt-3.5 pb-3 rounded-xl glass-card text-foreground text-sm outline-none transition-all ${
+        style={{
+          background: "rgba(8, 18, 32, 0.75)",
+          border: "1px solid rgba(0,240,255,0.25)",
+          color: "#e8f4ff",
+          backdropFilter: "blur(8px)",
+        }}
+        className={`w-full px-4 pt-3.5 pb-3 rounded-xl text-sm outline-none transition-all placeholder:text-transparent ${
           textarea ? "min-h-[120px] resize-none" : ""
         }`}
         rows={textarea ? 4 : undefined}
@@ -55,8 +62,39 @@ const Contact = () => {
   const { ref, inView } = useInView({ threshold: 0.15, triggerOnce: true });
 
   return (
-    <section id="contact" className="section-padding relative" ref={ref}>
-      <div className="max-w-7xl mx-auto relative">
+    <section id="contact" className="section-padding relative overflow-hidden" ref={ref}>
+
+      {/* Pinterest embed — scaled to fill as background */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        <div style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%) scale(3.2)",
+          width: "450px",
+          height: "768px",
+          opacity: 0.28,
+          transformOrigin: "center center",
+        }}>
+          <iframe
+            src="https://assets.pinterest.com/ext/embed.html?id=11047961582621785"
+            height="768"
+            width="450"
+            frameBorder={0}
+            scrolling="no"
+            title="bg"
+            style={{ display: "block", border: "none" }}
+          />
+        </div>
+        {/* Blend overlay — dark navy with subtle warm tint matching Pinterest pin */}
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 100% 90% at 50% 50%, hsl(222 47% 5% / 0.78) 20%, hsl(222 47% 4% / 0.88) 65%, hsl(222 47% 4% / 0.97) 100%)",
+        }} />
+        <div className="absolute inset-x-0 top-0" style={{ height: "15%", background: "linear-gradient(to bottom, hsl(222 47% 4%), transparent)" }} />
+        <div className="absolute inset-x-0 bottom-0" style={{ height: "15%", background: "linear-gradient(to top, hsl(222 47% 4%), transparent)" }} />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ clipPath: "inset(0 100% 0 0)" }}
           whileInView={{ clipPath: "inset(0 0% 0 0)" }}
@@ -64,13 +102,13 @@ const Contact = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16 max-w-2xl mx-auto"
         >
-          <span className="inline-block text-primary text-xs font-semibold tracking-wider uppercase mb-3 px-4 py-1.5 rounded-full bg-primary/10">
+          <span className="inline-block text-xs font-semibold tracking-wider uppercase mb-3 px-4 py-1.5 rounded-full" style={{ color: "#00f0ff", background: "rgba(0,240,255,0.12)", border: "1px solid rgba(0,240,255,0.3)", textShadow: "0 0 10px rgba(0,240,255,0.6)" }}>
             Let's Connect
           </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
-            Ready to <span className="text-primary">Automate</span>?
+          <h2 className="text-3xl md:text-5xl font-bold mb-4" style={{ color: "#ffffff", textShadow: "0 2px 20px rgba(0,0,0,0.9), 0 0 40px rgba(0,240,255,0.15)" }}>
+            Ready to <span style={{ color: "#00f0ff", textShadow: "0 0 20px rgba(0,240,255,0.5)" }}>Automate</span>?
           </h2>
-          <p className="text-muted-foreground text-base">
+          <p className="text-base" style={{ color: "rgba(200,230,255,0.85)", textShadow: "0 1px 8px rgba(0,0,0,0.9)" }}>
             Available for freelance projects, VA roles, GHL specialist roles, AI automation consulting, and long-term retainer arrangements.
           </p>
         </motion.div>
@@ -89,7 +127,8 @@ const Contact = () => {
                 whileHover={{ y: -5, scale: 1.01, boxShadow: "0 14px 40px hsl(191 100% 42% / 0.18), 0 0 0 1px hsl(191 100% 42% / 0.5)" }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15, type: "spring", stiffness: 300, damping: 22 }}
-                className="flex items-center gap-4 p-4 rounded-2xl glass-card group"
+                className="flex items-center gap-4 p-4 rounded-2xl group"
+                style={{ background: "rgba(8,18,32,0.65)", border: "1px solid rgba(0,240,255,0.2)", backdropFilter: "blur(10px)" }}
               >
                 <motion.div
                   whileInView={{ y: [0, -10, 0] }}
@@ -100,8 +139,8 @@ const Contact = () => {
                   <item.icon size={20} className="text-primary group-hover:text-primary-foreground transition-colors duration-300" />
                 </motion.div>
                 <div>
-                  <span className="text-muted-foreground text-xs uppercase tracking-wider">{item.label}</span>
-                  <p className="text-foreground text-sm font-medium">{item.value}</p>
+                  <span className="text-xs uppercase tracking-wider" style={{ color: "rgba(0,240,255,0.7)" }}>{item.label}</span>
+                  <p className="text-sm font-medium" style={{ color: "#e8f4ff", textShadow: "0 1px 6px rgba(0,0,0,0.9)" }}>{item.value}</p>
                 </div>
               </motion.a>
             ))}
@@ -141,10 +180,11 @@ const Contact = () => {
           initial={{ scale: 0.95, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-16 p-8 rounded-2xl glass-card text-center"
+          className="mt-16 p-8 rounded-2xl text-center"
+          style={{ background: "rgba(8,18,32,0.70)", border: "1px solid rgba(0,240,255,0.2)", backdropFilter: "blur(10px)" }}
         >
-          <h3 className="text-foreground text-xl font-bold mb-2">Let's build something amazing together</h3>
-          <p className="text-muted-foreground text-sm mb-6">Ready to automate your business? Let's chat.</p>
+          <h3 className="text-xl font-bold mb-2" style={{ color: "#ffffff", textShadow: "0 2px 12px rgba(0,0,0,0.9)" }}>Let's build something amazing together</h3>
+          <p className="text-sm mb-6" style={{ color: "rgba(200,230,255,0.85)", textShadow: "0 1px 6px rgba(0,0,0,0.9)" }}>Ready to automate your business? Let's chat.</p>
           <motion.a
             href="https://linkedin.com/in/vladimir-napigkit-82589074"
             target="_blank"
