@@ -72,11 +72,11 @@ const Contact = () => {
           alt=""
           aria-hidden="true"
           className="absolute w-full h-full"
-          style={{ objectFit: "cover", objectPosition: "center center", opacity: 0.45 }}
+          style={{ objectFit: "cover", objectPosition: "center center", opacity: 0.85 }}
         />
-        {/* Dark blue overlay — blends with the cyan/blue image palette */}
+        {/* Subtle dark overlay — let the image breathe */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 100% 90% at 50% 45%, hsl(220 60% 5% / 0.72) 15%, hsl(220 60% 4% / 0.85) 60%, hsl(222 47% 4% / 0.96) 100%)",
+          background: "radial-gradient(ellipse 100% 90% at 50% 45%, hsl(220 60% 5% / 0.45) 10%, hsl(220 60% 4% / 0.60) 55%, hsl(222 47% 4% / 0.88) 100%)",
         }} />
         <div className="absolute inset-x-0 top-0" style={{ height: "15%", background: "linear-gradient(to bottom, hsl(222 47% 4%), transparent)" }} />
         <div className="absolute inset-x-0 bottom-0" style={{ height: "15%", background: "linear-gradient(to top, hsl(222 47% 4%), transparent)" }} />
