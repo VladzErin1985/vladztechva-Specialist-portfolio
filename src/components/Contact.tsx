@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Linkedin, Send, ArrowRight } from "lucide-react";
 import { useInView } from "react-intersection-observer";
+import contactBg from "@/assets/contact_bg.jpg";
 
 const contactItems = [
   { icon: Mail, label: "Email", value: "vladimirnapigkit@gmail.com", href: "mailto:vladimirnapigkit@gmail.com" },
@@ -64,31 +65,18 @@ const Contact = () => {
   return (
     <section id="contact" className="section-padding relative overflow-hidden" ref={ref}>
 
-      {/* Pinterest embed — scaled to fill as background */}
+      {/* Pinterest pin image — static fallback background */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        <div style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%) scale(3.2)",
-          width: "450px",
-          height: "768px",
-          opacity: 0.28,
-          transformOrigin: "center center",
-        }}>
-          <iframe
-            src="https://assets.pinterest.com/ext/embed.html?id=11047961582621785"
-            height="768"
-            width="450"
-            frameBorder={0}
-            scrolling="no"
-            title="bg"
-            style={{ display: "block", border: "none" }}
-          />
-        </div>
-        {/* Blend overlay — dark navy with subtle warm tint matching Pinterest pin */}
+        <img
+          src={contactBg}
+          alt=""
+          aria-hidden="true"
+          className="absolute w-full h-full"
+          style={{ objectFit: "cover", objectPosition: "center center", opacity: 0.45 }}
+        />
+        {/* Dark blue overlay — blends with the cyan/blue image palette */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 100% 90% at 50% 50%, hsl(222 47% 5% / 0.78) 20%, hsl(222 47% 4% / 0.88) 65%, hsl(222 47% 4% / 0.97) 100%)",
+          background: "radial-gradient(ellipse 100% 90% at 50% 45%, hsl(220 60% 5% / 0.72) 15%, hsl(220 60% 4% / 0.85) 60%, hsl(222 47% 4% / 0.96) 100%)",
         }} />
         <div className="absolute inset-x-0 top-0" style={{ height: "15%", background: "linear-gradient(to bottom, hsl(222 47% 4%), transparent)" }} />
         <div className="absolute inset-x-0 bottom-0" style={{ height: "15%", background: "linear-gradient(to top, hsl(222 47% 4%), transparent)" }} />
