@@ -31,7 +31,7 @@ const tools: Tool[] = [
   { name: "GoHighLevel", icon: { type: "lucide", component: BarChart3, color: "#2563EB" }, category: "CRM", color: "#2563EB" },
   { name: "Zapier", icon: { type: "si", component: SiZapier }, category: "Automation", color: "#FF4A00" },
   { name: "Make.com", icon: { type: "si", component: SiMake }, category: "Automation", color: "#9B4DCA" },
-  { name: "ChatGPT", icon: { type: "si", component: SiOpenai }, category: "AI", color: "#10A37F" },
+  { name: "OpenAI", icon: { type: "si", component: SiOpenai }, category: "AI", color: "#10A37F" },
   { name: "Webhooks", icon: { type: "lucide", component: Link2, color: "#06B6D4" }, category: "Integration", color: "#06B6D4" },
   { name: "Google Workspace", icon: { type: "si", component: SiGoogle }, category: "Productivity", color: "#4285F4" },
   { name: "Supabase", icon: { type: "si", component: SiSupabase }, category: "Database", color: "#3ECF8E" },
