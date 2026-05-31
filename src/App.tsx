@@ -12,7 +12,7 @@ const queryClient = new QueryClient();
 function VisitorTracker() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const payload = JSON.stringify({
+    const base = {
       referrer: document.referrer,
       page: window.location.href,
       userAgent: navigator.userAgent,
@@ -21,14 +21,25 @@ function VisitorTracker() {
       utm_campaign: params.get("utm_campaign") || "",
       ref: params.get("ref") || "",
       fbclid: params.get("fbclid") || "",
-    });
-    fetch("https://n8n.srv1305072.hstgr.cloud/webhook/portfolio-visitor", {
-      method: "POST",
-      headers: { "Content-Type": "text/plain" },
-      body: payload,
-      keepalive: true,
-      mode: "no-cors",
-    }).catch(() => {});
+    };
+    fetch("https://ipapi.co/json/")
+      .then((r) => r.json())
+      .catch(() => ({}))
+      .then((geo: Record<string, string>) => {
+        const payload = JSON.stringify({
+          ...base,
+          city: geo.city || "",
+          country: geo.country_name || "",
+          isp: geo.org || "",
+        });
+        fetch("https://n8n.srv1305072.hstgr.cloud/webhook/portfolio-visitor", {
+          method: "POST",
+          headers: { "Content-Type": "text/plain" },
+          body: payload,
+          keepalive: true,
+          mode: "no-cors",
+        }).catch(() => {});
+      });
   }, []);
   return null;
 }
