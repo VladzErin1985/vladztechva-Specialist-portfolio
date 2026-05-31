@@ -11,10 +11,16 @@ const queryClient = new QueryClient();
 
 function VisitorTracker() {
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
     const payload = JSON.stringify({
       referrer: document.referrer,
       page: window.location.href,
       userAgent: navigator.userAgent,
+      utm_source: params.get("utm_source") || "",
+      utm_medium: params.get("utm_medium") || "",
+      utm_campaign: params.get("utm_campaign") || "",
+      ref: params.get("ref") || "",
+      fbclid: params.get("fbclid") || "",
     });
     fetch("https://n8n.srv1305072.hstgr.cloud/webhook/portfolio-visitor", {
       method: "POST",
