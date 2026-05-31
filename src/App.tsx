@@ -16,10 +16,13 @@ function VisitorTracker() {
       page: window.location.href,
       userAgent: navigator.userAgent,
     });
-    navigator.sendBeacon(
-      "https://n8n.srv1305072.hstgr.cloud/webhook/portfolio-visitor",
-      new Blob([payload], { type: "application/json" })
-    );
+    fetch("https://n8n.srv1305072.hstgr.cloud/webhook/portfolio-visitor", {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: payload,
+      keepalive: true,
+      mode: "no-cors",
+    }).catch(() => {});
   }, []);
   return null;
 }
