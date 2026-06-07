@@ -4,9 +4,9 @@ import { useInView } from "react-intersection-observer";
 import {
   SiN8N, SiAnthropic, SiNotion, SiSlack, SiZapier,
   SiMake, SiOpenai, SiGoogle, SiSupabase,
-  SiFigma, SiVercel,
+  SiFigma, SiVercel, SiAirtable,
 } from "react-icons/si";
-import { Mic, Send, BarChart3, Link2, Target, Workflow } from "lucide-react";
+import { Mic, Send, BarChart3, Link2, Target, Workflow, LayoutDashboard, ClipboardList } from "lucide-react";
 
 type ToolIcon =
   | { type: "si"; component: React.ComponentType<{ size?: number; style?: React.CSSProperties; className?: string }> }
@@ -35,8 +35,11 @@ const tools: Tool[] = [
   { name: "Webhooks", icon: { type: "lucide", component: Link2, color: "#06B6D4" }, category: "Integration", color: "#06B6D4" },
   { name: "Google Workspace", icon: { type: "si", component: SiGoogle }, category: "Productivity", color: "#4285F4" },
   { name: "Supabase", icon: { type: "si", component: SiSupabase }, category: "Database", color: "#3ECF8E" },
-{ name: "Figma", icon: { type: "si", component: SiFigma }, category: "Design", color: "#F24E1E" },
+  { name: "Figma", icon: { type: "si", component: SiFigma }, category: "Design", color: "#F24E1E" },
   { name: "Vercel", icon: { type: "si", component: SiVercel }, category: "Deploy", color: "#E2E8F0" },
+  { name: "Airtable", icon: { type: "si", component: SiAirtable }, category: "Database", color: "#FCB400" },
+  { name: "Softr.io", icon: { type: "lucide", component: LayoutDashboard, color: "#5E6AD2" }, category: "Dashboard", color: "#5E6AD2" },
+  { name: "AppSheet", icon: { type: "lucide", component: ClipboardList, color: "#34A853" }, category: "Field App", color: "#34A853" },
 ];
 
 const containerVariants = {
