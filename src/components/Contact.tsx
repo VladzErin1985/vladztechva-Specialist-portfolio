@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Linkedin, Send, ArrowRight } from "lucide-react";
 import { useInView } from "react-intersection-observer";
@@ -27,7 +27,7 @@ const FloatingLabelInput = ({ label, type = "text", name, textarea = false }: { 
         }}
         transition={{ duration: 0.2 }}
         className="absolute left-4 top-3.5 text-sm pointer-events-none origin-left"
-        style={{ color: "rgba(0,240,255,0.8)", textShadow: "0 0 8px rgba(0,240,255,0.4)" }}
+        style={{ color: "rgba(0,240,255,0.95)", textShadow: "0 0 8px rgba(0,240,255,0.4)", zIndex: 2 }}
       >
         {label}
       </motion.label>
@@ -43,6 +43,8 @@ const FloatingLabelInput = ({ label, type = "text", name, textarea = false }: { 
           border: "1px solid rgba(0,240,255,0.25)",
           color: "#e8f4ff",
           backdropFilter: "blur(8px)",
+          position: "relative",
+          zIndex: 1,
         }}
         className={`w-full px-4 pt-3.5 pb-3 rounded-xl text-sm outline-none transition-all placeholder:text-transparent ${
           textarea ? "min-h-[120px] resize-none" : ""
@@ -59,8 +61,39 @@ const FloatingLabelInput = ({ label, type = "text", name, textarea = false }: { 
   );
 };
 
+const CONTACT_WEBHOOK_URL = "https://n8n.srv1305072.hstgr.cloud/webhook/portfolio-contact";
+
 const Contact = () => {
   const { ref, inView } = useInView({ threshold: 0.15, triggerOnce: true });
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      name: data.get("name")?.toString() || "",
+      email: data.get("email")?.toString() || "",
+      message: data.get("message")?.toString() || "",
+    };
+    if (!payload.name || !payload.email || !payload.message) return;
+
+    setStatus("sending");
+    try {
+      await fetch(CONTACT_WEBHOOK_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      setStatus("sent");
+      form.reset();
+      setTimeout(() => setStatus("idle"), 4000);
+    } catch {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 4000);
+    }
+  };
 
   return (
     <section id="contact" className="section-padding relative overflow-hidden" ref={ref}>
@@ -156,18 +189,19 @@ const Contact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="space-y-5"
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleSubmit}
           >
             <FloatingLabelInput label="Your Name" name="name" />
             <FloatingLabelInput label="Your Email" type="email" name="email" />
             <FloatingLabelInput label="Your Message" name="message" textarea />
             <motion.button
               type="submit"
+              disabled={status === "sending"}
               whileHover={{ scale: 1.03, x: 3 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm glow-primary group"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm glow-primary group disabled:opacity-70"
             >
-              Send Message
+              {status === "sending" ? "Sending..." : status === "sent" ? "Message Sent ✓" : status === "error" ? "Try Again" : "Send Message"}
               <motion.span
                 className="inline-block"
                 whileHover={{ x: 4, rotate: -15 }}
@@ -176,6 +210,11 @@ const Contact = () => {
                 <Send size={16} />
               </motion.span>
             </motion.button>
+            {status === "error" && (
+              <p className="text-xs" style={{ color: "rgba(255,120,120,0.9)" }}>
+                Something went wrong — please email me directly instead.
+              </p>
+            )}
           </motion.form>
         </div>
 

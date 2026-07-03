@@ -40,3 +40,18 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Fix: browser autofill forces a light background that made light-colored
+   input text (e.g. the Contact form Name field) invisible */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: #e8f4ff;
+  -webkit-box-shadow: 0 0 0px 1000px rgba(8, 18, 32, 0.9) inset;
+  box-shadow: 0 0 0px 1000px rgba(8, 18, 32, 0.9) inset;
+  caret-color: #e8f4ff;
+  transition: background-color 5000s ease-in-out 0s;
+}
