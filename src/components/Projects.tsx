@@ -1,8 +1,21 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import cyberpunkWorkstation from "@/assets/cyberpunk_workstation.jpeg";
-import { ExternalLink, Bot, Workflow, Mail, Database, FileText, BarChart3, ArrowUpRight, Building2, Zap, LayoutGrid, Repeat, Settings, Circle, CheckCircle, GitMerge, Phone, Network, ZoomIn, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { ExternalLink, Bot, Workflow, Mail, Database, FileText, BarChart3, ArrowUpRight, Building2, Zap, LayoutGrid, Repeat, Settings, Circle, CheckCircle, Network, ZoomIn, X, ChevronLeft, ChevronRight, Layers } from "lucide-react";
 import { useInView } from "react-intersection-observer";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 
 import imgAIContent from "@/assets/AI_Content_Repurposing.png";
 import imgFinancialExport from "@/assets/make_Automated_Financial_Export_Pipeline.png";
@@ -11,12 +24,100 @@ import imgN8nGmail from "@/assets/n8n_Gmail_Attachments.png";
 import imgFBAgent from "@/assets/n8n_FB_AI_Agent.png";
 import imgCustomerOrders from "@/assets/n8n_Customer_Orders.png";
 import imgRAGSupabase from "@/assets/n8n_RAG_Supabase.png";
-import imgKsWf6 from "@/assets/ks_wf6.png";
-import imgKsWf2 from "@/assets/ks_wf2.png";
-import imgKsA2 from "@/assets/ks_a2.png";
-import imgKsWf1 from "@/assets/ks_wf1.png";
 import imgJoeyPhase1 from "@/assets/joey_phase1.png";
 import imgJoeyPhase2 from "@/assets/joey_phase2.png";
+
+// Bulk-load every Konsier system screenshot — avoids 33 individual import lines
+const konsierAssets = import.meta.glob("@/assets/konsier/*.png", {
+  eager: true,
+  import: "default",
+}) as Record<string, string>;
+const ks = (slug: string): string => {
+  const entry = Object.entries(konsierAssets).find(([path]) => path.endsWith(`/${slug}.png`));
+  return entry ? entry[1] : "";
+};
+
+type KonsierItem = { slug: string; label: string; nodes: string };
+type KonsierLane = { name: string; items: KonsierItem[] };
+
+const konsierLanes: KonsierLane[] = [
+  {
+    name: "Core Infrastructure",
+    items: [
+      { slug: "ks-err", label: "KS-ERR — Error Handler", nodes: "4 nodes" },
+      { slug: "ks-pd-events", label: "KS-PD-EVENTS — Pipedrive Webhook Receiver", nodes: "15 nodes" },
+    ],
+  },
+  {
+    name: "Entry Lanes — Lead Capture",
+    items: [
+      { slug: "ks-wf3", label: "KS-WF3 — Website Contact Form", nodes: "12 nodes" },
+      { slug: "ks-wf-cal", label: "KS-WF-CAL — Calendly → Pipedrive", nodes: "29 nodes" },
+      { slug: "ks-wf6", label: "KS-WF6 — Daily Outbound Pipeline (Apollo)", nodes: "29 nodes" },
+      { slug: "ks-wf1", label: "KS-WF1 — Email Reply Handler", nodes: "18 nodes" },
+      { slug: "ks-wf5", label: "KS-WF5 — LinkedIn Reply Handler", nodes: "11 nodes" },
+    ],
+  },
+  {
+    name: "Qualification & Voice",
+    items: [
+      { slug: "ks-wf2", label: "KS-WF2 — Retell Voice Qualify", nodes: "31 nodes" },
+      { slug: "ks-a2", label: "KS-A2 — Tier Routing", nodes: "11 nodes" },
+      { slug: "ks-wf20", label: "KS-WF20 — Speed-to-Lead Callback", nodes: "13 nodes" },
+    ],
+  },
+  {
+    name: "Closer Copilot Suite",
+    items: [
+      { slug: "ks-a4", label: "KS-A4 — Stalled Deal Alert", nodes: "6 nodes" },
+      { slug: "ks-a4a", label: "KS-A4a — Pre-Call Brief", nodes: "12 nodes" },
+      { slug: "ks-a4b", label: "KS-A4b — Post-Call Summary", nodes: "11 nodes" },
+      { slug: "ks-a4c", label: "KS-A4c — Objection Mining", nodes: "9 nodes" },
+    ],
+  },
+  {
+    name: "Onboarding & Billing",
+    items: [
+      { slug: "ks-wf4", label: "KS-WF4 — Stripe → Onboarding Chain", nodes: "14 nodes" },
+      { slug: "ks-wf4b", label: "KS-WF4B — Closed-Won Handoff", nodes: "9 nodes" },
+      { slug: "ks-a6", label: "KS-A6 — Onboarding Drafter", nodes: "7 nodes" },
+      { slug: "ks-wf17", label: "KS-WF17 — Deliverability Monitor", nodes: "15 nodes" },
+      { slug: "ks-wf18", label: "KS-WF18 — Dunning Recovery", nodes: "34 nodes" },
+    ],
+  },
+  {
+    name: "Post-Call & Customer Ops",
+    items: [
+      { slug: "ks-wf7", label: "KS-WF7 — Customer Call QA", nodes: "12 nodes" },
+      { slug: "ks-wf22", label: "KS-WF22 — Review Request SMS", nodes: "13 nodes" },
+      { slug: "ks-a10", label: "KS-A10 — Review Response Drafter", nodes: "9 nodes" },
+      { slug: "ks-a5", label: "KS-A5 — Hot Lead Trigger", nodes: "7 nodes" },
+    ],
+  },
+  {
+    name: "Reporting & Ops",
+    items: [
+      { slug: "ks-a7", label: "KS-A7 — Bookkeeping Reconciler", nodes: "13 nodes" },
+      { slug: "ks-a8", label: "KS-A8 — Founder Brief Writer", nodes: "11 nodes" },
+      { slug: "ks-wf-usage", label: "KS-WF-USAGE — Call Usage Metering", nodes: "9 nodes" },
+      { slug: "ks-wf-meter-reset", label: "KS-WF-METER-RESET — Monthly Reset", nodes: "6 nodes" },
+      { slug: "ks-agent-11", label: "KS-AGENT-11 — Expansion Spotter", nodes: "15 nodes" },
+    ],
+  },
+  {
+    name: "Growth & Reactivation",
+    items: [
+      { slug: "ks-wf21", label: "KS-WF21 — Reactivation Campaign", nodes: "19 nodes" },
+      { slug: "ks-wf19", label: "KS-WF19 — SAM.gov Watch", nodes: "13 nodes" },
+    ],
+  },
+];
+
+const konsierTools: KonsierItem[] = [
+  { slug: "tool-apollo", label: "Apollo.io — Lead Gen Geography", nodes: "Tool" },
+  { slug: "tool-notion", label: "Notion — Konsier Database", nodes: "Tool" },
+  { slug: "tool-pipedrive", label: "Pipedrive — Pipeline Stages", nodes: "Tool" },
+];
 
 const filters = [
   { label: "All", value: "all", icon: LayoutGrid },
@@ -30,50 +131,14 @@ const filters = [
 
 const projects = [
   {
-    title: "KS-WF6 — Daily Outbound Pipeline (Merged V1 POC + V2 Production)",
-    icon: GitMerge,
-    tags: ["n8n", "Apollo", "Claude AI", "Instantly", "Notion", "Pipedrive"],
-    categories: ["konsier", "n8n", "ai"],
-    description: "16-node production pipeline: Apollo lead scrape → ICP scoring → Notion dedup check → batch-50 Claude AGENT-01 email generation → Instantly delivery → Notion Lead Log → Slack alert. Merged V1 POC with V2 production logic for a clean, single-workflow outbound engine.",
-    highlight: "16 nodes · Production",
-    status: "live" as const,
-    image: imgKsWf6,
-    loomEmbed: null as string | null,
-    externalLink: null as string | null,
-  },
-  {
-    title: "KS-WF2 — Retell AI Call Processing + AGENT-PQA",
-    icon: Phone,
-    tags: ["n8n", "Retell AI", "Claude AI", "Pipedrive", "Notion", "Slack"],
-    categories: ["konsier", "n8n", "ai"],
-    description: "Processes inbound/outbound Retell AI call events. Dual-branch: outbound calls → AGENT-03 qualification analysis → Pipedrive stage update → Notion call log. Inbound replies → AGENT-PQA fires when red_flags detected, writes Claude Haiku fix → Notion QA Queue.",
-    highlight: "Published · Dual-branch",
-    status: "live" as const,
-    image: imgKsWf2,
-    loomEmbed: null as string | null,
-    externalLink: null as string | null,
-  },
-  {
-    title: "KS-A2 — AI Tier Routing Agent",
+    title: "Konsier — AI Receptionist Agency System",
     icon: Network,
-    tags: ["n8n", "Pipedrive", "Slack", "Claude AI"],
+    tags: ["n8n", "Pipedrive", "Retell AI", "Claude AI", "Instantly", "HeyReach", "Notion", "Stripe"],
     categories: ["konsier", "n8n", "ai"],
-    description: "11-node tier routing agent: webhook receives call volume data → Code node calculates tier score → IF node checks manual override → HTTP PATCH Pipedrive stage → Switch routes to 4 Slack branches (Starter / Professional / Enterprise / Not Qualified).",
-    highlight: "11 nodes · Built",
+    description: "A full AI-receptionist agency backend, built end to end: 30 production workflows across 8 functional lanes — lead capture, AI voice qualification, a sales closer-copilot suite, onboarding/billing, customer QA, and reactivation — running on 9 Claude agents and 3 Retell voice agents against one Pipedrive CRM.",
+    highlight: "30 workflows · 8 systems",
     status: "live" as const,
-    image: imgKsA2,
-    loomEmbed: null as string | null,
-    externalLink: null as string | null,
-  },
-  {
-    title: "KS-WF1 — Email Reply Handler",
-    icon: Mail,
-    tags: ["n8n", "Instantly", "Claude AI", "Pipedrive"],
-    categories: ["konsier", "n8n", "ai"],
-    description: "Published 6-branch reply handler: webhook receives Instantly reply events → Claude AGENT-02 classifies intent → Switch routes to Hot Lead, Objection, Question, Unsubscribe, Auto-Reply, or Needs Review branches.",
-    highlight: "Published · 6-branch",
-    status: "live" as const,
-    image: imgKsWf1,
+    image: ks("ks-wf6"),
     loomEmbed: null as string | null,
     externalLink: null as string | null,
   },
@@ -276,6 +341,7 @@ const Projects = () => {
   const [page, setPage] = useState(0);
   const [dir, setDir] = useState(1);
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
+  const [systemDialogOpen, setSystemDialogOpen] = useState(false);
   const { ref, inView } = useInView({ threshold: 0.05, triggerOnce: true });
 
   const filtered = activeFilter === "all"
@@ -305,6 +371,88 @@ const Projects = () => {
   return (
     <>
       {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
+
+      <Dialog open={systemDialogOpen} onOpenChange={setSystemDialogOpen}>
+        <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Konsier — Full System Breakdown</DialogTitle>
+            <DialogDescription>
+              30 workflows across 8 functional lanes, in the order a lead actually moves through them. Click any screenshot to zoom.
+            </DialogDescription>
+          </DialogHeader>
+
+          <Accordion type="single" collapsible defaultValue="lane-0" className="w-full">
+            {konsierLanes.map((lane, i) => (
+              <AccordionItem key={lane.name} value={`lane-${i}`}>
+                <AccordionTrigger className="text-sm">
+                  <span className="flex items-center gap-2">
+                    <span className="text-xs font-mono text-primary">{String(i + 1).padStart(2, "0")}</span>
+                    {lane.name}
+                    <span className="text-xs text-muted-foreground font-normal">({lane.items.length})</span>
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {lane.items.map((item) => (
+                      <button
+                        key={item.slug}
+                        onClick={() => setLightbox({ src: ks(item.slug), alt: item.label })}
+                        className="group text-left rounded-lg border border-border overflow-hidden hover:border-primary/60 transition-colors cursor-zoom-in"
+                      >
+                        <div className="relative overflow-hidden bg-secondary/40">
+                          <img
+                            src={ks(item.slug)}
+                            alt={item.label}
+                            loading="lazy"
+                            className="w-full h-28 object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                        <div className="p-2.5">
+                          <p className="text-xs font-medium text-foreground leading-snug">{item.label}</p>
+                          <p className="text-[11px] text-muted-foreground mt-0.5">{item.nodes}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+
+            <AccordionItem value="tools">
+              <AccordionTrigger className="text-sm">
+                <span className="flex items-center gap-2">
+                  <Settings size={13} className="text-primary" />
+                  Supporting Tools
+                  <span className="text-xs text-muted-foreground font-normal">({konsierTools.length})</span>
+                </span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {konsierTools.map((item) => (
+                    <button
+                      key={item.slug}
+                      onClick={() => setLightbox({ src: ks(item.slug), alt: item.label })}
+                      className="group text-left rounded-lg border border-border overflow-hidden hover:border-primary/60 transition-colors cursor-zoom-in"
+                    >
+                      <div className="relative overflow-hidden bg-secondary/40">
+                        <img
+                          src={ks(item.slug)}
+                          alt={item.label}
+                          loading="lazy"
+                          className="w-full h-28 object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                      <div className="p-2.5">
+                        <p className="text-xs font-medium text-foreground leading-snug">{item.label}</p>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </DialogContent>
+      </Dialog>
 
       <section id="projects" className="section-padding relative overflow-hidden" ref={ref}>
         {/* Cyberpunk workstation — full-section background */}
@@ -510,6 +658,17 @@ const Projects = () => {
                             View Live
                             <ArrowUpRight size={12} />
                           </a>
+                        )}
+
+                        {project.title === "Konsier — AI Receptionist Agency System" && (
+                          <button
+                            onClick={() => setSystemDialogOpen(true)}
+                            className="inline-flex items-center gap-2 mb-4 text-sm font-medium text-primary hover:underline"
+                          >
+                            <Layers size={14} />
+                            View Full System Breakdown
+                            <ArrowUpRight size={12} />
+                          </button>
                         )}
 
                         <div className="flex flex-wrap gap-2">
