@@ -370,51 +370,10 @@ const Projects = () => {
 
   return (
     <>
-      {/* Only for the regular card grid — inside the breakdown dialog, zooming uses
-          the in-dialog overlay below instead, since a full-viewport sibling overlay
-          gets treated as an "outside click" by Radix and fights with the dialog. */}
-      {lightbox && !systemDialogOpen && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
+      {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
 
-      <Dialog
-        open={systemDialogOpen}
-        onOpenChange={(next) => {
-          // Any dismiss attempt (outside click past the dialog's own edge, Escape key)
-          // while a screenshot is zoomed should just close the zoom, not the whole
-          // breakdown — the in-dialog zoom overlay handles clicks within the dialog
-          // itself, but a click far enough outside still reaches Radix's own overlay.
-          if (!next && lightbox) {
-            setLightbox(null);
-            return;
-          }
-          setSystemDialogOpen(next);
-        }}
-      >
-        <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto relative">
-          {/* In-dialog zoom overlay — a real DOM descendant of DialogContent, so
-              Radix treats every click on it (including Close) as "inside" the
-              dialog. Positioned absolute to fill the dialog's own box rather than
-              the full viewport, since DialogContent's transform breaks position:fixed
-              children anyway. */}
-          {lightbox && systemDialogOpen && (
-            <div
-              className="absolute inset-0 z-[60] flex items-center justify-center p-4 bg-background/95 backdrop-blur-sm rounded-lg"
-              onClick={() => setLightbox(null)}
-            >
-              <button
-                onClick={() => setLightbox(null)}
-                className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 text-sm"
-              >
-                <X size={18} /> Close
-              </button>
-              <img
-                src={lightbox.src}
-                alt={lightbox.alt}
-                className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
-                onClick={(e) => e.stopPropagation()}
-              />
-            </div>
-          )}
-
+      <Dialog open={systemDialogOpen} onOpenChange={setSystemDialogOpen}>
+        <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Konsier — Full System Breakdown</DialogTitle>
             <DialogDescription>
