@@ -373,7 +373,12 @@ const Projects = () => {
       {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
 
       <Dialog open={systemDialogOpen} onOpenChange={setSystemDialogOpen}>
-        <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
+        <DialogContent
+          className="max-w-4xl max-h-[85vh] overflow-y-auto"
+          onPointerDownOutside={(e) => { if (lightbox) e.preventDefault(); }}
+          onInteractOutside={(e) => { if (lightbox) e.preventDefault(); }}
+          onEscapeKeyDown={(e) => { if (lightbox) e.preventDefault(); }}
+        >
           <DialogHeader>
             <DialogTitle>Konsier — Full System Breakdown</DialogTitle>
             <DialogDescription>
