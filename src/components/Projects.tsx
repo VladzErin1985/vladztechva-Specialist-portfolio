@@ -375,7 +375,20 @@ const Projects = () => {
           gets treated as an "outside click" by Radix and fights with the dialog. */}
       {lightbox && !systemDialogOpen && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
 
-      <Dialog open={systemDialogOpen} onOpenChange={setSystemDialogOpen}>
+      <Dialog
+        open={systemDialogOpen}
+        onOpenChange={(next) => {
+          // Any dismiss attempt (outside click past the dialog's own edge, Escape key)
+          // while a screenshot is zoomed should just close the zoom, not the whole
+          // breakdown — the in-dialog zoom overlay handles clicks within the dialog
+          // itself, but a click far enough outside still reaches Radix's own overlay.
+          if (!next && lightbox) {
+            setLightbox(null);
+            return;
+          }
+          setSystemDialogOpen(next);
+        }}
+      >
         <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto relative">
           {/* In-dialog zoom overlay — a real DOM descendant of DialogContent, so
               Radix treats every click on it (including Close) as "inside" the
