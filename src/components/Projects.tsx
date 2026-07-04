@@ -37,86 +37,86 @@ const ks = (slug: string): string => {
   return entry ? entry[1] : "";
 };
 
-type KonsierItem = { slug: string; label: string; nodes: string };
+type KonsierItem = { slug: string; label: string; nodes: string; description: string };
 type KonsierLane = { name: string; items: KonsierItem[] };
 
 const konsierLanes: KonsierLane[] = [
   {
     name: "Core Infrastructure",
     items: [
-      { slug: "ks-err", label: "KS-ERR — Error Handler", nodes: "4 nodes" },
-      { slug: "ks-pd-events", label: "KS-PD-EVENTS — Pipedrive Webhook Receiver", nodes: "15 nodes" },
+      { slug: "ks-err", label: "KS-ERR — Error Handler", nodes: "4 nodes", description: "Catches every workflow failure system-wide and posts the details straight to Slack." },
+      { slug: "ks-pd-events", label: "KS-PD-EVENTS — Pipedrive Webhook Receiver", nodes: "15 nodes", description: "The silent router — every Pipedrive stage change gets read here and sent to whichever workflow should handle it next." },
     ],
   },
   {
     name: "Entry Lanes — Lead Capture",
     items: [
-      { slug: "ks-wf3", label: "KS-WF3 — Website Contact Form", nodes: "12 nodes" },
-      { slug: "ks-wf-cal", label: "KS-WF-CAL — Calendly → Pipedrive", nodes: "29 nodes" },
-      { slug: "ks-wf6", label: "KS-WF6 — Daily Outbound Pipeline (Apollo)", nodes: "29 nodes" },
-      { slug: "ks-wf1", label: "KS-WF1 — Email Reply Handler", nodes: "18 nodes" },
-      { slug: "ks-wf5", label: "KS-WF5 — LinkedIn Reply Handler", nodes: "11 nodes" },
+      { slug: "ks-wf3", label: "KS-WF3 — Website Contact Form", nodes: "12 nodes", description: "A site form submission creates the Person + Deal in Pipedrive and alerts the team in Slack." },
+      { slug: "ks-wf-cal", label: "KS-WF-CAL — Calendly → Pipedrive", nodes: "29 nodes", description: "A 4-branch booking router that handles demo, kickoff, check-in, and 30-day review calls differently." },
+      { slug: "ks-wf6", label: "KS-WF6 — Daily Outbound Pipeline (Apollo)", nodes: "29 nodes", description: "Scrapes Apollo across 5 verticals nightly, scores each lead, drafts a Claude email, and sends it through Instantly." },
+      { slug: "ks-wf1", label: "KS-WF1 — Email Reply Handler", nodes: "18 nodes", description: "Every Instantly reply gets classified by Claude and routed to one of 6 outcomes — hot lead, objection, unsubscribe, and more." },
+      { slug: "ks-wf5", label: "KS-WF5 — LinkedIn Reply Handler", nodes: "11 nodes", description: "The same reply-classification pattern as WF1, applied to LinkedIn replies coming in through HeyReach." },
     ],
   },
   {
     name: "Qualification & Voice",
     items: [
-      { slug: "ks-wf2", label: "KS-WF2 — Retell Voice Qualify", nodes: "31 nodes" },
-      { slug: "ks-a2", label: "KS-A2 — Tier Routing", nodes: "11 nodes" },
-      { slug: "ks-wf20", label: "KS-WF20 — Speed-to-Lead Callback", nodes: "13 nodes" },
+      { slug: "ks-wf2", label: "KS-WF2 — Retell Voice Qualify", nodes: "31 nodes", description: "A Retell AI call event triggers the qualification agent, which updates Pipedrive and logs the call to Notion." },
+      { slug: "ks-a2", label: "KS-A2 — Tier Routing", nodes: "11 nodes", description: "Turns call volume into a tier score, updates the deal's stage, and alerts the matching Slack channel." },
+      { slug: "ks-wf20", label: "KS-WF20 — Speed-to-Lead Callback", nodes: "13 nodes", description: "Detects a missed inbound call and fires an automatic callback attempt right away." },
     ],
   },
   {
     name: "Closer Copilot Suite",
     items: [
-      { slug: "ks-a4", label: "KS-A4 — Stalled Deal Alert", nodes: "6 nodes" },
-      { slug: "ks-a4a", label: "KS-A4a — Pre-Call Brief", nodes: "12 nodes" },
-      { slug: "ks-a4b", label: "KS-A4b — Post-Call Summary", nodes: "11 nodes" },
-      { slug: "ks-a4c", label: "KS-A4c — Objection Mining", nodes: "9 nodes" },
+      { slug: "ks-a4", label: "KS-A4 — Stalled Deal Alert", nodes: "6 nodes", description: "Flags any deal that's gone more than 7 days with no activity." },
+      { slug: "ks-a4a", label: "KS-A4a — Pre-Call Brief", nodes: "12 nodes", description: "Builds a briefing document ahead of every strategy call so the closer walks in prepared." },
+      { slug: "ks-a4b", label: "KS-A4b — Post-Call Summary", nodes: "11 nodes", description: "Auto-summarizes the call the moment it ends, no manual note-taking required." },
+      { slug: "ks-a4c", label: "KS-A4c — Objection Mining", nodes: "9 nodes", description: "Surfaces recurring objection patterns across recent calls so the pitch keeps improving." },
     ],
   },
   {
     name: "Onboarding & Billing",
     items: [
-      { slug: "ks-wf4", label: "KS-WF4 — Stripe → Onboarding Chain", nodes: "14 nodes" },
-      { slug: "ks-wf4b", label: "KS-WF4B — Closed-Won Handoff", nodes: "9 nodes" },
-      { slug: "ks-a6", label: "KS-A6 — Onboarding Drafter", nodes: "7 nodes" },
-      { slug: "ks-wf17", label: "KS-WF17 — Deliverability Monitor", nodes: "15 nodes" },
-      { slug: "ks-wf18", label: "KS-WF18 — Dunning Recovery", nodes: "34 nodes" },
+      { slug: "ks-wf4", label: "KS-WF4 — Stripe → Onboarding Chain", nodes: "14 nodes", description: "A successful Stripe payment sets the billing cadence and kicks off the onboarding sequence." },
+      { slug: "ks-wf4b", label: "KS-WF4B — Closed-Won Handoff", nodes: "9 nodes", description: "Continues the handoff from a closed-won deal straight into the onboarding intake." },
+      { slug: "ks-a6", label: "KS-A6 — Onboarding Drafter", nodes: "7 nodes", description: "Drafts the client's onboarding document automatically from their intake data." },
+      { slug: "ks-wf17", label: "KS-WF17 — Deliverability Monitor", nodes: "15 nodes", description: "Watches email sending health across every mailbox and flags deliverability risk early." },
+      { slug: "ks-wf18", label: "KS-WF18 — Dunning Recovery", nodes: "34 nodes", description: "A cadence-aware failed-payment recovery sequence that escalates in stages instead of one blunt retry." },
     ],
   },
   {
     name: "Post-Call & Customer Ops",
     items: [
-      { slug: "ks-wf7", label: "KS-WF7 — Customer Call QA", nodes: "12 nodes" },
-      { slug: "ks-wf22", label: "KS-WF22 — Review Request SMS", nodes: "13 nodes" },
-      { slug: "ks-a10", label: "KS-A10 — Review Response Drafter", nodes: "9 nodes" },
-      { slug: "ks-a5", label: "KS-A5 — Hot Lead Trigger", nodes: "7 nodes" },
+      { slug: "ks-wf7", label: "KS-WF7 — Customer Call QA", nodes: "12 nodes", description: "An AI agent reads every call transcript and flags red-flag calls for human review." },
+      { slug: "ks-wf22", label: "KS-WF22 — Review Request SMS", nodes: "13 nodes", description: "Sends a review-request text automatically once service is completed." },
+      { slug: "ks-a10", label: "KS-A10 — Review Response Drafter", nodes: "9 nodes", description: "Drafts a response to an incoming customer review, ready for a quick human approval." },
+      { slug: "ks-a5", label: "KS-A5 — Hot Lead Trigger", nodes: "7 nodes", description: "Flags a lead as hot the instant it qualifies, so follow-up happens in real time, not the next day." },
     ],
   },
   {
     name: "Reporting & Ops",
     items: [
-      { slug: "ks-a7", label: "KS-A7 — Bookkeeping Reconciler", nodes: "13 nodes" },
-      { slug: "ks-a8", label: "KS-A8 — Founder Brief Writer", nodes: "11 nodes" },
-      { slug: "ks-wf-usage", label: "KS-WF-USAGE — Call Usage Metering", nodes: "9 nodes" },
-      { slug: "ks-wf-meter-reset", label: "KS-WF-METER-RESET — Monthly Reset", nodes: "6 nodes" },
-      { slug: "ks-agent-11", label: "KS-AGENT-11 — Expansion Spotter", nodes: "15 nodes" },
+      { slug: "ks-a7", label: "KS-A7 — Bookkeeping Reconciler", nodes: "13 nodes", description: "Runs a weekly reconciliation between Stripe payments and QuickBooks records." },
+      { slug: "ks-a8", label: "KS-A8 — Founder Brief Writer", nodes: "11 nodes", description: "Writes a weekly founder brief and delivers it straight to Notion and a Slack DM." },
+      { slug: "ks-wf-usage", label: "KS-WF-USAGE — Call Usage Metering", nodes: "9 nodes", description: "Meters call usage against every client's plan for accurate billing." },
+      { slug: "ks-wf-meter-reset", label: "KS-WF-METER-RESET — Monthly Reset", nodes: "6 nodes", description: "Resets usage counters at the start of every billing month." },
+      { slug: "ks-agent-11", label: "KS-AGENT-11 — Expansion Spotter", nodes: "15 nodes", description: "Flags existing accounts that look ready for an upsell or expansion conversation." },
     ],
   },
   {
     name: "Growth & Reactivation",
     items: [
-      { slug: "ks-wf21", label: "KS-WF21 — Reactivation Campaign", nodes: "19 nodes" },
-      { slug: "ks-wf19", label: "KS-WF19 — SAM.gov Watch", nodes: "13 nodes" },
+      { slug: "ks-wf21", label: "KS-WF21 — Reactivation Campaign", nodes: "19 nodes", description: "Drafts win-back SMS scripts for lapsed clients — gated behind a hard compliance approval step, no exceptions." },
+      { slug: "ks-wf19", label: "KS-WF19 — SAM.gov Watch", nodes: "13 nodes", description: "Watches federal contract notices for GovCon-adjacent opportunities worth flagging." },
     ],
   },
 ];
 
 const konsierTools: KonsierItem[] = [
-  { slug: "tool-apollo", label: "Apollo.io — Lead Gen Geography", nodes: "Tool" },
-  { slug: "tool-notion", label: "Notion — Konsier Database", nodes: "Tool" },
-  { slug: "tool-pipedrive", label: "Pipedrive — Pipeline Stages", nodes: "Tool" },
+  { slug: "tool-apollo", label: "Apollo.io — Lead Gen Geography", nodes: "Tool", description: "The ICP/geography targeting configuration that sources the 5-vertical outbound list." },
+  { slug: "tool-notion", label: "Notion — Konsier Database", nodes: "Tool", description: "The Notion databases behind the QA queues, founder briefs, and onboarding docs." },
+  { slug: "tool-pipedrive", label: "Pipedrive — Pipeline Stages", nodes: "Tool", description: "The pipeline and stage structure every workflow above reads from and writes back to." },
 ];
 
 const filters = [
@@ -313,7 +313,7 @@ const Lightbox = ({ src, alt, onClose }: { src: string; alt: string; onClose: ()
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
       onClick={onClose}
     >
       <motion.div
@@ -410,6 +410,7 @@ const Projects = () => {
                         <div className="p-2.5">
                           <p className="text-xs font-medium text-foreground leading-snug">{item.label}</p>
                           <p className="text-[11px] text-muted-foreground mt-0.5">{item.nodes}</p>
+                          <p className="text-[11px] text-muted-foreground/80 mt-1.5 leading-snug">{item.description}</p>
                         </div>
                       </button>
                     ))}
@@ -444,6 +445,7 @@ const Projects = () => {
                       </div>
                       <div className="p-2.5">
                         <p className="text-xs font-medium text-foreground leading-snug">{item.label}</p>
+                        <p className="text-[11px] text-muted-foreground/80 mt-1.5 leading-snug">{item.description}</p>
                       </div>
                     </button>
                   ))}
@@ -583,12 +585,26 @@ const Projects = () => {
                   exit="exit"
                   className="grid grid-cols-1 md:grid-cols-2 gap-6"
                 >
-                  {visibleCards.map((project) => (
+                  {visibleCards.map((project) => {
+                    const isKonsierSystem = project.title === "Konsier — AI Receptionist Agency System";
+                    return (
                     <motion.div
                       key={project.title}
                       whileHover={{ y: -6, boxShadow: "0 16px 40px -12px hsl(var(--primary) / 0.18)" }}
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                      className="group rounded-2xl glass-card relative overflow-hidden"
+                      className={`group rounded-2xl glass-card relative overflow-hidden ${isKonsierSystem ? "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" : ""}`}
+                      {...(isKonsierSystem ? {
+                        role: "button",
+                        tabIndex: 0,
+                        "aria-label": "Open Konsier full system breakdown",
+                        onClick: () => setSystemDialogOpen(true),
+                        onKeyDown: (e: React.KeyboardEvent) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            setSystemDialogOpen(true);
+                          }
+                        },
+                      } : {})}
                     >
                       {/* Loom embed */}
                       {project.loomEmbed && (
@@ -608,7 +624,14 @@ const Projects = () => {
                       {project.image && (
                         <div
                           className="border-b border-border overflow-hidden relative cursor-zoom-in"
-                          onClick={() => setLightbox({ src: project.image as string, alt: project.title })}
+                          onClick={(e) => {
+                            if (isKonsierSystem) {
+                              e.stopPropagation();
+                              setSystemDialogOpen(true);
+                            } else {
+                              setLightbox({ src: project.image as string, alt: project.title });
+                            }
+                          }}
                         >
                           <img
                             src={project.image}
@@ -660,9 +683,9 @@ const Projects = () => {
                           </a>
                         )}
 
-                        {project.title === "Konsier — AI Receptionist Agency System" && (
+                        {isKonsierSystem && (
                           <button
-                            onClick={() => setSystemDialogOpen(true)}
+                            onClick={(e) => { e.stopPropagation(); setSystemDialogOpen(true); }}
                             className="inline-flex items-center gap-2 mb-4 text-sm font-medium text-primary hover:underline"
                           >
                             <Layers size={14} />
@@ -680,7 +703,7 @@ const Projects = () => {
                         </div>
                       </div>
                     </motion.div>
-                  ))}
+                  );})}
                 </motion.div>
               </AnimatePresence>
             </motion.div>
