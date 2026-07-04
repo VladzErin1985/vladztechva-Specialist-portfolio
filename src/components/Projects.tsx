@@ -372,7 +372,19 @@ const Projects = () => {
     <>
       {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
 
-      <Dialog open={systemDialogOpen} onOpenChange={setSystemDialogOpen}>
+      <Dialog
+        open={systemDialogOpen}
+        onOpenChange={(next) => {
+          // The lightbox renders as a sibling of the dialog, so Radix's own
+          // outside-click detection sees every click on it (including its Close
+          // button) as "outside" and tries to close the dialog underneath on the
+          // very first click. Only state is guarded here — nothing about how the
+          // lightbox itself renders changes, so this can't reintroduce the
+          // "dialog won't open" regression from the DialogContent restructuring.
+          if (!next && lightbox) return;
+          setSystemDialogOpen(next);
+        }}
+      >
         <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Konsier — Full System Breakdown</DialogTitle>
