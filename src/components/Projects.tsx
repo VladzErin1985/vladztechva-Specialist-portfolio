@@ -372,13 +372,17 @@ const Projects = () => {
     <>
       {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
 
-      <Dialog open={systemDialogOpen} onOpenChange={setSystemDialogOpen}>
-        <DialogContent
-          className="max-w-4xl max-h-[85vh] overflow-y-auto"
-          onPointerDownOutside={(e) => { if (lightbox) e.preventDefault(); }}
-          onInteractOutside={(e) => { if (lightbox) e.preventDefault(); }}
-          onEscapeKeyDown={(e) => { if (lightbox) e.preventDefault(); }}
-        >
+      <Dialog
+        open={systemDialogOpen}
+        onOpenChange={(next) => {
+          // Ignore any close request (outside click, Escape, etc.) while a screenshot
+          // is zoomed — the click should only close the lightbox, and the breakdown
+          // dialog should still be sitting right where it was underneath.
+          if (!next && lightbox) return;
+          setSystemDialogOpen(next);
+        }}
+      >
+        <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Konsier — Full System Breakdown</DialogTitle>
             <DialogDescription>
