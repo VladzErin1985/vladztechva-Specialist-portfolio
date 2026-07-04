@@ -321,16 +321,16 @@ const Lightbox = ({ src, alt, onClose }: { src: string; alt: string; onClose: ()
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.8, opacity: 0 }}
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
-        className="relative max-w-5xl w-full"
+        className="relative max-w-5xl w-full min-h-[50vh] flex items-center justify-center"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute -top-10 right-0 text-white/80 hover:text-white transition-colors flex items-center gap-1 text-sm"
+          className="absolute -top-10 right-0 text-white/80 hover:text-white transition-colors flex items-center gap-1 text-sm z-10"
         >
           <X size={18} /> Close
         </button>
-        <img src={src} alt={alt} className="w-full h-auto rounded-2xl shadow-2xl border border-white/10" />
+        <img src={src} alt={alt} className="max-w-full max-h-[80vh] w-auto h-auto rounded-2xl shadow-2xl border border-white/10" />
       </motion.div>
     </motion.div>
   </AnimatePresence>
