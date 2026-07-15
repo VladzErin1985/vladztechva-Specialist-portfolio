@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import robotLaptop from "@/assets/robot_laptop.jpeg";
 import { useInView } from "react-intersection-observer";
 import {
   SiN8N, SiAnthropic, SiNotion, SiSlack, SiZapier,
@@ -67,14 +66,20 @@ const Tools = () => {
 
   return (
     <section id="tools" className="section-padding relative overflow-hidden" ref={ref}>
-      {/* Giant laptop robot — left side background, full height */}
+      {/* Android transformation video — left side background, full height */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <img
-          src={robotLaptop}
-          alt="" aria-hidden="true"
+        <video
+          src="/video/tools-android-transform.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          aria-hidden="true"
           className="absolute h-full w-auto"
           style={{ left: "-5%", top: 0, objectFit: "cover", objectPosition: "60% top" }}
         />
+        {/* Uniform dark wash so the cards stay fully readable over video motion */}
+        <div className="absolute inset-0" style={{ background: "hsl(222 47% 4% / 0.72)" }} />
         <div className="absolute inset-y-0 right-0" style={{
           width: "65%",
           background: "linear-gradient(to left, hsl(222 47% 4%) 55%, hsl(222 47% 4%/0.85) 75%, transparent 100%)",

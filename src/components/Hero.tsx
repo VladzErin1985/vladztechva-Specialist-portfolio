@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, MapPin, CheckCircle } from "lucide-react";
-import heroBg from "@/assets/hero_bg.jpg";
-import robotAnalyst from "@/assets/robot_analyst.jpeg";
 
 // ── Tech badges (left panel) ──────────────────────────────────────────────────
 const techBadges = [
@@ -42,40 +40,39 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
 
-      {/* ── BACKGROUND: hero image + layered overlays ───────────────────────── */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src={heroBg} alt="" aria-hidden="true"
-          className="w-full h-full object-cover"
-          style={{ objectPosition: "18% center" }}
-        />
-
-        {/* Robot mascot — blends into background scene via gradient overlays above */}
-        <img
-          src={robotAnalyst}
-          alt=""
+      {/* ── BACKGROUND: hero video + layered overlays ───────────────────────── */}
+      <div className="absolute inset-0 z-0" style={{ background: "hsl(222 47% 4%)" }}>
+        {/* object-cover — fills the full container with zero letterbox gaps.
+            (object-contain was tried but left a visible seam/line on some viewport
+            aspect ratios where the fit was just slightly off — cover avoids that
+            failure mode entirely by never leaving any unfilled edge.) */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
           aria-hidden="true"
-          className="absolute pointer-events-none hidden lg:block"
-          style={{
-            width: "260px",
-            bottom: "40px",
-            left: "3%",
-            mixBlendMode: "screen" as const,
-            opacity: 0.78,
-            maskImage: "radial-gradient(ellipse 82% 88% at 50% 60%, black 35%, rgba(0,0,0,0.4) 65%, transparent 100%)",
-            WebkitMaskImage: "radial-gradient(ellipse 82% 88% at 50% 60%, black 35%, rgba(0,0,0,0.4) 65%, transparent 100%)",
-            filter: "brightness(1.2) contrast(0.9)",
-          }}
-        />
+          className="w-full h-full object-cover"
+          style={{ objectPosition: "center center" }}
+        >
+          <source src="/video/hero-ai-system.mp4" type="video/mp4" />
+        </video>
 
-        {/* Main directional gradient — left open, right sealed */}
+        {/* Uniform dark wash — lightened so the video reads clearly instead of
+            washing out; the directional gradient below still darkens the text
+            side enough for the panels to stay legible */}
+        <div className="absolute inset-0" style={{ background: "hsl(222 47% 4% / 0.15)" }} />
+
+        {/* Main directional gradient — left open, right sealed. Lightened across
+            the board vs. the original pass so the video stays visible everywhere,
+            still darkening progressively toward the right where the pipeline card sits. */}
         <div className="absolute inset-0" style={{
           background: `linear-gradient(to right,
-            hsl(222 47% 4% / 0.10) 0%,
-            hsl(222 47% 4% / 0.25) 25%,
-            hsl(222 47% 4% / 0.42) 48%,
-            hsl(222 47% 4% / 0.85) 68%,
-            hsl(222 47% 4%) 80%)`
+            hsl(222 47% 4% / 0.02) 0%,
+            hsl(222 47% 4% / 0.12) 25%,
+            hsl(222 47% 4% / 0.25) 48%,
+            hsl(222 47% 4% / 0.55) 68%,
+            hsl(222 47% 4% / 0.80) 80%)`
         }} />
 
         {/* Top seal — hides baked-in image text */}
@@ -147,21 +144,23 @@ const Hero = () => {
           </p>
         </motion.div>
 
-        {/* ── 2-COLUMN LAYOUT ─────────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 items-center mb-10">
+        {/* ── 3-COLUMN "COMMAND CENTER" LAYOUT ────────────────────────────── */}
+        {/* Deliberate composition, not a random 3-card scatter: skills (left) and
+            pipeline output (right) flank the centered name — reads left-to-right
+            as "inputs → operator → results". Small animated beams at each card's
+            inner edge reinforce that flow, echoing the pipeline's own AUTO HANDOFF
+            connector motif. Full width now (no max-w cap) so the two side cards
+            sit near their own edges and the video's subject stays clear in the middle. */}
+        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr_300px] gap-6 lg:gap-4 items-center mb-10">
 
-          {/* LEFT — floating panels (Vladimir comes from BG image) */}
+          {/* LEFT — Tech stack card */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative order-2 lg:order-1 hidden lg:flex flex-col justify-between items-end min-h-[520px] py-4"
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="order-2 lg:order-1 flex justify-center lg:justify-start"
           >
-            {/* ── GLASSMORPHIC TECH PANEL ── */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.5 }}
+            <div
               style={{
                 background: "rgba(6, 10, 22, 0.72)",
                 border: "1px solid hsl(191 100% 42% / 0.22)",
@@ -169,7 +168,6 @@ const Hero = () => {
               }}
               className="rounded-2xl p-5 w-[228px] relative overflow-hidden"
             >
-              {/* Corner accent lines */}
               <span className="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-primary/60 rounded-tl-lg" />
               <span className="absolute bottom-0 right-0 w-5 h-5 border-b-2 border-r-2 border-primary/60 rounded-br-lg" />
 
@@ -202,106 +200,122 @@ const Hero = () => {
                   </span>
                 </div>
               </div>
-            </motion.div>
 
-            {/* ── DECORATIVE CODE SNIPPET ── */}
+              {/* Outbound beam — signals this feeds toward the center */}
+              <motion.div
+                animate={{ opacity: [0.2, 0.8, 0.2] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="hidden lg:block absolute top-1/2 -right-6 w-6 h-px"
+                style={{ background: "linear-gradient(to right, hsl(191 100% 42% / 0.8), transparent)" }}
+              />
+            </div>
+          </motion.div>
+
+          {/* CENTER — Name (one line) + subtitle + location + CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="order-1 lg:order-2 flex flex-col items-center text-center gap-4 px-1"
+          >
+            <motion.h1
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.7 }}
+              className="font-bold tracking-normal whitespace-nowrap"
+              style={{ fontSize: "clamp(1.6rem, 5.5vw, 4.4rem)", lineHeight: 1 }}
+            >
+              <span style={{
+                background: "linear-gradient(90deg, #ffffff 0%, #e2f8ff 30%, #00f0ff 65%, #38bdf8 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                filter: "drop-shadow(0 0 28px hsl(191 100% 42% / 0.70)) drop-shadow(0 0 60px hsl(191 100% 42% / 0.35)) drop-shadow(2px 4px 0px rgba(0,0,0,0.9))",
+              }}>VLADIMIR NAPIGKIT</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.55 }}
+              className="text-[13px] font-mono tracking-[0.3em] uppercase"
+              style={{
+                color: "#00f0ff",
+                textShadow: "0 0 18px hsl(191 100% 42% / 0.65), 0 0 40px hsl(191 100% 42% / 0.25)",
+              }}
+            >
+              AI AUTOMATION ARCHITECT
+            </motion.p>
+
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1.1 }}
-              style={{
-                background: "rgba(255, 255, 255, 0.02)",
-                border: "1px solid hsl(215 30% 60% / 0.18)",
-              }}
-              className="rounded-xl p-3.5 w-[270px] font-mono text-[9px] text-muted-foreground leading-[1.75]"
+              transition={{ delay: 0.65 }}
+              className="flex items-center gap-2 text-foreground/40 text-xs font-mono"
             >
-              <div className="flex gap-1.5 mb-2.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
-                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-                <span className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
-              </div>
-              <span className="text-primary/50">let</span> parsed;<br />
-              <span className="text-primary/50">try</span> {"{"}<br />
-              {"  "}<span className="text-accent/65">const</span> match = raw.match(...);<br />
-              {"  "}parsed = JSON.parse(match[0]);<br />
-              {"}"} <span className="text-primary/50">catch</span> (e) {"{"}<br />
-              {"  "}parsed = {"{ status: 'follow_up' }"};<br />
-              {"}"}
+              <MapPin size={11} style={{ color: "#00f0ff" }} />
+              <span>Zamboanga City, Philippines · UTC+8</span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.95 }}
+              className="flex gap-3 mt-1"
+            >
+              <motion.a
+                href="#projects"
+                whileHover={{ y: -3 }}
+                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm"
+                style={{
+                  background: "linear-gradient(135deg, hsl(191 100% 42%) 0%, hsl(210 100% 55%) 100%)",
+                  color: "hsl(222 47% 4%)",
+                  boxShadow: "0 0 24px hsl(191 100% 42% / 0.4), 0 4px 16px hsl(191 100% 42% / 0.2)",
+                }}
+              >
+                View My Work <ArrowRight size={15} />
+              </motion.a>
+              <motion.a
+                href="#contact"
+                whileHover={{ y: -3, background: "hsl(191 100% 42% / 0.1)" }}
+                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-foreground font-semibold text-sm transition-colors"
+                style={{
+                  border: "1px solid hsl(191 100% 42% / 0.3)",
+                  boxShadow: "0 0 12px hsl(191 100% 42% / 0.08), inset 0 0 12px hsl(191 100% 42% / 0.04)",
+                }}
+              >
+                Get In Touch
+              </motion.a>
             </motion.div>
           </motion.div>
 
-          {/* RIGHT — Name + Pipeline + CTAs */}
+          {/* RIGHT — Automation Pipeline card */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.25 }}
-            className="order-1 lg:order-2 flex flex-col gap-5"
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="order-3 flex justify-center lg:justify-end"
           >
-            {/* ── NAME + TITLE ── */}
-            <div>
-              <motion.h1
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.7 }}
-                className="font-bold leading-[0.9] mb-3 tracking-normal"
-                style={{ fontSize: "clamp(3rem, 5vw, 5.2rem)" }}
-              >
-                <span style={{
-                  background: "linear-gradient(90deg, #ffffff 0%, #e2f8ff 30%, #00f0ff 65%, #38bdf8 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  filter: "drop-shadow(0 0 28px hsl(191 100% 42% / 0.70)) drop-shadow(0 0 60px hsl(191 100% 42% / 0.35)) drop-shadow(2px 4px 0px rgba(0,0,0,0.9))",
-                }}>VLADIMIR</span>
-                <br />
-                <span style={{
-                  background: "linear-gradient(90deg, #ffffff 0%, #e2f8ff 50%, #00f0ff 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  filter: "drop-shadow(0 0 18px hsl(191 100% 42% / 0.40)) drop-shadow(2px 4px 0px rgba(0,0,0,0.9))",
-                }}>NAPIGKIT</span>
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.55 }}
-                className="text-[13px] font-mono tracking-[0.3em] uppercase mb-2"
-                style={{
-                  color: "#00f0ff",
-                  textShadow: "0 0 18px hsl(191 100% 42% / 0.65), 0 0 40px hsl(191 100% 42% / 0.25)",
-                }}
-              >
-                AI AUTOMATION ARCHITECT
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.65 }}
-                className="flex items-center gap-2 text-foreground/40 text-xs font-mono"
-              >
-                <MapPin size={11} style={{ color: "#00f0ff" }} />
-                <span>Zamboanga City, Philippines · UTC+8</span>
-              </motion.div>
-            </div>
-
-            {/* ── GLASSMORPHIC PIPELINE PANEL ── */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
+            <div
               style={{
                 background: "rgba(255, 255, 255, 0.03)",
                 border: "1px solid hsl(191 100% 42% / 0.20)",
                 boxShadow: "0 0 0 1px hsl(191 100% 42% / 0.05), inset 0 1px 0 rgba(255,255,255,0.06)",
               }}
-              className="rounded-2xl p-5 relative overflow-hidden max-w-[390px] w-full"
+              className="rounded-2xl p-5 relative overflow-hidden w-full max-w-[300px]"
             >
-              {/* Corner accents */}
               <span className="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-primary/50 rounded-tl-xl" />
               <span className="absolute bottom-0 right-0 w-5 h-5 border-b-2 border-r-2 border-primary/50 rounded-br-xl" />
+
+              {/* Inbound beam — mirrors the left card's outbound beam */}
+              <motion.div
+                animate={{ opacity: [0.2, 0.8, 0.2] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                className="hidden lg:block absolute top-1/2 -left-6 w-6 h-px"
+                style={{ background: "linear-gradient(to left, hsl(191 100% 42% / 0.8), transparent)" }}
+              />
 
               <p className="text-primary/55 text-[10px] tracking-[0.28em] uppercase font-mono mb-4">
                 AUTOMATION PIPELINE
@@ -385,41 +399,7 @@ const Hero = () => {
                   </div>
                 ))}
               </div>
-            </motion.div>
-
-            {/* ── CTAs ── */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.95 }}
-              className="flex gap-3"
-            >
-              <motion.a
-                href="#projects"
-                whileHover={{ y: -3 }}
-                whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm"
-                style={{
-                  background: "linear-gradient(135deg, hsl(191 100% 42%) 0%, hsl(210 100% 55%) 100%)",
-                  color: "hsl(222 47% 4%)",
-                  boxShadow: "0 0 24px hsl(191 100% 42% / 0.4), 0 4px 16px hsl(191 100% 42% / 0.2)",
-                }}
-              >
-                View My Work <ArrowRight size={15} />
-              </motion.a>
-              <motion.a
-                href="#contact"
-                whileHover={{ y: -3, background: "hsl(191 100% 42% / 0.1)" }}
-                whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-foreground font-semibold text-sm transition-colors"
-                style={{
-                  border: "1px solid hsl(191 100% 42% / 0.3)",
-                  boxShadow: "0 0 12px hsl(191 100% 42% / 0.08), inset 0 0 12px hsl(191 100% 42% / 0.04)",
-                }}
-              >
-                Get In Touch
-              </motion.a>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
 
