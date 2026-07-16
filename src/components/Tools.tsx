@@ -5,7 +5,7 @@ import {
   SiMake, SiOpenai, SiGoogle, SiSupabase,
   SiFigma, SiVercel, SiAirtable,
 } from "react-icons/si";
-import { Mic, Send, BarChart3, Link2, Target, Workflow, LayoutDashboard, ClipboardList } from "lucide-react";
+import { Mic, Send, BarChart3, Link2, Target, Workflow, LayoutDashboard, ClipboardList, Clapperboard } from "lucide-react";
 
 type ToolIcon =
   | { type: "si"; component: React.ComponentType<{ size?: number; style?: React.CSSProperties; className?: string }> }
@@ -39,6 +39,7 @@ const tools: Tool[] = [
   { name: "Airtable", icon: { type: "si", component: SiAirtable }, category: "Database", color: "#FCB400" },
   { name: "Softr.io", icon: { type: "lucide", component: LayoutDashboard, color: "#5E6AD2" }, category: "Dashboard", color: "#5E6AD2" },
   { name: "AppSheet", icon: { type: "lucide", component: ClipboardList, color: "#34A853" }, category: "Field App", color: "#34A853" },
+  { name: "AI Video", icon: { type: "lucide", component: Clapperboard, color: "#EC4899" }, category: "AI Video", color: "#EC4899" },
 ];
 
 const containerVariants = {

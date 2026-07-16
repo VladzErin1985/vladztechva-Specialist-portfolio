@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Building2, Bot, Zap, Target, Globe, Brain, ArrowUpRight, Network, Phone, Monitor, Code2, Layers } from "lucide-react";
+import { Building2, Bot, Zap, Target, Globe, Brain, ArrowUpRight, Network, Phone, Monitor, Code2, Layers, Clapperboard } from "lucide-react";
 import robotHolographic from "@/assets/robot_holographic.jpeg";
 import { useTilt } from "@/hooks/useTilt";
 import { useInView } from "react-intersection-observer";
@@ -16,6 +16,7 @@ const services = [
   { icon: Monitor, title: "Custom Portfolio Design", description: "Fully custom portfolio and business websites designed in Figma and built to pixel-perfect spec. Integrated with n8n or Make.com for contact form automation, CRM sync, and lead capture on form submit." },
   { icon: Code2, title: "Custom Website Design", description: "Bespoke business website design with unique layouts, branding, and animations. Backend-integrated via n8n webhooks — form submission triggers CRM entry, Slack alert, and automated email follow-up." },
   { icon: Layers, title: "Funnel Design & Integration", description: "Custom sales funnels designed for conversion — landing pages, quiz lead scoring, and upsell flows. Fully integrated: form submit → n8n → AI qualification → CRM stage update → automated drip sequence." },
+  { icon: Clapperboard, title: "AI Video Generation", description: "Cinematic AI-generated video — brand pieces, product demos, and avatar-driven sales content produced end-to-end with AI, no camera crew or filming schedule required." },
 ];
 
 const containerVariants = {
