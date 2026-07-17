@@ -98,37 +98,13 @@ const Contact = () => {
   return (
     <section id="contact" className="section-padding relative overflow-hidden" ref={ref}>
 
-      {/* YouTube video background — Blue Technology Loop, no copyright */}
+      {/* Color overlay only — shared hologram video lives one level up in Index.tsx, spanning this + Testimonials */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* Oversized iframe to cover all aspect ratios */}
-        <div style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "120vw",
-          height: "120vh",
-          minWidth: "120%",
-          minHeight: "120%",
-        }}>
-          <iframe
-            src="https://www.youtube.com/embed/NfiJwKpxH6s?autoplay=1&mute=1&loop=1&playlist=NfiJwKpxH6s&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1"
-            allow="autoplay; encrypted-media"
-            title="bg-video"
-            style={{
-              width: "100%",
-              height: "100%",
-              border: "none",
-              opacity: 0.55,
-            }}
-          />
-        </div>
-        {/* Dark overlay to blend and keep text readable */}
+        {/* Violet-to-dark overlay, matching Testimonials' treatment */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 100% 90% at 50% 45%, hsl(220 60% 5% / 0.50) 10%, hsl(220 60% 4% / 0.65) 55%, hsl(222 47% 4% / 0.90) 100%)",
+          background: "radial-gradient(ellipse 100% 90% at 50% 45%, hsl(272 55% 8% / 0.32) 10%, hsl(272 55% 7% / 0.48) 55%, hsl(272 55% 5% / 0.68) 100%)",
         }} />
-        <div className="absolute inset-x-0 top-0" style={{ height: "15%", background: "linear-gradient(to bottom, hsl(222 47% 4%), transparent)" }} />
-        <div className="absolute inset-x-0 bottom-0" style={{ height: "15%", background: "linear-gradient(to top, hsl(222 47% 4%), transparent)" }} />
+        <div className="absolute inset-x-0 bottom-0" style={{ height: "14%", background: "linear-gradient(to top, hsl(222 47% 4%), transparent)" }} />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">

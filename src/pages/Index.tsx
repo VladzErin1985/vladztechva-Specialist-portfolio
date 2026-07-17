@@ -31,8 +31,22 @@ const Index = () => {
         <Tools />
         <Projects />
         <WorkExperience />
-        <Testimonials />
-        <Contact />
+        <div className="relative overflow-hidden">
+          {/* Single shared hologram video background spanning both sections */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full pointer-events-none z-0"
+            style={{ objectFit: "cover", objectPosition: "center 30%" }}
+          >
+            <source src="/video/testimonials-hologram.mp4" type="video/mp4" />
+          </video>
+          <Testimonials />
+          <Contact />
+        </div>
         <Footer />
       </div>
     </>

@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { Quote, Star } from "lucide-react";
 import { useTilt } from "@/hooks/useTilt";
 import { useInView } from "react-intersection-observer";
-import clientBg from "@/assets/client_testimonials_bg.jpeg";
 
 const testimonials = [
   {
@@ -51,13 +50,13 @@ const TestimonialCard = ({ t, index }: { t: typeof testimonials[0]; index: numbe
         transformPerspective: 1000,
         rotateX: isCoarse ? 0 : tilt.rotateX,
         rotateY: isCoarse ? 0 : tilt.rotateY,
-        background: "rgba(10, 28, 35, 0.35)",
-        boxShadow: "0 4px 32px -4px rgba(0,0,0,0.7), inset 0 1px 0 rgba(0,240,255,0.08)",
-        backdropFilter: "blur(12px)",
-        border: "1px solid rgba(0,240,255,0.18)",
+        background: "rgba(30, 16, 46, 0.18)",
+        boxShadow: "0 4px 32px -4px rgba(0,0,0,0.6), inset 0 1px 0 rgba(168,85,247,0.1)",
+        backdropFilter: "blur(10px)",
+        border: "1px solid rgba(168,85,247,0.22)",
       }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="p-6 rounded-2xl hover:border-cyan-400/40 transition-colors group relative"
+      className="p-6 rounded-2xl hover:border-violet-400/50 transition-colors group relative"
     >
       {/* Quote icon */}
       <motion.div
@@ -67,7 +66,7 @@ const TestimonialCard = ({ t, index }: { t: typeof testimonials[0]; index: numbe
         transition={{ duration: 0.8 }}
         className="absolute top-4 right-4"
       >
-        <Quote size={32} style={{ color: "rgba(0,240,255,0.6)" }} />
+        <Quote size={32} style={{ color: "rgba(192,132,252,0.6)" }} />
       </motion.div>
 
       {/* Stars */}
@@ -94,15 +93,15 @@ const TestimonialCard = ({ t, index }: { t: typeof testimonials[0]; index: numbe
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-            className="absolute -inset-1 rounded-full border border-dashed border-cyan-400/40"
+            className="absolute -inset-1 rounded-full border border-dashed border-violet-400/40"
           />
-          <div className="w-10 h-10 rounded-full flex items-center justify-center relative" style={{ background: "rgba(0,240,255,0.15)", border: "1px solid rgba(0,240,255,0.3)" }}>
-            <span className="font-bold text-sm" style={{ color: "#00f0ff", textShadow: "0 0 8px rgba(0,240,255,0.8)" }}>{t.initials}</span>
+          <div className="w-10 h-10 rounded-full flex items-center justify-center relative" style={{ background: "rgba(168,85,247,0.15)", border: "1px solid rgba(168,85,247,0.3)" }}>
+            <span className="font-bold text-sm" style={{ color: "#c084fc", textShadow: "0 0 8px rgba(168,85,247,0.8)" }}>{t.initials}</span>
           </div>
         </div>
         <div>
           <p className="font-semibold text-sm" style={{ color: "#ffffff", textShadow: "0 1px 6px rgba(0,0,0,1)" }}>{t.name}</p>
-          <p className="text-xs" style={{ color: "rgba(0,240,255,0.75)", textShadow: "0 1px 4px rgba(0,0,0,0.9)" }}>{t.role}</p>
+          <p className="text-xs" style={{ color: "rgba(192,132,252,0.8)", textShadow: "0 1px 4px rgba(0,0,0,0.9)" }}>{t.role}</p>
         </div>
       </div>
     </motion.div>
@@ -114,21 +113,13 @@ const Testimonials = () => {
 
   return (
     <section id="testimonials" className="section-padding relative text-primary-foreground overflow-hidden" ref={ref}>
-      {/* Background image */}
+      {/* Color overlay only — shared hologram video lives one level up in Index.tsx, spanning this + Contact */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <img
-          src={clientBg}
-          alt=""
-          aria-hidden="true"
-          className="absolute w-full h-full"
-          style={{ objectFit: "cover", objectPosition: "center 30%" }}
-        />
-        {/* Teal-to-dark overlay blending with image palette */}
+        {/* Violet-to-dark overlay, lightened so the hologram video reads through clearly */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 90% 80% at 50% 50%, hsl(186 60% 6% / 0.72) 20%, hsl(186 60% 6% / 0.85) 65%, hsl(186 60% 6% / 0.95) 100%)",
+          background: "radial-gradient(ellipse 90% 80% at 50% 50%, hsl(272 55% 8% / 0.32) 20%, hsl(272 55% 7% / 0.48) 65%, hsl(272 55% 5% / 0.68) 100%)",
         }} />
-        <div className="absolute inset-x-0 top-0" style={{ height: "18%", background: "linear-gradient(to bottom, hsl(222 47% 4%), transparent)" }} />
-        <div className="absolute inset-x-0 bottom-0" style={{ height: "18%", background: "linear-gradient(to top, hsl(222 47% 4%), transparent)" }} />
+        <div className="absolute inset-x-0 top-0" style={{ height: "14%", background: "linear-gradient(to bottom, hsl(222 47% 4%), transparent)" }} />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">

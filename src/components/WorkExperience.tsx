@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { GraduationCap, MapPin, Calendar, Rocket, Briefcase, Monitor, Circle, CheckCircle, Network } from "lucide-react";
-import miniEditors from "@/assets/mini_editors.jpeg";
 
 const experiences = [
   {
@@ -82,33 +81,31 @@ const experiences = [
 const WorkExperience = () => {
   return (
     <section id="experience" className="section-padding relative overflow-hidden">
-      {/* Mini Editors — full-section background */}
+      {/* AI hologram video — smaller, left-side, vertically centered, faded into content */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <img
-          src={miniEditors}
-          alt="" aria-hidden="true"
-          className="absolute w-full h-full"
-          style={{ objectFit: "cover", objectPosition: "center center", opacity: 1 }}
+        <video
+          src="/video/experience-hologram.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          aria-hidden="true"
+          className="absolute h-full w-auto"
+          style={{ left: "-3%", top: 0, objectFit: "cover", objectPosition: "50% top" }}
         />
-        {/* Dark center overlay so timeline cards stay readable */}
-        <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 85% 75% at 50% 50%, hsl(222 47% 4% / 0.80) 25%, hsl(222 47% 4% / 0.60) 60%, hsl(222 47% 4% / 0.35) 100%)",
+        {/* Lightened wash — keeps the hologram screen visible while timeline cards stay readable */}
+        <div className="absolute inset-0" style={{ background: "hsl(222 47% 4% / 0.35)" }} />
+        <div className="absolute inset-y-0 right-0" style={{
+          width: "60%",
+          background: "linear-gradient(to left, hsl(222 47% 4%) 45%, hsl(222 47% 4%/0.65) 70%, transparent 100%)",
         }} />
         <div className="absolute inset-x-0 top-0" style={{
-          height: "20%",
+          height: "18%",
           background: "linear-gradient(to bottom, hsl(222 47% 4%), transparent)",
         }} />
         <div className="absolute inset-x-0 bottom-0" style={{
-          height: "20%",
+          height: "18%",
           background: "linear-gradient(to top, hsl(222 47% 4%), transparent)",
-        }} />
-        <div className="absolute inset-y-0 left-0" style={{
-          width: "10%",
-          background: "linear-gradient(to right, hsl(222 47% 4%), transparent)",
-        }} />
-        <div className="absolute inset-y-0 right-0" style={{
-          width: "10%",
-          background: "linear-gradient(to left, hsl(222 47% 4%), transparent)",
         }} />
       </div>
       <div className="max-w-7xl mx-auto relative z-10">
