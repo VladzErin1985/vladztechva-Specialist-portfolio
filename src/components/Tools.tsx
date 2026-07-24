@@ -5,7 +5,7 @@ import {
   SiMake, SiOpenai, SiGoogle, SiSupabase,
   SiFigma, SiVercel, SiAirtable,
 } from "react-icons/si";
-import { Mic, Send, BarChart3, Link2, Target, Workflow, LayoutDashboard, ClipboardList, Clapperboard } from "lucide-react";
+import { Mic, Send, BarChart3, Link2, Target, Workflow, LayoutDashboard, ClipboardList, Clapperboard, ShieldCheck } from "lucide-react";
 
 type ToolIcon =
   | { type: "si"; component: React.ComponentType<{ size?: number; style?: React.CSSProperties; className?: string }> }
@@ -28,6 +28,7 @@ const tools: Tool[] = [
   { name: "Notion", icon: { type: "si", component: SiNotion }, category: "Knowledge Base", color: "#E2E8F0" },
   { name: "Slack", icon: { type: "si", component: SiSlack }, category: "Notifications", color: "#4A154B" },
   { name: "GoHighLevel", icon: { type: "lucide", component: BarChart3, color: "#2563EB" }, category: "CRM", color: "#2563EB" },
+  { name: "Momentum AMS", icon: { type: "lucide", component: ShieldCheck, color: "#1A56A0" }, category: "CRM", color: "#1A56A0" },
   { name: "Zapier", icon: { type: "si", component: SiZapier }, category: "Automation", color: "#FF4A00" },
   { name: "Make.com", icon: { type: "si", component: SiMake }, category: "Automation", color: "#9B4DCA" },
   { name: "OpenAI", icon: { type: "si", component: SiOpenai }, category: "AI", color: "#10A37F" },

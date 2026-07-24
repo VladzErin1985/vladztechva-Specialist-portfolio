@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Building2, Bot, Zap, Target, Globe, Brain, ArrowUpRight, Network, Phone, Monitor, Code2, Layers, Clapperboard } from "lucide-react";
+import { Building2, Bot, Zap, Target, Globe, Brain, ArrowUpRight, Network, Phone, Monitor, Code2, Layers, Clapperboard, ShieldCheck } from "lucide-react";
 import robotHolographic from "@/assets/robot_holographic.jpeg";
 import { useTilt } from "@/hooks/useTilt";
 import { useInView } from "react-intersection-observer";
@@ -10,6 +10,7 @@ const services = [
   { icon: Zap, title: "n8n Workflow Architecture", description: "Production-grade n8n workflows: Apollo outbound pipelines, webhook handlers, multi-branch Switch routing, ICP scoring, and Notion/Slack integrations." },
   { icon: Bot, title: "AI Agent Development", description: "Claude API agent prompts for lead qualification, email drafting, reply triage, call QA, and onboarding — each agent purpose-built with structured output parsing." },
   { icon: Building2, title: "CRM Pipeline Engineering", description: "Pipedrive multi-pipeline setup with stage routing, custom field mapping, API v2 webhooks, cross-pipeline handoffs, and native automation triggers." },
+  { icon: ShieldCheck, title: "Insurance AMS Automation", description: "Momentum AMS workflow builds — task and email automations across sales, onboarding, renewal, and claims pipelines, opportunity-stage triggers, and custom field architecture for insurance agencies." },
   { icon: Target, title: "Outbound Lead Systems", description: "Apollo + Instantly outbound stacks: ICP filtering, Clay enrichment, warmup sequences, spintax email copy, reply webhook processing, and Notion dedup." },
   { icon: Brain, title: "RAG & Knowledge Pipelines", description: "Retrieval-Augmented Generation using Supabase vector databases and Notion as a live knowledge base for context-aware AI agent responses." },
   { icon: Globe, title: "GHL Systems & Funnels", description: "Complete GoHighLevel CRM setups — 5-stage pipelines, funnels, quiz builders, A2P 10DLC, sub-account snapshots, and round-robin workflows." },
