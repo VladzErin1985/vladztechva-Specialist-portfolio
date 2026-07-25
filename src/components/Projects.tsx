@@ -37,6 +37,16 @@ const ks = (slug: string): string => {
   return entry ? entry[1] : "";
 };
 
+// Bulk-load every Heavens Wellness system screenshot
+const heavensAssets = import.meta.glob("@/assets/heavens/*.png", {
+  eager: true,
+  import: "default",
+}) as Record<string, string>;
+const hw = (slug: string): string => {
+  const entry = Object.entries(heavensAssets).find(([path]) => path.endsWith(`/${slug}.png`));
+  return entry ? entry[1] : "";
+};
+
 type KonsierItem = { slug: string; label: string; nodes: string; description: string };
 type KonsierLane = { name: string; items: KonsierItem[] };
 
@@ -109,6 +119,29 @@ const konsierLanes: KonsierLane[] = [
     items: [
       { slug: "ks-wf21", label: "KS-WF21 — Reactivation Campaign", nodes: "19 nodes", description: "Drafts win-back SMS scripts for lapsed clients — gated behind a hard compliance approval step, no exceptions." },
       { slug: "ks-wf19", label: "KS-WF19 — SAM.gov Watch", nodes: "13 nodes", description: "Watches federal contract notices for GovCon-adjacent opportunities worth flagging." },
+    ],
+  },
+];
+
+const heavensLanes: KonsierLane[] = [
+  {
+    name: "Credit Balance System",
+    items: [
+      { slug: "credit-initial", label: "Initial Assignment", nodes: "Automation", description: "Assigns a new member's starting credit balance the moment their membership tier is set." },
+      { slug: "credit-tier1", label: "Tier 1 (1 Credit)", nodes: "Automation", description: "Decrements 1 credit per booking for Tier 1 services, blocks the booking and texts the member if their balance is insufficient." },
+      { slug: "credit-tier2", label: "Tier 2 (2 Credits)", nodes: "Automation", description: "Same balance-check-and-decrement pattern, scoped to 2-credit services." },
+      { slug: "credit-tier3", label: "Tier 3 (3 Credits)", nodes: "Automation", description: "Same pattern, scoped to 3-credit services." },
+      { slug: "credit-tier4", label: "Tier 4 (4 Credits)", nodes: "Automation", description: "Same pattern, scoped to 4-credit services." },
+      { slug: "credit-tier5", label: "Tier 5 (5 Credits)", nodes: "Automation", description: "Same pattern, scoped to the highest-tier 5-credit services." },
+      { slug: "credit-reset", label: "Annual Reset (Anniversary)", nodes: "Automation", description: "Resets each member's credit balance automatically on their own membership anniversary date, not a single fixed date for everyone." },
+    ],
+  },
+  {
+    name: "Conflict-Check Automations",
+    items: [
+      { slug: "conflict-ascend", label: "Ascend (PEMF/EWOT Verify)", nodes: "Automation", description: "Checks real-time availability of every piece of shared equipment before confirming an Ascend combo-service booking." },
+      { slug: "conflict-contrast", label: "Contrast Sessions (Sauna Verify)", nodes: "Automation", description: "Verifies sauna and cold-plunge availability together before confirming a Contrast Session booking, since the class blocks multiple pieces of equipment at once." },
+      { slug: "conflict-transcend", label: "Transcend (Juvent/Hydrogen/Pulsetto Verify)", nodes: "Automation", description: "Same real-time multi-resource check for the Transcend combo protocol, which draws on three separate pieces of equipment simultaneously." },
     ],
   },
 ];
@@ -188,6 +221,18 @@ const projects = [
     status: "live" as const,
     image: null as string | null,
     loomEmbed: "https://www.loom.com/embed/f13ba5175d4e47e99131d5230729119b",
+    externalLink: null as string | null,
+  },
+  {
+    title: "Heavens Wellness — GHL Booking & Membership System",
+    icon: Building2,
+    tags: ["GoHighLevel", "Booking Automation", "Calendar Management", "REST API"],
+    categories: ["ghl"],
+    description: "Full GHL booking system for a wellness studio: 20+ service calendars each on a dedicated staff profile, a credit-based membership system across 5 tiers with automatic balance tracking, and conflict-check automation for combo equipment sessions — including a direct API-driven fix eliminating cross-calendar booking conflicts.",
+    highlight: "20+ calendars automated",
+    status: "live" as const,
+    image: hw("overview"),
+    loomEmbed: "https://www.loom.com/embed/da6a1092ecce4fab8e908aa3b5ab6a9d",
     externalLink: null as string | null,
   },
   {
@@ -343,6 +388,7 @@ const Projects = () => {
   const [dir, setDir] = useState(1);
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
   const [systemDialogOpen, setSystemDialogOpen] = useState(false);
+  const [heavensDialogOpen, setHeavensDialogOpen] = useState(false);
   const { ref, inView } = useInView({ threshold: 0.05, triggerOnce: true });
 
   const filtered = activeFilter === "all"
@@ -465,6 +511,62 @@ const Projects = () => {
                 </div>
               </AccordionContent>
             </AccordionItem>
+          </Accordion>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={heavensDialogOpen}
+        onOpenChange={(next) => {
+          // Same lightbox-as-sibling guard as the Konsier dialog above.
+          if (!next && lightbox) return;
+          setHeavensDialogOpen(next);
+        }}
+      >
+        <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Heavens Wellness — Full System Breakdown</DialogTitle>
+            <DialogDescription>
+              The credit-balance tier system and the combo-service conflict-check automations. Click any screenshot to zoom.
+            </DialogDescription>
+          </DialogHeader>
+
+          <Accordion type="single" collapsible defaultValue="hw-lane-0" className="w-full">
+            {heavensLanes.map((lane, i) => (
+              <AccordionItem key={lane.name} value={`hw-lane-${i}`}>
+                <AccordionTrigger className="text-sm">
+                  <span className="flex items-center gap-2">
+                    <span className="text-xs font-mono text-primary">{String(i + 1).padStart(2, "0")}</span>
+                    {lane.name}
+                    <span className="text-xs text-muted-foreground font-normal">({lane.items.length})</span>
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {lane.items.map((item) => (
+                      <button
+                        key={item.slug}
+                        onClick={() => setLightbox({ src: hw(item.slug), alt: item.label })}
+                        className="group text-left rounded-lg border border-border overflow-hidden hover:border-primary/60 transition-colors cursor-zoom-in"
+                      >
+                        <div className="relative overflow-hidden bg-secondary/40">
+                          <img
+                            src={hw(item.slug)}
+                            alt={item.label}
+                            loading="lazy"
+                            className="w-full h-28 object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                        <div className="p-2.5">
+                          <p className="text-xs font-medium text-foreground leading-snug">{item.label}</p>
+                          <p className="text-[11px] text-muted-foreground/80 mt-1.5 leading-snug">{item.description}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
           </Accordion>
         </DialogContent>
       </Dialog>
@@ -600,21 +702,24 @@ const Projects = () => {
                 >
                   {visibleCards.map((project) => {
                     const isKonsierSystem = project.title === "Konsier — AI Receptionist Agency System";
+                    const isHeavensSystem = project.title === "Heavens Wellness — GHL Booking & Membership System";
+                    const isGallerySystem = isKonsierSystem || isHeavensSystem;
+                    const openGalleryDialog = () => isKonsierSystem ? setSystemDialogOpen(true) : setHeavensDialogOpen(true);
                     return (
                     <motion.div
                       key={project.title}
                       whileHover={{ y: -6, boxShadow: "0 16px 40px -12px hsl(var(--primary) / 0.18)" }}
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                      className={`group rounded-2xl glass-card relative overflow-hidden ${isKonsierSystem ? "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" : ""}`}
-                      {...(isKonsierSystem ? {
+                      className={`group rounded-2xl glass-card relative overflow-hidden ${isGallerySystem ? "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" : ""}`}
+                      {...(isGallerySystem ? {
                         role: "button",
                         tabIndex: 0,
-                        "aria-label": "Open Konsier full system breakdown",
-                        onClick: () => setSystemDialogOpen(true),
+                        "aria-label": `Open ${project.title} full system breakdown`,
+                        onClick: openGalleryDialog,
                         onKeyDown: (e: React.KeyboardEvent) => {
                           if (e.key === "Enter" || e.key === " ") {
                             e.preventDefault();
-                            setSystemDialogOpen(true);
+                            openGalleryDialog();
                           }
                         },
                       } : {})}
@@ -638,9 +743,9 @@ const Projects = () => {
                         <div
                           className="border-b border-border overflow-hidden relative cursor-zoom-in"
                           onClick={(e) => {
-                            if (isKonsierSystem) {
+                            if (isGallerySystem) {
                               e.stopPropagation();
-                              setSystemDialogOpen(true);
+                              openGalleryDialog();
                             } else {
                               setLightbox({ src: project.image as string, alt: project.title });
                             }
@@ -696,9 +801,9 @@ const Projects = () => {
                           </a>
                         )}
 
-                        {isKonsierSystem && (
+                        {isGallerySystem && (
                           <button
-                            onClick={(e) => { e.stopPropagation(); setSystemDialogOpen(true); }}
+                            onClick={(e) => { e.stopPropagation(); openGalleryDialog(); }}
                             className="inline-flex items-center gap-2 mb-4 text-sm font-medium text-primary hover:underline"
                           >
                             <Layers size={14} />
