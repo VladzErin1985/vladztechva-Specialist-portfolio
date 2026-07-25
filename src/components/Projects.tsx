@@ -182,7 +182,7 @@ const projects = [
     description: "A full AI-receptionist agency backend, built end to end: 30 production workflows across 8 functional lanes — lead capture, AI voice qualification, a sales closer-copilot suite, onboarding/billing, customer QA, and reactivation — running on 9 Claude agents and 3 Retell voice agents against one Pipedrive CRM.",
     highlight: "30 workflows · 8 systems",
     status: "live" as const,
-    image: null as string | null,
+    image: ks("ks-wf6"),
     loomEmbed: "https://www.loom.com/embed/2c1c129b04364256a7b289c7f976bcbb",
     externalLink: null as string | null,
   },
