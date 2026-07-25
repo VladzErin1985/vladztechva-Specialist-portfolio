@@ -26,6 +26,17 @@ import imgCustomerOrders from "@/assets/n8n_Customer_Orders.png";
 import imgRAGSupabase from "@/assets/n8n_RAG_Supabase.png";
 import imgJoeyPhase1 from "@/assets/joey_phase1.png";
 import imgJoeyPhase2 from "@/assets/joey_phase2.png";
+import imgNirvanaLogo from "@/assets/nirvana-logo.jpg";
+
+// Real client logo used as a project icon — same size/className contract as the lucide icons
+const NirvanaIcon = ({ size = 18, className }: { size?: number; className?: string }) => (
+  <img
+    src={imgNirvanaLogo}
+    alt=""
+    className={className}
+    style={{ width: size, height: size, objectFit: "contain", borderRadius: "9999px" }}
+  />
+);
 
 // Bulk-load every Konsier system screenshot — avoids 33 individual import lines
 const konsierAssets = import.meta.glob("@/assets/konsier/*.png", {
@@ -176,6 +187,18 @@ const projects = [
     externalLink: null as string | null,
   },
   {
+    title: "Heavens Wellness — GHL Booking & Membership System",
+    icon: NirvanaIcon,
+    tags: ["GoHighLevel", "Booking Automation", "Calendar Management", "REST API"],
+    categories: ["ghl"],
+    description: "Full GHL booking system for a wellness studio: 20+ service calendars each on a dedicated staff profile, a credit-based membership system across 5 tiers with automatic balance tracking, and conflict-check automation for combo equipment sessions — including a direct API-driven fix eliminating cross-calendar booking conflicts.",
+    highlight: "20+ calendars automated",
+    status: "live" as const,
+    image: hw("overview"),
+    loomEmbed: "https://www.loom.com/embed/da6a1092ecce4fab8e908aa3b5ab6a9d",
+    externalLink: null as string | null,
+  },
+  {
     title: "AI Lead Gen System Phase 1 — RAG Pinecone Knowledge Base",
     icon: Database,
     tags: ["n8n", "Google Drive", "Pinecone", "OpenAI", "RAG"],
@@ -221,18 +244,6 @@ const projects = [
     status: "live" as const,
     image: null as string | null,
     loomEmbed: "https://www.loom.com/embed/f13ba5175d4e47e99131d5230729119b",
-    externalLink: null as string | null,
-  },
-  {
-    title: "Heavens Wellness — GHL Booking & Membership System",
-    icon: Building2,
-    tags: ["GoHighLevel", "Booking Automation", "Calendar Management", "REST API"],
-    categories: ["ghl"],
-    description: "Full GHL booking system for a wellness studio: 20+ service calendars each on a dedicated staff profile, a credit-based membership system across 5 tiers with automatic balance tracking, and conflict-check automation for combo equipment sessions — including a direct API-driven fix eliminating cross-calendar booking conflicts.",
-    highlight: "20+ calendars automated",
-    status: "live" as const,
-    image: hw("overview"),
-    loomEmbed: "https://www.loom.com/embed/da6a1092ecce4fab8e908aa3b5ab6a9d",
     externalLink: null as string | null,
   },
   {
