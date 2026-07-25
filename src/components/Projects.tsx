@@ -34,7 +34,7 @@ const NirvanaIcon = ({ size = 18, className }: { size?: number; className?: stri
     src={imgNirvanaLogo}
     alt=""
     className={className}
-    style={{ width: size, height: size, objectFit: "contain", borderRadius: "9999px" }}
+    style={{ width: size, height: size, objectFit: "contain" }}
   />
 );
 
@@ -776,9 +776,15 @@ const Projects = () => {
 
                       <div className="p-6">
                         <div className="flex items-start justify-between mb-3">
-                          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors duration-300">
-                            <project.icon size={18} className="text-primary group-hover:text-primary-foreground transition-colors duration-300" />
-                          </div>
+                          {isHeavensSystem ? (
+                            <div className="w-14 h-14 flex items-center justify-center">
+                              <project.icon size={56} />
+                            </div>
+                          ) : (
+                            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors duration-300">
+                              <project.icon size={18} className="text-primary group-hover:text-primary-foreground transition-colors duration-300" />
+                            </div>
+                          )}
                           <div className="flex items-center gap-2">
                             <span className="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
                               {project.highlight}
