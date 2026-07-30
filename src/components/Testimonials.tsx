@@ -1,7 +1,115 @@
-import { motion } from "framer-motion";
-import { Quote, Star } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Quote, Star, ZoomIn, X } from "lucide-react";
 import { useTilt } from "@/hooks/useTilt";
 import { useInView } from "react-intersection-observer";
+import brianFeedback from "@/assets/testimonials/brian-feedback.png";
+import drewTestimonial from "@/assets/testimonials/drew-testimonial.jpg";
+
+// Same Lightbox pattern as Projects.tsx — sibling to any Dialog, never nested,
+// so Radix's own pointer-events lock on <body> can't swallow its clicks.
+const Lightbox = ({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) => (
+  <AnimatePresence>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm pointer-events-auto"
+      onClick={onClose}
+      style={{ pointerEvents: "auto" }}
+    >
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.8, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+        className="relative max-w-5xl w-full min-h-[50vh] flex items-center justify-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute -top-10 right-0 text-white/80 hover:text-white transition-colors flex items-center gap-1 text-sm z-10"
+        >
+          <X size={18} /> Close
+        </button>
+        <img src={src} alt={alt} className="max-w-full max-h-[80vh] w-auto h-auto rounded-2xl shadow-2xl border border-white/10" />
+      </motion.div>
+    </motion.div>
+  </AnimatePresence>
+);
+
+const realFeedback = [
+  {
+    image: brianFeedback,
+    name: "Brian Maurer",
+    role: "Owner, Shield Point Risk Advisors",
+    alt: "Email from Brian Maurer bringing Vladimir on for a long-term partnership building out Shield Point's systems and automation",
+  },
+  {
+    image: drewTestimonial,
+    name: "Drew",
+    role: "Founder, Velocity Capital / Konsier.AI",
+    alt: "Note from Drew thanking Vladimir for reliable, quality work before bringing him onto a bigger build",
+  },
+];
+
+const RealFeedbackCard = ({ f, onOpen }: { f: typeof realFeedback[0]; onOpen: () => void }) => {
+  const { ref, tilt, handleMouseMove, handleMouseLeave } = useTilt(8);
+  const isCoarse = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      onMouseMove={isCoarse ? undefined : handleMouseMove}
+      onMouseLeave={isCoarse ? undefined : handleMouseLeave}
+      style={{
+        transformPerspective: 1000,
+        rotateX: isCoarse ? 0 : tilt.rotateX,
+        rotateY: isCoarse ? 0 : tilt.rotateY,
+        background: "rgba(30, 16, 46, 0.18)",
+        boxShadow: "0 4px 32px -4px rgba(0,0,0,0.6), inset 0 1px 0 rgba(168,85,247,0.1)",
+        backdropFilter: "blur(10px)",
+        border: "1px solid rgba(168,85,247,0.22)",
+      }}
+      className="rounded-2xl overflow-hidden group"
+    >
+      <button
+        type="button"
+        onClick={onOpen}
+        aria-label={`Zoom in on ${f.name}'s feedback`}
+        className="relative block w-full h-56 overflow-hidden cursor-zoom-in bg-[rgba(20,10,32,0.9)]"
+      >
+        <img
+          src={f.image}
+          alt={f.alt}
+          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+          style={{
+            opacity: 0.55,
+            filter: "grayscale(0.3) brightness(0.75) contrast(1.05)",
+            mixBlendMode: "luminosity",
+            maskImage: "radial-gradient(ellipse 78% 72% at 50% 40%, black 35%, transparent 95%)",
+            WebkitMaskImage: "radial-gradient(ellipse 78% 72% at 50% 40%, black 35%, transparent 95%)",
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(180deg, rgba(20,10,32,0.15) 0%, rgba(20,10,32,0.75) 100%)" }}
+        />
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
+          <ZoomIn size={28} className="text-white opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 drop-shadow-lg" />
+        </div>
+      </button>
+      <div className="p-5">
+        <p className="font-semibold text-sm" style={{ color: "#ffffff", textShadow: "0 1px 6px rgba(0,0,0,1)" }}>{f.name}</p>
+        <p className="text-xs" style={{ color: "rgba(192,132,252,0.8)" }}>{f.role}</p>
+      </div>
+    </motion.div>
+  );
+};
 
 const testimonials = [
   {
@@ -110,8 +218,11 @@ const TestimonialCard = ({ t, index }: { t: typeof testimonials[0]; index: numbe
 
 const Testimonials = () => {
   const { ref, inView } = useInView({ threshold: 0.15, triggerOnce: true });
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
 
   return (
+    <>
+    {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
     <section id="testimonials" className="section-padding relative text-primary-foreground overflow-hidden" ref={ref}>
       {/* Color overlay only — shared hologram video lives one level up in Index.tsx, spanning this + Contact */}
       <div className="absolute inset-0 pointer-events-none z-0">
@@ -138,6 +249,12 @@ const Testimonials = () => {
           </h2>
         </motion.div>
 
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto mb-12">
+          {realFeedback.map((f) => (
+            <RealFeedbackCard key={f.name} f={f} onOpen={() => setLightbox({ src: f.image, alt: f.alt })} />
+          ))}
+        </div>
+
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -150,6 +267,7 @@ const Testimonials = () => {
         </motion.div>
       </div>
     </section>
+    </>
   );
 };
 

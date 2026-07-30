@@ -61,6 +61,12 @@ const FloatingLabelInput = ({ label, type = "text", name, textarea = false }: { 
   );
 };
 
+const TelegramIcon = ({ size = 16, className = "" }: { size?: number; className?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M21.05 3.64 2.98 10.6c-1.24.49-1.23 1.17-.23 1.48l4.63 1.45 1.78 5.5c.22.6.37.84.76.84.35 0 .5-.16.7-.35l1.7-1.65 4.7 3.47c.87.48 1.5.23 1.72-.8L21.9 4.86c.3-1.26-.48-1.83-1.5-1.42Zm-11.8 10.3-1.02-3.3 8.9-5.6c.4-.24.76-.1.46.17l-7.3 6.6-.5 2.13-.54-.02Z" />
+  </svg>
+);
+
 const CONTACT_WEBHOOK_URL = "https://n8n.srv1305072.hstgr.cloud/webhook/portfolio-contact";
 
 const Contact = () => {
@@ -167,6 +173,13 @@ const Contact = () => {
             className="space-y-5"
             onSubmit={handleSubmit}
           >
+            <div
+              className="inline-flex items-center gap-1.5 mb-1 px-3 py-1 rounded-full text-xs font-medium"
+              style={{ color: "#00f0ff", background: "rgba(0,240,255,0.1)", border: "1px solid rgba(0,240,255,0.25)" }}
+            >
+              <TelegramIcon size={13} />
+              <span>Sent straight to my Telegram</span>
+            </div>
             <FloatingLabelInput label="Your Name" name="name" />
             <FloatingLabelInput label="Your Email" type="email" name="email" />
             <FloatingLabelInput label="Your Message" name="message" textarea />

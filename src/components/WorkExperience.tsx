@@ -1,7 +1,22 @@
+import { useRef } from "react";
 import { motion } from "framer-motion";
-import { GraduationCap, MapPin, Calendar, Rocket, Briefcase, Monitor, Circle, CheckCircle, Network } from "lucide-react";
+import { GraduationCap, MapPin, Calendar, Rocket, Briefcase, Monitor, Network, Shield, Users, ChevronLeft, ChevronRight } from "lucide-react";
 
 const experiences = [
+  {
+    role: "AI Automation Architect",
+    company: "Shield Point Risk Advisors, LLC",
+    period: "July 2026 – Present",
+    location: "Missouri, USA · Remote",
+    icon: Shield,
+    highlights: [
+      "Architecting AI-driven automation on top of Momentum AMS (NowCerts) and its native Automation Center (MAC) for a full-service independent insurance agency",
+      "Built a full 30-day new-client onboarding sequence (11 trigger-driven touchpoints) and an Annual Review cross-sell workflow, both firing directly off policy and CRM stage changes",
+      "Extended the platform's own no-code builder past its native limits by engineering custom fields and record tagging directly through its REST API",
+      "Diagnosed a live automation that had run error-free for weeks while its real logic silently never executed, then fixed and proved it end-to-end against real data",
+    ],
+    current: true,
+  },
   {
     role: "AI Automation Architect",
     company: "Velocity Capital LLC · Konsier.AI",
@@ -17,17 +32,17 @@ const experiences = [
     current: true,
   },
   {
-    role: "GHL & AI Automation Specialist",
-    company: "Freelance / Self-Directed",
-    period: "Feb 2026 – Apr 2026",
-    location: "Philippines",
-    icon: Rocket,
+    role: "AI Automation Specialist / GHL Specialist",
+    company: "OutsourceAid (Agency)",
+    period: "May 2026 – Present",
+    location: "Remote · Multiple US Clients",
+    icon: Users,
     highlights: [
-      "Built AI Lead Gen System Phase 1 (Joey Elaty — Real Estate): Google Drive trigger → SOP auto-ingestion → Pinecone vector store with OpenAI embeddings — fully automated RAG knowledge base across 4 companies",
-      "Built AI Lead Gen System Phase 2: autonomous AI Agent (Claude + Pinecone RAG) querying live Google Sheets leads and updating GHL CRM via API — zero human intervention",
-      "Deployed complete GHL CRM systems — multi-stage pipelines, quiz-based lead scoring funnels, Retell AI inbound voice lead capture, and AI-personalized email sequences via n8n",
+      "Part-time GHL contractor placed through OutsourceAid's staffing model — matched to individual client projects across different industries rather than one single employer",
+      "Finding Nirvana Wellness (wellness/biohacking studio, Venice FL): built a 5-tier credit-balance booking enforcement system spanning 22 services, fixed equipment double-booking conflicts, and resolved a shared-staff cross-calendar bug by scripting 21 calendars onto dedicated profiles via the GHL API",
+      "Movement Clinic / Haven Wellness (peptide clinic B2B lead-gen funnel): built the full quiz-based lead capture, tagged SMS/email nurture sequence, and booked-call confirmation flow end-to-end in GHL",
     ],
-    current: false,
+    current: true,
   },
   {
     role: "Sales Specialist",
@@ -79,6 +94,16 @@ const experiences = [
 ];
 
 const WorkExperience = () => {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+
+  const scrollByCard = (dir: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>("[data-exp-card]");
+    const step = card ? card.offsetWidth + 32 : 360;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  };
+
   return (
     <section id="experience" className="section-padding relative overflow-hidden">
       {/* AI hologram video — smaller, left-side, vertically centered, faded into content */}
@@ -90,14 +115,18 @@ const WorkExperience = () => {
           muted
           playsInline
           aria-hidden="true"
-          className="absolute h-full w-auto"
-          style={{ left: "-3%", top: 0, objectFit: "cover", objectPosition: "50% top" }}
+          className="absolute w-full h-full"
+          style={{ left: 0, top: 0, objectFit: "cover", objectPosition: "50% top" }}
         />
         {/* Lightened wash — keeps the hologram screen visible while timeline cards stay readable */}
-        <div className="absolute inset-0" style={{ background: "hsl(222 47% 4% / 0.35)" }} />
+        <div className="absolute inset-0" style={{ background: "hsl(222 47% 4% / 0.4)" }} />
+        <div className="absolute inset-y-0 left-0" style={{
+          width: "10%",
+          background: "linear-gradient(to right, hsl(222 47% 4%), transparent)",
+        }} />
         <div className="absolute inset-y-0 right-0" style={{
-          width: "60%",
-          background: "linear-gradient(to left, hsl(222 47% 4%) 45%, hsl(222 47% 4%/0.65) 70%, transparent 100%)",
+          width: "10%",
+          background: "linear-gradient(to left, hsl(222 47% 4%), transparent)",
         }} />
         <div className="absolute inset-x-0 top-0" style={{
           height: "18%",
@@ -114,7 +143,7 @@ const WorkExperience = () => {
           whileInView={{ clipPath: "inset(0 0% 0 0)" }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16 max-w-2xl mx-auto"
+          className="text-center mb-12 max-w-2xl mx-auto"
         >
           <span className="inline-block text-primary text-xs font-semibold tracking-wider uppercase mb-3 px-4 py-1.5 rounded-full bg-primary/10">
             Where I've Been
@@ -122,98 +151,111 @@ const WorkExperience = () => {
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
             Work <span className="text-primary">Experience</span>
           </h2>
+          <p className="text-muted-foreground text-sm">Drag, scroll, or use the arrows to explore the timeline →</p>
         </motion.div>
 
-        <div className="relative max-w-3xl mx-auto">
-          {/* Animated vertical line */}
-          <motion.div
-            initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-px origin-top"
-          />
+        <div className="relative">
+          {/* Nav arrows — hidden on touch devices, native swipe handles it there */}
+          <button
+            onClick={() => scrollByCard(-1)}
+            aria-label="Scroll to previous experience"
+            className="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full glass-card items-center justify-center text-foreground hover:text-primary transition-colors"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button
+            onClick={() => scrollByCard(1)}
+            aria-label="Scroll to next experience"
+            className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full glass-card items-center justify-center text-foreground hover:text-primary transition-colors"
+          >
+            <ChevronRight size={20} />
+          </button>
 
-          {experiences.map((exp, i) => (
-            <motion.div
-              key={exp.role + exp.company}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -60 : 60, rotate: i % 2 === 0 ? -3 : 3 }}
-              whileInView={{ opacity: 1, x: 0, rotate: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease: "easeOut", delay: i * 0.1 }}
-              className={`relative flex items-start gap-6 mb-8 ${
-                i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-              }`}
-            >
-              {/* Timeline dot with pulse */}
-              <div className="absolute left-6 md:left-1/2 -translate-x-1.5 mt-6 z-10">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ type: "spring", stiffness: 500, damping: 25 }}
-                  className="relative"
-                >
-                  {exp.current ? (
-                    <>
-                      <Circle size={12} className="fill-primary text-primary" />
-                      <motion.div
-                        animate={{ scale: [1, 1.8, 1], opacity: [1, 0, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="absolute inset-0 w-3 h-3 rounded-full border border-primary"
-                      />
-                    </>
-                  ) : (
-                    <CheckCircle size={12} className="text-primary" />
-                  )}
-                </motion.div>
-              </div>
-
-              <div className="hidden md:block md:w-1/2" />
-
+          <div
+            ref={scrollerRef}
+            className="flex gap-8 overflow-x-auto pb-10 pt-6 px-1 snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+          >
+            {experiences.map((exp, i) => (
               <motion.div
-                whileHover={{ y: -6, scale: 1.01, boxShadow: "0 16px 48px hsl(191 100% 42% / 0.20), 0 0 0 1px hsl(191 100% 42% / 0.5)" }}
-                transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                className="ml-14 md:ml-0 md:w-1/2 p-5 rounded-2xl glass-card card-3d group"
+                key={exp.role + exp.company}
+                data-exp-card
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: i * 0.08 }}
+                className="relative shrink-0 snap-center w-[85vw] sm:w-[380px]"
               >
-                {exp.current && (
-                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full mb-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                    Current
-                  </span>
-                )}
-                <div className="flex items-center gap-3 mb-2">
-                  <motion.div whileHover={{ scale: 1.2, rotate: 10 }} transition={{ type: "spring" }}>
-                    <exp.icon size={18} className="text-primary" />
+                {/* Timeline dot + connecting line, horizontal */}
+                <div className="flex items-center mb-4">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ type: "spring", stiffness: 500, damping: 25 }}
+                    className="relative shrink-0"
+                  >
+                    {exp.current ? (
+                      <>
+                        <div className="w-3 h-3 rounded-full bg-primary" />
+                        <motion.div
+                          animate={{ scale: [1, 1.8, 1], opacity: [1, 0, 1] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                          className="absolute inset-0 w-3 h-3 rounded-full border border-primary"
+                        />
+                      </>
+                    ) : (
+                      <div className="w-3 h-3 rounded-full bg-primary/40" />
+                    )}
                   </motion.div>
-                  <div className="flex items-center gap-2 text-muted-foreground text-xs">
-                    <Calendar size={12} />
-                    <span>{exp.period}</span>
-                    <span className="text-border">·</span>
-                    <MapPin size={12} />
-                    <span>{exp.location}</span>
-                  </div>
+                  {i < experiences.length - 1 && (
+                    <div className="h-px flex-1 bg-border ml-2" />
+                  )}
                 </div>
-                <h3 className="text-base font-semibold text-foreground">{exp.role}</h3>
-                <p className="text-primary text-sm font-medium mb-3">{exp.company}</p>
-                <ul className="space-y-1.5">
-                  {exp.highlights.map((h, j) => (
-                    <li key={j} className="text-muted-foreground text-sm leading-relaxed flex gap-2">
-                      <span className="text-primary mt-1 shrink-0">▸</span>
-                      <span>{h}</span>
-                    </li>
-                  ))}
-                </ul>
+
+                <motion.div
+                  whileHover={{ y: -6, scale: 1.01, boxShadow: "0 16px 48px hsl(191 100% 42% / 0.20), 0 0 0 1px hsl(191 100% 42% / 0.5)" }}
+                  transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                  className="p-5 rounded-2xl glass-card card-3d group h-full"
+                >
+                  {exp.current && (
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full mb-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                      Current
+                    </span>
+                  )}
+                  <div className="flex items-center gap-3 mb-2">
+                    <motion.div whileHover={{ scale: 1.2, rotate: 10 }} transition={{ type: "spring" }}>
+                      <exp.icon size={18} className="text-primary" />
+                    </motion.div>
+                    <div className="flex items-center gap-2 text-muted-foreground text-xs">
+                      <Calendar size={12} />
+                      <span>{exp.period}</span>
+                      <span className="text-border">·</span>
+                      <MapPin size={12} />
+                      <span>{exp.location}</span>
+                    </div>
+                  </div>
+                  <h3 className="text-base font-semibold text-foreground">{exp.role}</h3>
+                  <p className="text-primary text-sm font-medium mb-3">{exp.company}</p>
+                  <ul className="space-y-1.5">
+                    {exp.highlights.map((h, j) => (
+                      <li key={j} className="text-muted-foreground text-sm leading-relaxed flex gap-2">
+                        <span className="text-primary mt-1 shrink-0">▸</span>
+                        <span>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          ))}
+            ))}
+          </div>
         </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 p-6 rounded-2xl glass-card card-3d max-w-xl mx-auto flex items-center gap-5"
+          className="mt-8 p-6 rounded-2xl glass-card card-3d max-w-xl mx-auto flex items-center gap-5"
         >
           <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
             <GraduationCap size={26} className="text-primary" />
