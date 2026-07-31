@@ -386,8 +386,8 @@ const Hero = () => {
                 style={{ borderTop: "1px solid hsl(191 100% 42% / 0.12)" }}
               >
                 {[
-                  { n: "9+", l: "Workflows" },
-                  { n: "8", l: "AI Agents" },
+                  { n: "30+", l: "Workflows" },
+                  { n: "10", l: "AI Agents" },
                   { n: "3", l: "Pipelines" },
                 ].map((s) => (
                   <div key={s.l}>

@@ -24,7 +24,7 @@ const experiences = [
     location: "Philippines · Remote",
     icon: Network,
     highlights: [
-      "Architecting a full AI receptionist agency system from greenfield: 9+ n8n workflows, 8 Claude AI agents, and 3 Pipedrive pipelines (OUTBOUND, INBOUND, CUSTOMER LIFECYCLE)",
+      "Architecting a full AI receptionist agency system from greenfield: 30+ n8n workflows, 10 Claude AI agents, and 3 Pipedrive pipelines (OUTBOUND, INBOUND, CUSTOMER LIFECYCLE)",
       "Built KS-WF6 Daily Outbound Pipeline — Apollo lead scrape → ICP scoring → Notion dedup → batch-50 Claude email generation → Instantly delivery, fully automated end-to-end",
       "Integrated Retell AI voice qualification with real-time call_analyzed webhooks — KS-A2 Tier Routing agent auto-stages deals and fires Slack alerts across 3 pipelines",
       "Owns all AI agent development (Claude API, structured JSON output), Pipedrive CRM engineering, and team architecture — builder and future trainer of 2 operations VAs",
