@@ -21,7 +21,7 @@ const experiences = [
     role: "AI Automation Architect",
     company: "Velocity Capital LLC · Konsier.AI",
     period: "May 2026 – Present",
-    location: "Philippines · Remote",
+    location: "San Diego, CA · Remote",
     icon: Network,
     highlights: [
       "Architecting a full AI receptionist agency system from greenfield: 30+ n8n workflows, 10 Claude AI agents, and 3 Pipedrive pipelines (OUTBOUND, INBOUND, CUSTOMER LIFECYCLE)",
